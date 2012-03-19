@@ -18,7 +18,6 @@ public class SpectrumImpl extends Spectrum implements Binnable<SpectrumBin> {
 
     public SpectrumImpl(long spectrumId) {
         this.spectrumId = spectrumId;
-        initBins();
     }
 
     /**

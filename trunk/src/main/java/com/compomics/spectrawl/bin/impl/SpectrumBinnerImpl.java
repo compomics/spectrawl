@@ -8,19 +8,19 @@ import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.TreeMap;
 
 /**
- * Created by IntelliJ IDEA.
- * User: niels
- * Date: 28/02/12
- * Time: 15:04
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: niels Date: 28/02/12 Time: 15:04 To change
+ * this template use File | Settings | File Templates.
  */
 public class SpectrumBinnerImpl implements SpectrumBinner {
 
     @Override
     public void binSpectrum(SpectrumImpl spectrum) {
-        TreeMap<Double, PeakBin> peakBins = null;
+        //init bins
+        spectrum.initBins();
+        
+        TreeMap<Double, PeakBin> peakBins = new TreeMap<Double, PeakBin>();
         for (Double outerMass : spectrum.getPeakMap().keySet()) {
-            peakBins = initPeakBins();
+            peakBins = initPeakBins(peakBins);
             for (Double innerMass : spectrum.getPeakMap().keySet()) {
                 double massDelta = innerMass - outerMass;
                 //check if mass delta value lies within the bins floor and ceiling
@@ -51,10 +51,11 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
     /**
      * Init the peak bins map
      *
+     * @param peakBins the PeakBin map
      * @return the initialized peak bins map
      */
-    private TreeMap<Double, PeakBin> initPeakBins() {
-        TreeMap<Double, PeakBin> peakBins = new TreeMap<Double, PeakBin>();
+    private TreeMap<Double, PeakBin> initPeakBins(TreeMap<Double, PeakBin> peakBins) {
+        peakBins.clear();
 
         int numberOfBins = (int) ((Binnable.CEILING - Binnable.FLOOR) / Binnable.BIN_SIZE);
         for (int i = 0; i < numberOfBins; i++) {

@@ -18,7 +18,6 @@ public class Experiment implements Binnable<ExperimentBin> {
 
     public Experiment(long experimentId) {
         this.experimentId = experimentId;
-        initBins();
     }
 
     public List<SpectrumImpl> getSpectra() {
