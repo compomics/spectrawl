@@ -14,7 +14,7 @@ public class ExperimentBinnerImpl implements ExperimentBinner {
 
     @Override
     public void binExperiment(Experiment experiment) {
-        this.binExperiment(experiment, experiment.getExperimentBins().keySet());
+        this.binExperiment(experiment, null);
     }
 
     @Override
@@ -23,7 +23,14 @@ public class ExperimentBinnerImpl implements ExperimentBinner {
         DescriptiveStatistics peakCountStatistics = new DescriptiveStatistics();
         DescriptiveStatistics intensitySumStatistics = new DescriptiveStatistics();
         DescriptiveStatistics highestIntensityStatistics = new DescriptiveStatistics();
-
+        
+        //init bins
+        experiment.initBins();
+        
+        if(binFloors == null){
+            binFloors = experiment.getBins().keySet();
+        }
+                
         //iterate over bins
         for (Double binFloor : binFloors) {
             ExperimentBin experimentBin = experiment.getExperimentBins().get(binFloor);
