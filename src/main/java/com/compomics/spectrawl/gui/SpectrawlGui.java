@@ -4,17 +4,38 @@
  */
 package com.compomics.spectrawl.gui;
 
+import java.awt.GridBagConstraints;
+
 /**
  *
  * @author niels
  */
 public class SpectrawlGui extends javax.swing.JFrame {
 
+    private ExperimentLoaderPanel experimentLoaderPanel;
+    private AnalyzeFilterPanel analyzeFilterPanel;
+    private ProcessFilterPanel processFilterPanel;
+
     /**
      * Creates new form SpectrawlGui
      */
     public SpectrawlGui() {
         initComponents();
+
+        //add custom components
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+
+        experimentLoaderPanel = new ExperimentLoaderPanel(this);
+        experimentLoaderParentPanel.add(experimentLoaderPanel, gridBagConstraints);
+
+        analyzeFilterPanel = new AnalyzeFilterPanel(this);
+        analyzeFilterParentPanel.add(analyzeFilterPanel, gridBagConstraints);
+
+        processFilterPanel = new ProcessFilterPanel(this);
+        processFilterParentPanel.add(processFilterPanel, gridBagConstraints);
     }
 
     /**
@@ -39,32 +60,12 @@ public class SpectrawlGui extends javax.swing.JFrame {
         layout.rowHeights = new int[] {0, 10, 0};
         getContentPane().setLayout(layout);
 
-        filtersTabbedPane.setBorder(new javax.swing.border.MatteBorder(null));
+        filtersTabbedPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        javax.swing.GroupLayout processFilterParentPanelLayout = new javax.swing.GroupLayout(processFilterParentPanel);
-        processFilterParentPanel.setLayout(processFilterParentPanelLayout);
-        processFilterParentPanelLayout.setHorizontalGroup(
-            processFilterParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 109, Short.MAX_VALUE)
-        );
-        processFilterParentPanelLayout.setVerticalGroup(
-            processFilterParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 253, Short.MAX_VALUE)
-        );
-
+        processFilterParentPanel.setLayout(new java.awt.GridBagLayout());
         filtersTabbedPane.addTab("process filter", processFilterParentPanel);
 
-        javax.swing.GroupLayout analyzeFilterParentPanelLayout = new javax.swing.GroupLayout(analyzeFilterParentPanel);
-        analyzeFilterParentPanel.setLayout(analyzeFilterParentPanelLayout);
-        analyzeFilterParentPanelLayout.setHorizontalGroup(
-            analyzeFilterParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 109, Short.MAX_VALUE)
-        );
-        analyzeFilterParentPanelLayout.setVerticalGroup(
-            analyzeFilterParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 253, Short.MAX_VALUE)
-        );
-
+        analyzeFilterParentPanel.setLayout(new java.awt.GridBagLayout());
         filtersTabbedPane.addTab("analyze filter", analyzeFilterParentPanel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -72,50 +73,28 @@ public class SpectrawlGui extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weightx = 0.15;
         gridBagConstraints.weighty = 1.0;
         getContentPane().add(filtersTabbedPane, gridBagConstraints);
 
-        experimentLoaderParentPanel.setBorder(new javax.swing.border.MatteBorder(null));
-
-        javax.swing.GroupLayout experimentLoaderParentPanelLayout = new javax.swing.GroupLayout(experimentLoaderParentPanel);
-        experimentLoaderParentPanel.setLayout(experimentLoaderParentPanelLayout);
-        experimentLoaderParentPanelLayout.setHorizontalGroup(
-            experimentLoaderParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 276, Short.MAX_VALUE)
-        );
-        experimentLoaderParentPanelLayout.setVerticalGroup(
-            experimentLoaderParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 47, Short.MAX_VALUE)
-        );
-
+        experimentLoaderParentPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        experimentLoaderParentPanel.setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.75;
+        gridBagConstraints.weightx = 0.85;
         gridBagConstraints.weighty = 0.15;
         getContentPane().add(experimentLoaderParentPanel, gridBagConstraints);
 
-        experimentBinsParentPanel.setBorder(new javax.swing.border.MatteBorder(null));
-
-        javax.swing.GroupLayout experimentBinsParentPanelLayout = new javax.swing.GroupLayout(experimentBinsParentPanel);
-        experimentBinsParentPanel.setLayout(experimentBinsParentPanelLayout);
-        experimentBinsParentPanelLayout.setHorizontalGroup(
-            experimentBinsParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 276, Short.MAX_VALUE)
-        );
-        experimentBinsParentPanelLayout.setVerticalGroup(
-            experimentBinsParentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 238, Short.MAX_VALUE)
-        );
-
+        experimentBinsParentPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        experimentBinsParentPanel.setLayout(new java.awt.GridBagLayout());
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.75;
-        gridBagConstraints.weighty = 0.75;
+        gridBagConstraints.weightx = 0.85;
+        gridBagConstraints.weighty = 0.85;
         getContentPane().add(experimentBinsParentPanel, gridBagConstraints);
 
         pack();

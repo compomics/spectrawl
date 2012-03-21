@@ -4,17 +4,43 @@
  */
 package com.compomics.spectrawl.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 /**
  *
  * @author niels
  */
-public class processFilterPanel extends javax.swing.JPanel {
+public class ProcessFilterPanel extends javax.swing.JPanel {
+    
+    private SpectrawlGui spectrawlGui;
 
     /**
-     * Creates new form processFilterPanel
+     * Creates new form ProcessFilterPanel
      */
-    public processFilterPanel() {
+    public ProcessFilterPanel(SpectrawlGui spectrawlGui) {
         initComponents();
+        
+        this.spectrawlGui = spectrawlGui;
+
+        //add action listeners
+        winsorFilterCheckBox.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (winsorFilterCheckBox.isSelected()) {
+                    doEnableTextFields(Boolean.TRUE);
+                } else {
+                    doEnableTextFields(Boolean.FALSE);
+                }
+            }
+        });
+    }
+    
+    private void doEnableTextFields(boolean doEnable) {
+        winsorConstantTextField.setEnabled(doEnable);
+        winsorConvergenceCriterionTextField.setEnabled(doEnable);
+        winsorOutlierLimitTextField.setEnabled(doEnable);
     }
 
     /**
@@ -25,18 +51,77 @@ public class processFilterPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        winsorFilterCheckBox = new javax.swing.JCheckBox();
+        winsorConstantLabel = new javax.swing.JLabel();
+        winsorConstantTextField = new javax.swing.JTextField();
+        winsorConvergenceCriterionLabel = new javax.swing.JLabel();
+        winsorConvergenceCriterionTextField = new javax.swing.JTextField();
+        winsorOutlierLimitLabel = new javax.swing.JLabel();
+        winsorOutlierLimitTextField = new javax.swing.JTextField();
+
+        java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
+        layout.columnWidths = new int[] {0, 5, 0};
+        layout.rowHeights = new int[] {0, 10, 0, 10, 0, 10, 0};
+        setLayout(layout);
+
+        winsorFilterCheckBox.setText("do winsorisation filtering");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(winsorFilterCheckBox, gridBagConstraints);
+
+        winsorConstantLabel.setText("winsorisation constant");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(winsorConstantLabel, gridBagConstraints);
+
+        winsorConstantTextField.setEnabled(false);
+        winsorConstantTextField.setPreferredSize(new java.awt.Dimension(60, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 2;
+        add(winsorConstantTextField, gridBagConstraints);
+
+        winsorConvergenceCriterionLabel.setText("winsorisation convergence criterion");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(winsorConvergenceCriterionLabel, gridBagConstraints);
+
+        winsorConvergenceCriterionTextField.setEnabled(false);
+        winsorConvergenceCriterionTextField.setPreferredSize(new java.awt.Dimension(60, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 4;
+        add(winsorConvergenceCriterionTextField, gridBagConstraints);
+
+        winsorOutlierLimitLabel.setText("winsorisation outlier limit");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        add(winsorOutlierLimitLabel, gridBagConstraints);
+
+        winsorOutlierLimitTextField.setEnabled(false);
+        winsorOutlierLimitTextField.setPreferredSize(new java.awt.Dimension(60, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 6;
+        add(winsorOutlierLimitTextField, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel winsorConstantLabel;
+    private javax.swing.JTextField winsorConstantTextField;
+    private javax.swing.JLabel winsorConvergenceCriterionLabel;
+    private javax.swing.JTextField winsorConvergenceCriterionTextField;
+    private javax.swing.JCheckBox winsorFilterCheckBox;
+    private javax.swing.JLabel winsorOutlierLimitLabel;
+    private javax.swing.JTextField winsorOutlierLimitTextField;
     // End of variables declaration//GEN-END:variables
 }
