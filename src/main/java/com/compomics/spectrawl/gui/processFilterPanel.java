@@ -4,6 +4,7 @@
  */
 package com.compomics.spectrawl.gui;
 
+import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,20 +13,29 @@ import java.awt.event.ActionListener;
  * @author niels
  */
 public class ProcessFilterPanel extends javax.swing.JPanel {
-    
+
     private SpectrawlGui spectrawlGui;
 
     /**
      * Creates new form ProcessFilterPanel
      */
     public ProcessFilterPanel(SpectrawlGui spectrawlGui) {
-        initComponents();
-        
         this.spectrawlGui = spectrawlGui;
+
+        initPanel();
+    }
+
+    private void initPanel() {
+        initComponents();
+
+        //init winsorisation configuration
+        winsorConstantTextField.setText(PropertiesConfigurationHolder.getInstance().getString("WINSOR.CONSTANT"));
+        winsorConvergenceCriterionTextField.setText(PropertiesConfigurationHolder.getInstance().getString("WINSOR.CONVERGENCE_CRITERION"));
+        winsorOutlierLimitTextField.setText(PropertiesConfigurationHolder.getInstance().getString("WINSOR.OUTLIER_LIMIT"));
 
         //add action listeners
         winsorFilterCheckBox.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (winsorFilterCheckBox.isSelected()) {
@@ -36,7 +46,7 @@ public class ProcessFilterPanel extends javax.swing.JPanel {
             }
         });
     }
-    
+
     private void doEnableTextFields(boolean doEnable) {
         winsorConstantTextField.setEnabled(doEnable);
         winsorConvergenceCriterionTextField.setEnabled(doEnable);

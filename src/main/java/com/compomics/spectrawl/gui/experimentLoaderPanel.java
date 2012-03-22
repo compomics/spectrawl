@@ -32,19 +32,23 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
      * Creates new form ExperimentLoaderPanel
      */
     public ExperimentLoaderPanel(SpectrawlGui spectrawlGui) {
+        this.spectrawlGui = spectrawlGui;
+
+        initPanel();
+    }
+
+    private void initPanel() {
         initComponents();
 
         //remove panels
         experimentSelectionPanel.remove(msLimsPanel);
         experimentSelectionPanel.remove(mgfPanel);
 
-        this.spectrawlGui = spectrawlGui;
-        
         //init bin configuration
         binFloorTextField.setText(PropertiesConfigurationHolder.getInstance().getString("BINS_FLOOR"));
         binCeilingTextField.setText(PropertiesConfigurationHolder.getInstance().getString("BINS_CEILING"));
         binSizeTextField.setText(PropertiesConfigurationHolder.getInstance().getString("BIN_SIZE"));
-        
+
         //add items to combo box
         for (ExperimentType experimentType : ExperimentType.values()) {
             experimentTypeComboBox.addItem(experimentType);
@@ -97,7 +101,6 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
                 }
             }
         });
-
     }
 
     private boolean isPresent(Component component, JPanel panel) {

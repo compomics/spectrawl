@@ -15,7 +15,7 @@ import javax.swing.ListModel;
  * @author niels
  */
 public class AnalyzeFilterPanel extends javax.swing.JPanel {
-    
+
     private SpectrawlGui spectrawlGui;
     private DefaultListModel peakFilterListModel;
     private DefaultListModel binFilterListModel;
@@ -24,9 +24,13 @@ public class AnalyzeFilterPanel extends javax.swing.JPanel {
      * Creates new form AnalyzeFilterPanel
      */
     public AnalyzeFilterPanel(SpectrawlGui spectrawlGui) {
-        initComponents();
-        
         this.spectrawlGui = spectrawlGui;
+
+        initPanel();
+    }
+
+    private void initPanel() {
+        initComponents();
 
         //initialize list models
         peakFilterListModel = new DefaultListModel();
@@ -36,7 +40,7 @@ public class AnalyzeFilterPanel extends javax.swing.JPanel {
 
         //add action listeners
         addPeakButton.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (addPeakTextField.getText() != "") {
@@ -45,9 +49,9 @@ public class AnalyzeFilterPanel extends javax.swing.JPanel {
                 }
             }
         });
-        
+
         removePeakButton.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (peakFilterList.getSelectedIndex() != -1) {
@@ -55,9 +59,9 @@ public class AnalyzeFilterPanel extends javax.swing.JPanel {
                 }
             }
         });
-        
+
         addBinButton.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (addBinTextField.getText() != "") {
@@ -66,9 +70,9 @@ public class AnalyzeFilterPanel extends javax.swing.JPanel {
                 }
             }
         });
-        
+
         removeBinButton.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (binFilterList.getSelectedIndex() != -1) {
