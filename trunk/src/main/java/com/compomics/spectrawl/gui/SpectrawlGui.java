@@ -20,6 +20,10 @@ public class SpectrawlGui extends javax.swing.JFrame {
      * Creates new form SpectrawlGui
      */
     public SpectrawlGui() {
+        initFrame();
+    }
+
+    private void initFrame() {
         initComponents();
 
         //add custom components
