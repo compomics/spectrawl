@@ -18,25 +18,26 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: niels
- * Date: 3/02/12
- * Time: 10:53
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: niels Date: 3/02/12 Time: 10:53 To change
+ * this template use File | Settings | File Templates.
  */
 public class MsLimsSpectrumLoader implements SpectrumLoader {
 
     private static final Logger LOGGER = Logger.getLogger(MsLimsSpectrumLoader.class);
-
     private Connection connection;
     private Map<Long, Spectrum> mSLimsSpectra;
-    private boolean doProcessingFilter;
+    private boolean doNoiseFiltering;
     private NoiseThresholdFinder noiseThresholdFinder;
     private NoiseFilter noiseFilter;
 
     public MsLimsSpectrumLoader(Connection connection) {
         this.connection = connection;
-        doProcessingFilter = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
+        doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
+    }
+
+    @Override
+    public void setDoNoiseFiltering(boolean doNoiseFiltering) {
+        this.doNoiseFiltering = doNoiseFiltering;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class MsLimsSpectrumLoader implements SpectrumLoader {
             spectrum = new SpectrumImpl(spectrumId);
 
             //filter the spectrum if necessary
-            if (doProcessingFilter) {
+            if (doNoiseFiltering) {
                 //check if noise threshold finder and noise filter are set
                 if (noiseFilter != null && noiseThresholdFinder != null) {
                     double noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArray(mSLimsPeaks));

@@ -3,6 +3,7 @@ package com.compomics.spectrawl.filter.analyze.impl;
 import com.compomics.spectrawl.filter.analyze.Filter;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Peak;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,13 +15,29 @@ import com.compomics.util.experiment.massspectrometry.Peak;
 public class SpectrumMzRatioFilter implements Filter<SpectrumImpl> {
 
     private double mzRatioTolerance;
-    private double[] mzRatioFilterValues;
+    private List<Double> mzRatioFilterValues;
 
-    public SpectrumMzRatioFilter(double mzRatioTolerance, double[] mzRatioFilterValues) {
+    public SpectrumMzRatioFilter(double mzRatioTolerance, List<Double> mzRatioFilterValues) {
         this.mzRatioTolerance = mzRatioTolerance;
+        this.mzRatioFilterValues = mzRatioFilterValues;        
+    }
+
+    public List<Double> getMzRatioFilterValues() {
+        return mzRatioFilterValues;
+    }
+
+    public void setMzRatioFilterValues(List<Double> mzRatioFilterValues) {
         this.mzRatioFilterValues = mzRatioFilterValues;
     }
 
+    public double getMzRatioTolerance() {
+        return mzRatioTolerance;
+    }
+
+    public void setMzRatioTolerance(double mzRatioTolerance) {
+        this.mzRatioTolerance = mzRatioTolerance;
+    }
+        
     @Override
     public boolean passesFilter(SpectrumImpl spectrum, boolean doInvert) {
         boolean passesFilter = Boolean.TRUE;
