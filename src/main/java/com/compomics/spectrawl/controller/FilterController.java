@@ -71,9 +71,9 @@ public class FilterController {
     }
     
     public void updateWinsorNoiseThresholdFinder(WinsorNoiseThresholdFinder winsorNoiseThresholdFinder) {
-        winsorNoiseThresholdFinder.setWinsorConstant(Long.parseLong(processFilterPanel.getWinsorConstantTextField().getText()));
-        winsorNoiseThresholdFinder.setWinsorConvergenceCriterion(Long.parseLong(processFilterPanel.getWinsorConvergenceCriterionTextField().getText()));
-        winsorNoiseThresholdFinder.setWinsorOutlierLimit(Long.parseLong(processFilterPanel.getWinsorOutlierLimitTextField().getText()));
+        winsorNoiseThresholdFinder.setWinsorConstant(Double.parseDouble(processFilterPanel.getWinsorConstantTextField().getText()));
+        winsorNoiseThresholdFinder.setWinsorConvergenceCriterion(Double.parseDouble(processFilterPanel.getWinsorConvergenceCriterionTextField().getText()));
+        winsorNoiseThresholdFinder.setWinsorOutlierLimit(Double.parseDouble(processFilterPanel.getWinsorOutlierLimitTextField().getText()));
     }
     
     public FilterChain<SpectrumImpl> getFilterChain(){        
