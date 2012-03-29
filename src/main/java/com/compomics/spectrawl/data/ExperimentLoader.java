@@ -22,7 +22,14 @@ public interface ExperimentLoader {
      * @param spectrumFilter the spectrum filter
      */
     void setSpectrumFilter(Filter<SpectrumImpl> spectrumFilter);
-
+    
+    /**
+     * Gets the spectrum loader
+     * 
+     * @return the spectrum loader
+     */
+    SpectrumLoader getSpectrumLoader();
+    
     /**
      * Sets the spectrum loader
      *
@@ -36,7 +43,7 @@ public interface ExperimentLoader {
      * @param spectrumBinner the experiment binner
      */
     void setSpectrumBinner(SpectrumBinner spectrumBinner);
-
+    
     /**
      * Loads the experiment
      *

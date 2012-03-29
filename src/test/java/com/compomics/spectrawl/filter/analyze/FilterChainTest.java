@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -70,7 +69,10 @@ public class FilterChainTest {
 
     @Test
     public void testSpectrumMzRatioFilter() {
-        Filter<SpectrumImpl> filter = new SpectrumMzRatioFilter(0.5, new double[]{220.3, 230});
+        List<Double> mzRatioFilterValues = new ArrayList<Double>();
+        mzRatioFilterValues.add(220.3);
+        mzRatioFilterValues.add(230D);
+        Filter<SpectrumImpl> filter = new SpectrumMzRatioFilter(0.5, mzRatioFilterValues);
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
         assertTrue(filter.passesFilter(spectrum, Boolean.FALSE));
@@ -79,10 +81,10 @@ public class FilterChainTest {
 
     @Test
     public void testSpectrumBinFilter() {
-        Map<Double, Double> filterValues = new HashMap<Double, Double>();
-        filterValues.put(120D, 0.3);
-        filterValues.put(200D, 0.6);
-        Filter<SpectrumImpl> filter = new SpectrumBinFilter(filterValues);
+        List<Double> filterValues = new ArrayList<Double>();
+        filterValues.add(120D);
+        filterValues.add(200D);
+        Filter<SpectrumImpl> filter = new SpectrumBinFilter(0.3, filterValues);
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
         assertTrue(filter.passesFilter(spectrum, Boolean.FALSE));
@@ -96,11 +98,13 @@ public class FilterChainTest {
         FilterChain<SpectrumImpl> combinedFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.OR);
 
         //add 2 filters to the first two filter chains
-        Filter<SpectrumImpl> mzRatioFilter = new SpectrumMzRatioFilter(0.5, new double[]{230});
-        Map<Double, Double> filterValues = new HashMap<Double, Double>();
-        filterValues.put(120D, 0.3);
-        filterValues.put(200D, 0.8);
-        Filter<SpectrumImpl> binFilter = new SpectrumBinFilter(filterValues);
+        List<Double> mzRatioFilterValues = new ArrayList<Double>();
+        mzRatioFilterValues.add(230D);
+        Filter<SpectrumImpl> mzRatioFilter = new SpectrumMzRatioFilter(0.5, mzRatioFilterValues);
+        List<Double> filterValues = new ArrayList<Double>();
+        filterValues.add(120D);
+        filterValues.add(200D);
+        Filter<SpectrumImpl> binFilter = new SpectrumBinFilter(0.8, filterValues);
 
         andFilterChain.addFilter(mzRatioFilter);
         orFilterChain.addFilter(mzRatioFilter);

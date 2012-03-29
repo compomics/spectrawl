@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.TreeMap;
 
 /**
- * Created by IntelliJ IDEA.
- * User: niels
- * Date: 14/02/12
- * Time: 10:36
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: niels Date: 14/02/12 Time: 10:36 To change
+ * this template use File | Settings | File Templates.
  */
 public class Experiment implements Binnable<ExperimentBin> {
 
+    public enum ExperimentType {
+
+        MsLims, Mgf
+    }
     private long experimentId;
     private List<SpectrumImpl> spectra;
     private TreeMap<Double, ExperimentBin> experimentBins;

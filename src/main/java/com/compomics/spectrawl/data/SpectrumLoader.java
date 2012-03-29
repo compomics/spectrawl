@@ -39,7 +39,15 @@ public interface SpectrumLoader {
      * @return the spectra IDs
      */
     Set<Long> getSpectraIdsByExperimentId(long experimentId, int numberOfSpectra);
-
+    
+    /**
+     * Sets the do noise filtering boolean. The default value can be set in the 
+     * spectrawl.properties file.
+     * 
+     * @param doNoiseFiltering the do noise filtering boolean
+     */
+    void setDoNoiseFiltering(boolean doNoiseFiltering);
+    
     /**
      * Sets the noise threshold finder for finding the spectrum noise threshold
      *
