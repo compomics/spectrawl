@@ -5,12 +5,9 @@
 package com.compomics.spectrawl.controller;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
-import com.compomics.spectrawl.data.ConnectionLoader;
-import com.compomics.spectrawl.data.ExperimentLoader;
-import com.compomics.spectrawl.data.impl.MsLimsSpectrumLoader;
-import com.compomics.spectrawl.view.ExperimentLoaderPanel;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.util.GuiUtils;
+import com.compomics.spectrawl.view.ExperimentLoaderPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;

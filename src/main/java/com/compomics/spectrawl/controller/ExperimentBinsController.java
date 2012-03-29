@@ -6,6 +6,7 @@ package com.compomics.spectrawl.controller;
 
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.view.ExperimentBinsPanel;
+import java.awt.GridBagConstraints;
 import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
@@ -28,11 +29,13 @@ public class ExperimentBinsController {
     //model
     DefaultCategoryDataset categoryDataset;
     //view
+    private ChartPanel chartPanel;
     private ExperimentBinsPanel experimentBinsPanel;
     //parent controller
     private SpectrawlController spectrawlController;
 
     public ExperimentBinsController(SpectrawlController spectrawlController) {
+        chartPanel = new ChartPanel(null);
         experimentBinsPanel = new ExperimentBinsPanel();
 
         this.spectrawlController = spectrawlController;
@@ -46,28 +49,36 @@ public class ExperimentBinsController {
 
     public void viewExerimentBins(Experiment experiment) {
         LOGGER.debug("initialize bins chart of experiment");
-        
-        //make new data set
+
+        //create new data set
         categoryDataset = new DefaultCategoryDataset();
-        
+
         //add values
         for (Double floorBin : experiment.getBins().keySet()) {
             categoryDataset.addValue(experiment.getBins().get(floorBin).getHighestIntensityQuantiles().getPercentile_50(), "highestIntensity", floorBin.toString());
             categoryDataset.addValue(experiment.getBins().get(floorBin).getIntensitySumQuantiles().getPercentile_50(), "intensitySum", floorBin.toString());
             //categoryDataset.addValue(experiment.getBins().get(floorBin).getPeakCountQuantiles().getPercentile_50(), "peakCount", floorBin.toString());
         }
-
+        
+        //create chart
         JFreeChart chart = ChartFactory.createBarChart("title", "bin", "relative intensity", categoryDataset, PlotOrientation.VERTICAL, true, true, false);
         CategoryPlot plot = (CategoryPlot) chart.getPlot();
         CategoryAxis xAxis = (CategoryAxis) plot.getDomainAxis();
         xAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
-
-        ChartPanel chartPanel = new ChartPanel(chart);
-        //chartPanel.setPreferredSize(new Dimension(1000, 1000));
+        
+        //add chart to chart panel
+        chartPanel.setChart(chart);
 
         LOGGER.debug("finished initializing bins chart of experiment");
     }
 
     private void initPanel() {
+        //add chartPanel                  
+        GridBagConstraints gridBagConstraints = new GridBagConstraints();
+        gridBagConstraints.fill = GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+
+        experimentBinsPanel.add(chartPanel, gridBagConstraints);
     }
 }
