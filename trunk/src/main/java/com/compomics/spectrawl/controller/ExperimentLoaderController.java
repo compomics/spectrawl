@@ -51,7 +51,7 @@ public class ExperimentLoaderController {
 
     private void initPanel() {
         //set progress bar invisible
-        spectrawlController.hideSpectrawlProgressBar();
+        experimentLoaderPanel.getSpectrawlProgressBar().setVisible(Boolean.FALSE);
 
         //remove panels
         experimentLoaderPanel.getExperimentSelectionPanel().remove(experimentLoaderPanel.getMsLimsPanel());

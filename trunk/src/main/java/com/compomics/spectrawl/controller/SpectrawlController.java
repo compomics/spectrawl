@@ -6,6 +6,7 @@ package com.compomics.spectrawl.controller;
 
 import com.compomics.spectrawl.bin.ExperimentBinner;
 import com.compomics.spectrawl.bin.impl.ExperimentBinnerImpl;
+import com.compomics.spectrawl.bin.impl.SpectrumBinnerImpl;
 import com.compomics.spectrawl.data.ConnectionLoader;
 import com.compomics.spectrawl.data.ExperimentLoader;
 import com.compomics.spectrawl.data.impl.ExperimentLoaderImpl;
@@ -52,6 +53,8 @@ public class SpectrawlController {
 
         //init services
         experimentLoader = new ExperimentLoaderImpl();
+        //set spectrum binner
+        experimentLoader.setSpectrumBinner(new SpectrumBinnerImpl());
         experimentBinner = new ExperimentBinnerImpl();
         noiseFilter = new NoiseFilterImpl();
         winsorNoiseThresholdFinder = new WinsorNoiseThresholdFinder();
