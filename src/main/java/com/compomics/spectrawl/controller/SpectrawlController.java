@@ -70,6 +70,7 @@ public class SpectrawlController {
         spectrawlFrame.getExperimentLoaderParentPanel().add(experimentLoaderController.getExperimentLoaderPanel(), gridBagConstraints);
         spectrawlFrame.getProcessFilterParentPanel().add(filterController.getProcessFilterPanel(), gridBagConstraints);
         spectrawlFrame.getAnalyzeFilterParentPanel().add(filterController.getAnalyzeFilterPanel(), gridBagConstraints);
+        spectrawlFrame.getExperimentBinsParentPanel().add(experimentBinsController.getExperimentBinsPanel(), gridBagConstraints);
     }
 
     public Experiment getExperiment() {
@@ -109,9 +110,9 @@ public class SpectrawlController {
         experimentBinner.binExperiment(experiment);
 
         //show experiment bins
-        experimentBinsController.viewExerimentBins(experiment);
+        experimentBinsController.viewExperimentBins(experiment);
     }
-
+    
     public void showSpectrawlProgressBar(String message) {
         experimentLoaderController.showSpectrawlProgressBar(message);
     }
