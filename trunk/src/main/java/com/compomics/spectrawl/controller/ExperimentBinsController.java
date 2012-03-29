@@ -7,8 +7,7 @@ package com.compomics.spectrawl.controller;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.view.ExperimentBinsPanel;
 import java.awt.GridBagConstraints;
-import java.util.concurrent.ExecutionException;
-import javax.swing.SwingWorker;
+import javax.swing.JButton;
 import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -47,7 +46,7 @@ public class ExperimentBinsController {
         return experimentBinsPanel;
     }
 
-    public void viewExerimentBins(Experiment experiment) {
+    public void viewExperimentBins(Experiment experiment) {
         LOGGER.debug("initialize bins chart of experiment");
 
         //create new data set
@@ -71,14 +70,14 @@ public class ExperimentBinsController {
 
         LOGGER.debug("finished initializing bins chart of experiment");
     }
-
+    
     private void initPanel() {
         //add chartPanel                  
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-
+        
         experimentBinsPanel.add(chartPanel, gridBagConstraints);
     }
 }
