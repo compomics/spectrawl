@@ -66,9 +66,13 @@ public class ExperimentBinsController {
         xAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
         
         //add chart to chart panel
-        chartPanel.setChart(chart);
+        chartPanel.setChart(chart);        
 
         LOGGER.debug("finished initializing bins chart of experiment");
+    }
+    
+    public void resetChartPanel(){
+        chartPanel.setChart(null);
     }
     
     private void initPanel() {

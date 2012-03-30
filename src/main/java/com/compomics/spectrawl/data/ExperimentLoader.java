@@ -47,7 +47,7 @@ public interface ExperimentLoader {
     /**
      * Loads the experiment
      *
-     * @param experimentId the experiment
+     * @param experimentId the experiment ID
      * @return the experiment
      */
     Experiment loadExperiment(long experimentId);
@@ -55,7 +55,7 @@ public interface ExperimentLoader {
     /**
      * Loads the experiment
      *
-     * @param experimentId    the experiment
+     * @param experimentId    the experiment ID
      * @param numberOfSpectra the number of spectra to retrieve
      * @return the experiment
      */

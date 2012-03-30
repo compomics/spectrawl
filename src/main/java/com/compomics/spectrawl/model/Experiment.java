@@ -11,7 +11,7 @@ public class Experiment implements Binnable<ExperimentBin> {
 
     public enum ExperimentType {
 
-        MsLims, Mgf
+        MSLIMS, MGF
     }
     private long experimentId;
     private List<SpectrumImpl> spectra;
@@ -20,6 +20,10 @@ public class Experiment implements Binnable<ExperimentBin> {
     public Experiment(long experimentId) {
         this.experimentId = experimentId;
     }
+
+    public long getExperimentId() {
+        return experimentId;
+    }        
 
     public List<SpectrumImpl> getSpectra() {
         return spectra;
