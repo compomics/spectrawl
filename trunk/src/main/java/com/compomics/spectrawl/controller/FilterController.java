@@ -5,16 +5,14 @@
 package com.compomics.spectrawl.controller;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
-import com.compomics.spectrawl.filter.analyze.Filter;
 import com.compomics.spectrawl.filter.analyze.FilterChain;
 import com.compomics.spectrawl.filter.analyze.impl.FilterChainImpl;
 import com.compomics.spectrawl.filter.analyze.impl.SpectrumBinFilter;
 import com.compomics.spectrawl.filter.analyze.impl.SpectrumMzRatioFilter;
 import com.compomics.spectrawl.filter.process.impl.WinsorNoiseThresholdFinder;
+import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.spectrawl.view.AnalyzeFilterPanel;
 import com.compomics.spectrawl.view.ProcessFilterPanel;
-import com.compomics.spectrawl.model.SpectrumImpl;
-import com.compomics.util.io.filefilters.MzDataFileFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;

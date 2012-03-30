@@ -17,6 +17,7 @@ import com.compomics.spectrawl.filter.process.impl.WinsorNoiseThresholdFinder;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.view.SpectrawlFrame;
 import java.awt.GridBagConstraints;
+import java.io.File;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 
@@ -82,6 +83,7 @@ public class SpectrawlController {
     }
 
     public void loadExperiment(long experimentId) {
+       
         //check if msLimsSpectrumLoader is initialized
         if (msLimsSpectrumLoader == null) {
             msLimsSpectrumLoader = new MsLimsSpectrumLoader(ConnectionLoader.getConnection());
@@ -99,12 +101,20 @@ public class SpectrawlController {
             filterController.updateWinsorNoiseThresholdFinder(winsorNoiseThresholdFinder);
         }
         msLimsSpectrumLoader.setDoNoiseFiltering(filterController.isWinsorCheckBoxSelected());
-
+        
+        processExperiment();
+    }
+    
+    public void loadExperiment(File[] mgfFiles){ 
+        
+    }
+    
+    public void processExperiment(){
         //add filters
         experimentLoader.setSpectrumFilter(filterController.getFilterChain());
 
         //load experiment
-        experiment = experimentLoader.loadExperiment(experimentId, 100);
+        experiment = experimentLoader.loadExperiment(experiment.getExperimentId(), 100);
 
         //bin experiment
         experimentBinner.binExperiment(experiment);
@@ -113,6 +123,10 @@ public class SpectrawlController {
         experimentBinsController.viewExperimentBins(experiment);
     }
     
+    public void resetChartPanel(){
+        
+    }
+
     public void showSpectrawlProgressBar(String message) {
         experimentLoaderController.showSpectrawlProgressBar(message);
     }
@@ -120,7 +134,7 @@ public class SpectrawlController {
     public void hideSpectrawlProgressBar() {
         experimentLoaderController.hideSpectrawlProgressBar();
     }
-        
+
     public void showMessageDialog(String title, String message, int messageType) {
         JOptionPane.showMessageDialog(spectrawlFrame.getContentPane(), message, title, messageType);
     }

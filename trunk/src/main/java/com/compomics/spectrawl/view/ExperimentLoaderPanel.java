@@ -21,7 +21,9 @@ import org.apache.log4j.Logger;
  * @author niels
  */
 public class ExperimentLoaderPanel extends javax.swing.JPanel {
-
+    
+    JFileChooser fileChooser;
+    
     /**
      * Creates new form ExperimentLoaderPanel
      */
@@ -81,6 +83,10 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
         return msLimsPanel;
     }
 
+    public JFileChooser getFileChooser() {
+        return fileChooser;
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

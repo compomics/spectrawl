@@ -8,11 +8,13 @@ import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.util.GuiUtils;
 import com.compomics.spectrawl.view.ExperimentLoaderPanel;
+import com.compomics.util.io.filefilters.MgfFileFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
 
@@ -22,7 +24,7 @@ import org.apache.log4j.Logger;
  */
 public class ExperimentLoaderController {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentLoaderController.class);  
+    private static final Logger LOGGER = Logger.getLogger(ExperimentLoaderController.class);
     //view
     private ExperimentLoaderPanel experimentLoaderPanel;
     //parent controller
@@ -34,17 +36,17 @@ public class ExperimentLoaderController {
 
         initPanel();
     }
-    
+
     public ExperimentLoaderPanel getExperimentLoaderPanel() {
         return experimentLoaderPanel;
     }
-    
-    public void showSpectrawlProgressBar(String message){
+
+    public void showSpectrawlProgressBar(String message) {
         experimentLoaderPanel.getSpectrawlProgressBar().setVisible(Boolean.TRUE);
         experimentLoaderPanel.getSpectrawlProgressBarLabel().setText(message);
     }
-    
-    public void hideSpectrawlProgressBar(){
+
+    public void hideSpectrawlProgressBar() {
         experimentLoaderPanel.getSpectrawlProgressBar().setVisible(Boolean.FALSE);
         experimentLoaderPanel.getSpectrawlProgressBarLabel().setText("");
     }
@@ -68,6 +70,15 @@ public class ExperimentLoaderController {
         }
         experimentLoaderPanel.getExperimentTypeComboBox().setSelectedIndex(-1);
 
+        //init fileChooser
+        JFileChooser fileChooser = new JFileChooser();
+        //select only files
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        //select multiple file
+        fileChooser.setMultiSelectionEnabled(Boolean.TRUE);
+        //set MGF file filter
+        fileChooser.setFileFilter(new MgfFileFilter());
+
         //add actionlisteners
         experimentLoaderPanel.getExperimentTypeComboBox().addActionListener(new ActionListener() {
 
@@ -75,7 +86,7 @@ public class ExperimentLoaderController {
             public void actionPerformed(ActionEvent ae) {
                 Experiment.ExperimentType selectedExperimentType = (Experiment.ExperimentType) experimentLoaderPanel.getExperimentTypeComboBox().getSelectedItem();
                 switch (selectedExperimentType) {
-                    case MsLims:
+                    case MSLIMS:
                         if (!GuiUtils.isComponentPresent(experimentLoaderPanel.getMsLimsPanel(), experimentLoaderPanel.getExperimentSelectionPanel())) {
                             experimentLoaderPanel.getExperimentSelectionPanel().add(experimentLoaderPanel.getMsLimsPanel());
                         }
@@ -84,7 +95,7 @@ public class ExperimentLoaderController {
                         }
                         experimentLoaderPanel.getExperimentSelectionPanel().revalidate();
                         break;
-                    case Mgf:
+                    case MGF:
                         if (!GuiUtils.isComponentPresent(experimentLoaderPanel.getMgfPanel(), experimentLoaderPanel.getExperimentSelectionPanel())) {
                             experimentLoaderPanel.getExperimentSelectionPanel().add(experimentLoaderPanel.getMgfPanel());
                         }
@@ -101,16 +112,10 @@ public class ExperimentLoaderController {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-
-                //select only files
-                fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-
                 //in response to the button click, show open dialog 
-                int returnVal = fileChooser.showOpenDialog(experimentLoaderPanel);
+                int returnVal = experimentLoaderPanel.getFileChooser().showOpenDialog(experimentLoaderPanel);
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
-                    File projectDirectory = fileChooser.getSelectedFile();
-                    experimentLoaderPanel.getMgfFileTextField().setText(projectDirectory.getName());
+                    experimentLoaderPanel.getMgfFileTextField().setText(experimentLoaderPanel.getFileChooser().getSelectedFiles()[0].getName());
                 }
             }
         });
@@ -119,27 +124,43 @@ public class ExperimentLoaderController {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                spectrawlController.showSpectrawlProgressBar("loading experiment...");
+                spectrawlController.resetChartPanel();                
                 ExperimentLoaderSwingWorker experimentLoaderSwingWorker = new ExperimentLoaderSwingWorker();
                 experimentLoaderSwingWorker.execute();
             }
         });
     }
-    
+
     //swing worker
     private class ExperimentLoaderSwingWorker extends SwingWorker<Void, Void> {
 
         @Override
         protected Void doInBackground() throws Exception {
-            if (GuiUtils.isComponentPresent(experimentLoaderPanel.getMsLimsPanel(), experimentLoaderPanel.getExperimentSelectionPanel())) {
-                String msLimsExperimentId = experimentLoaderPanel.getMsLimsExperimentIdTextField().getText();
+            if (experimentLoaderPanel.getExperimentTypeComboBox().getSelectedItem().equals(Experiment.ExperimentType.MSLIMS)) {
+                if (!experimentLoaderPanel.getMsLimsExperimentIdTextField().getText().equals("")) {
+                    spectrawlController.showSpectrawlProgressBar("loading experiment...");
+                    String msLimsExperimentId = experimentLoaderPanel.getMsLimsExperimentIdTextField().getText();
 
-                LOGGER.debug("loading experiment " + msLimsExperimentId);
+                    LOGGER.debug("loading mslims experiment " + msLimsExperimentId);
 
-                long experimentId = Long.parseLong(msLimsExperimentId);
-                spectrawlController.loadExperiment(experimentId);                                
+                    long experimentId = Long.parseLong(msLimsExperimentId);
+                    spectrawlController.loadExperiment(experimentId);
 
-                LOGGER.debug("finished loading experiment " + msLimsExperimentId);
+                    LOGGER.debug("finished loading mslims experiment " + msLimsExperimentId);
+                } else {
+                    spectrawlController.showMessageDialog("Validation error", "Please fill in an mslims experiment ID", JOptionPane.ERROR_MESSAGE);
+                }
+            } else if (experimentLoaderPanel.getExperimentTypeComboBox().getSelectedItem().equals(Experiment.ExperimentType.MGF)) {
+                if (experimentLoaderPanel.getFileChooser().getSelectedFiles().length != 0) {
+                    spectrawlController.showSpectrawlProgressBar("loading experiment...");
+                    LOGGER.debug("loading MGF file(s)");
+
+                    spectrawlController.loadExperiment(experimentLoaderPanel.getFileChooser().getSelectedFiles());
+
+                    LOGGER.debug("finished loading MGF file(s)");
+                } else {
+                    spectrawlController.showMessageDialog("Validation error", "Please select one or more MGF files", JOptionPane.ERROR_MESSAGE);
+                }
             }
 
             return null;
