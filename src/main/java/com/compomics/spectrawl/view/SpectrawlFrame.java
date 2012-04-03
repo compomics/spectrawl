@@ -57,7 +57,7 @@ public class SpectrawlFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Spectrawl");
-        setMinimumSize(new java.awt.Dimension(1200, 1000));
+        setMinimumSize(new java.awt.Dimension(1200, 1100));
         java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
         layout.columnWidths = new int[] {0, 5, 0};
         layout.rowHeights = new int[] {0, 5, 0};

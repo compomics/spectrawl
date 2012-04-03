@@ -7,7 +7,6 @@ package com.compomics.spectrawl.controller;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.view.ExperimentBinsPanel;
 import java.awt.GridBagConstraints;
-import javax.swing.JButton;
 import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;

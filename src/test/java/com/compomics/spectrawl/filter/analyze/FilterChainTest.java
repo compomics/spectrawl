@@ -48,7 +48,7 @@ public class FilterChainTest {
         peak = new Peak(420.6, 100D);
         peaks.put(420.6, peak);
 
-        SpectrumImpl spectrum_1 = new SpectrumImpl(1L);
+        SpectrumImpl spectrum_1 = new SpectrumImpl("1");
         spectrum_1.setPeakList(peaks);
 
         //bin the spectra
@@ -59,7 +59,7 @@ public class FilterChainTest {
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
         spectra.add(spectrum_1);
 
-        experiment = new Experiment(1L);
+        experiment = new Experiment("1");
         experiment.setSpectra(spectra);
 
         //bin the experiment

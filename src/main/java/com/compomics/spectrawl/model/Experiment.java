@@ -13,15 +13,15 @@ public class Experiment implements Binnable<ExperimentBin> {
 
         MSLIMS, MGF
     }
-    private long experimentId;
+    private String experimentId;
     private List<SpectrumImpl> spectra;
     private TreeMap<Double, ExperimentBin> experimentBins;
 
-    public Experiment(long experimentId) {
+    public Experiment(String experimentId) {
         this.experimentId = experimentId;
     }
 
-    public long getExperimentId() {
+    public String getExperimentId() {
         return experimentId;
     }        
 

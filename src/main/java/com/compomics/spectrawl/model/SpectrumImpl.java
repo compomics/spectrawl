@@ -1,7 +1,6 @@
 package com.compomics.spectrawl.model;
 
-import com.compomics.util.experiment.massspectrometry.Spectrum;
-
+import com.compomics.util.experiment.massspectrometry.MSnSpectrum;
 import java.util.TreeMap;
 
 /**
@@ -11,13 +10,23 @@ import java.util.TreeMap;
  * Time: 13:47
  * To change this template use File | Settings | File Templates.
  */
-public class SpectrumImpl extends Spectrum implements Binnable<SpectrumBin> {
+public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
 
-    private long spectrumId;
+    private String spectrumId;
     private TreeMap<Double, SpectrumBin> spectrumBins;
 
-    public SpectrumImpl(long spectrumId) {
+    public SpectrumImpl(){
+        super();
+    }
+    
+    public SpectrumImpl(String spectrumId) {
+        super();
         this.spectrumId = spectrumId;
+    }
+    
+    public SpectrumImpl(MSnSpectrum mSnSpectrum){
+        super(mSnSpectrum.getLevel(), mSnSpectrum.getPrecursor(), mSnSpectrum.getSpectrumTitle(), mSnSpectrum.getPeakMap(), mSnSpectrum.getFileName(), mSnSpectrum.getScanStartTime());
+        this.spectrumId = spectrumTitle;
     }
 
     /**

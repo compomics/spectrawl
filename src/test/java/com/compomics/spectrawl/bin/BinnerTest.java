@@ -1,22 +1,18 @@
 package com.compomics.spectrawl.bin;
 
-import com.compomics.spectrawl.bin.impl.SpectrumBinnerImpl;
-import com.compomics.spectrawl.model.*;
 import com.compomics.spectrawl.bin.impl.ExperimentBinnerImpl;
-
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-
-import com.compomics.spectrawl.util.PeakUtils;
+import com.compomics.spectrawl.bin.impl.SpectrumBinnerImpl;
+import com.compomics.spectrawl.model.Experiment;
+import com.compomics.spectrawl.model.ExperimentBin;
+import com.compomics.spectrawl.model.SpectrumBin;
+import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Peak;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.print.attribute.HashAttributeSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created by IntelliJ IDEA.
@@ -47,7 +43,7 @@ public class BinnerTest {
         peak = new Peak(420.6, 100D);
         peaks.put(420.6, peak);
 
-        SpectrumImpl spectrum_1 = new SpectrumImpl(1L);
+        SpectrumImpl spectrum_1 = new SpectrumImpl("1");
         spectrum_1.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -70,7 +66,7 @@ public class BinnerTest {
         peak = new Peak(260.54, 100D);
         peaks.put(260.54, peak);
 
-        SpectrumImpl spectrum_2 = new SpectrumImpl(1L);
+        SpectrumImpl spectrum_2 = new SpectrumImpl("1");
         spectrum_2.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -87,7 +83,7 @@ public class BinnerTest {
         peak = new Peak(260.54, 100D);
         peaks.put(260.54, peak);
 
-        SpectrumImpl spectrum_3 = new SpectrumImpl(1L);
+        SpectrumImpl spectrum_3 = new SpectrumImpl("1");
         spectrum_3.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -104,7 +100,7 @@ public class BinnerTest {
         peak = new Peak(260.54, 100D);
         peaks.put(260.54, peak);
 
-        SpectrumImpl spectrum_4 = new SpectrumImpl(1L);
+        SpectrumImpl spectrum_4 = new SpectrumImpl("1");
         spectrum_4.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -121,7 +117,7 @@ public class BinnerTest {
         peak = new Peak(260.54, 100D);
         peaks.put(260.54, peak);
 
-        SpectrumImpl spectrum_5 = new SpectrumImpl(1L);
+        SpectrumImpl spectrum_5 = new SpectrumImpl("1");
         spectrum_5.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -130,7 +126,7 @@ public class BinnerTest {
         peak = new Peak(220.54, 100D);
         peaks.put(220.54, peak);
 
-        SpectrumImpl spectrum_6 = new SpectrumImpl(1L);
+        SpectrumImpl spectrum_6 = new SpectrumImpl("1");
         spectrum_6.setPeakList(peaks);
 
         //bin the spectra
@@ -151,7 +147,7 @@ public class BinnerTest {
         spectra.add(spectrum_5);
         spectra.add(spectrum_6);
 
-        experiment = new Experiment(1L);
+        experiment = new Experiment("1");
         experiment.setSpectra(spectra);
 
         //bin the experiment
