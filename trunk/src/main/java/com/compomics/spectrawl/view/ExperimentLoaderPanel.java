@@ -29,6 +29,7 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
      */
     public ExperimentLoaderPanel() {
         initComponents();
+        fileChooser = new JFileChooser();
     }
 
     public JTextField getBinCeilingTextField() {

@@ -14,32 +14,7 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public interface SpectrumLoader {
-
-    /**
-     * Gets the spectrum by spectrum ID
-     *
-     * @param spectrumId the spectrum ID
-     * @return the spectra
-     */
-    SpectrumImpl getSpectrumBySpectrumId(long spectrumId);
-
-    /**
-     * Gets the spectra IDs by experiment ID
-     *
-     * @param experimentId the experiment ID
-     * @return the spectra IDs
-     */
-    Set<Long> getSpectraIdsByExperimentId(long experimentId);
-
-    /**
-     * Gets the spectra IDs by experiment ID
-     *
-     * @param experimentId    the experiment ID
-     * @param numberOfSpectra the number of spectra to load
-     * @return the spectra IDs
-     */
-    Set<Long> getSpectraIdsByExperimentId(long experimentId, int numberOfSpectra);
-    
+        
     /**
      * Sets the do noise filtering boolean. The default value can be set in the 
      * spectrawl.properties file.

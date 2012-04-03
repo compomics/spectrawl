@@ -8,9 +8,14 @@ import com.compomics.spectrawl.bin.ExperimentBinner;
 import com.compomics.spectrawl.bin.impl.ExperimentBinnerImpl;
 import com.compomics.spectrawl.bin.impl.SpectrumBinnerImpl;
 import com.compomics.spectrawl.data.ConnectionLoader;
-import com.compomics.spectrawl.data.ExperimentLoader;
-import com.compomics.spectrawl.data.impl.ExperimentLoaderImpl;
-import com.compomics.spectrawl.data.impl.MsLimsSpectrumLoader;
+import com.compomics.spectrawl.data.MgfExperimentLoader;
+import com.compomics.spectrawl.data.MgfSpectrumLoader;
+import com.compomics.spectrawl.data.MsLimsExperimentLoader;
+import com.compomics.spectrawl.data.MsLimsSpectrumLoader;
+import com.compomics.spectrawl.data.impl.MgfExperimentLoaderImpl;
+import com.compomics.spectrawl.data.impl.MgfSpectrumLoaderImpl;
+import com.compomics.spectrawl.data.impl.MsLimsExperimentLoaderImpl;
+import com.compomics.spectrawl.data.impl.MsLimsSpectrumLoaderImpl;
 import com.compomics.spectrawl.filter.process.NoiseFilter;
 import com.compomics.spectrawl.filter.process.impl.NoiseFilterImpl;
 import com.compomics.spectrawl.filter.process.impl.WinsorNoiseThresholdFinder;
@@ -37,8 +42,10 @@ public class SpectrawlController {
     private FilterController filterController;
     private ExperimentBinsController experimentBinsController;
     //services
-    private ExperimentLoader experimentLoader;
+    private MsLimsExperimentLoader msLimsExperimentLoader;
     private MsLimsSpectrumLoader msLimsSpectrumLoader;
+    private MgfExperimentLoader mgfExperimentLoader;
+    private MgfSpectrumLoader mgfSpectrumLoader;
     private ExperimentBinner experimentBinner;
     private NoiseFilter noiseFilter;
     private WinsorNoiseThresholdFinder winsorNoiseThresholdFinder;
@@ -53,9 +60,12 @@ public class SpectrawlController {
         initGui();
 
         //init services
-        experimentLoader = new ExperimentLoaderImpl();
+        msLimsExperimentLoader = new MsLimsExperimentLoaderImpl();
+        mgfExperimentLoader = new MgfExperimentLoaderImpl();
         //set spectrum binner
-        experimentLoader.setSpectrumBinner(new SpectrumBinnerImpl());
+        msLimsExperimentLoader.setSpectrumBinner(new SpectrumBinnerImpl());
+        mgfExperimentLoader.setSpectrumBinner(new SpectrumBinnerImpl());
+        
         experimentBinner = new ExperimentBinnerImpl();
         noiseFilter = new NoiseFilterImpl();
         winsorNoiseThresholdFinder = new WinsorNoiseThresholdFinder();
@@ -82,18 +92,14 @@ public class SpectrawlController {
         this.experiment = experiment;
     }
 
-    public void loadExperiment(long experimentId) {
-       
+    public void loadMsLimsExperiment(String experimentId) {
         //check if msLimsSpectrumLoader is initialized
         if (msLimsSpectrumLoader == null) {
-            msLimsSpectrumLoader = new MsLimsSpectrumLoader(ConnectionLoader.getConnection());
+            msLimsSpectrumLoader = new MsLimsSpectrumLoaderImpl(ConnectionLoader.getConnection());
             msLimsSpectrumLoader.setNoiseFilter(noiseFilter);
             msLimsSpectrumLoader.setNoiseThresholdFinder(winsorNoiseThresholdFinder);
-        }
 
-        //check if msLimsSpectrumLoader is set as the experimentLoader spectrumLoader
-        if (!(experimentLoader.getSpectrumLoader() instanceof MsLimsSpectrumLoader)) {
-            experimentLoader.setSpectrumLoader(msLimsSpectrumLoader);
+            msLimsExperimentLoader.setMsLimsSpectrumLoader(msLimsSpectrumLoader);
         }
 
         //check if filtering checkbox is selected
@@ -101,30 +107,53 @@ public class SpectrawlController {
             filterController.updateWinsorNoiseThresholdFinder(winsorNoiseThresholdFinder);
         }
         msLimsSpectrumLoader.setDoNoiseFiltering(filterController.isWinsorCheckBoxSelected());
-        
-        processExperiment();
-    }
-    
-    public void loadExperiment(File[] mgfFiles){ 
-        
-    }
-    
-    public void processExperiment(){
+
         //add filters
-        experimentLoader.setSpectrumFilter(filterController.getFilterChain());
+        msLimsExperimentLoader.setSpectrumFilter(filterController.getFilterChain());
 
         //load experiment
-        experiment = experimentLoader.loadExperiment(experiment.getExperimentId(), 100);
+        experiment = msLimsExperimentLoader.loadExperiment(experimentId, 100);
+        
+        //bin experiment
+        binExperiment();
+    }
 
+    public void loadMgfExperiment(File[] mgfFiles) {
+        //check if mgfSpectrumLoader is initialized
+        if (mgfSpectrumLoader == null) {
+            mgfSpectrumLoader = new MgfSpectrumLoaderImpl();
+            mgfSpectrumLoader.setNoiseFilter(noiseFilter);
+            mgfSpectrumLoader.setNoiseThresholdFinder(winsorNoiseThresholdFinder);
+
+            mgfExperimentLoader.setMgfSpectrumLoader(mgfSpectrumLoader);
+        }
+
+        //check if filtering checkbox is selected
+        if (filterController.isWinsorCheckBoxSelected()) {
+            filterController.updateWinsorNoiseThresholdFinder(winsorNoiseThresholdFinder);
+        }
+        mgfSpectrumLoader.setDoNoiseFiltering(filterController.isWinsorCheckBoxSelected());
+
+        //add filters
+        mgfExperimentLoader.setSpectrumFilter(filterController.getFilterChain());
+        
+        //load experiment with selected mgf files
+        experiment = mgfExperimentLoader.loadExperiment(experimentLoaderController.getMgfFiles());
+        
+        //bin experiment
+        binExperiment();
+    }
+
+    public void binExperiment() {
         //bin experiment
         experimentBinner.binExperiment(experiment);
 
         //show experiment bins
         experimentBinsController.viewExperimentBins(experiment);
     }
-    
-    public void resetChartPanel(){
-        
+
+    public void resetChartPanel() {
+        experimentBinsController.resetChartPanel();
     }
 
     public void showSpectrawlProgressBar(String message) {

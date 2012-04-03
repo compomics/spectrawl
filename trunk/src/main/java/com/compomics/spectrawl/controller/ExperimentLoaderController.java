@@ -12,6 +12,8 @@ import com.compomics.util.io.filefilters.MgfFileFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -50,10 +52,19 @@ public class ExperimentLoaderController {
         experimentLoaderPanel.getSpectrawlProgressBar().setVisible(Boolean.FALSE);
         experimentLoaderPanel.getSpectrawlProgressBarLabel().setText("");
     }
+    
+    public Map<String, File> getMgfFiles(){
+        Map<String, File> mgfFiles = new HashMap<String, File>();
+        for(File mgfFile : experimentLoaderPanel.getFileChooser().getSelectedFiles()){
+            mgfFiles.put(mgfFile.getName(), mgfFile);
+        }
+        return mgfFiles;
+    }
 
     private void initPanel() {
         //set progress bar invisible
         experimentLoaderPanel.getSpectrawlProgressBar().setVisible(Boolean.FALSE);
+        experimentLoaderPanel.getSpectrawlProgressBar().setIndeterminate(Boolean.TRUE);
 
         //remove panels
         experimentLoaderPanel.getExperimentSelectionPanel().remove(experimentLoaderPanel.getMsLimsPanel());
@@ -69,9 +80,9 @@ public class ExperimentLoaderController {
             experimentLoaderPanel.getExperimentTypeComboBox().addItem(experimentType);
         }
         experimentLoaderPanel.getExperimentTypeComboBox().setSelectedIndex(-1);
-
-        //init fileChooser
-        JFileChooser fileChooser = new JFileChooser();
+        
+        //get file chooser
+        JFileChooser fileChooser = experimentLoaderPanel.getFileChooser();
         //select only files
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         //select multiple file
@@ -142,9 +153,8 @@ public class ExperimentLoaderController {
                     String msLimsExperimentId = experimentLoaderPanel.getMsLimsExperimentIdTextField().getText();
 
                     LOGGER.debug("loading mslims experiment " + msLimsExperimentId);
-
-                    long experimentId = Long.parseLong(msLimsExperimentId);
-                    spectrawlController.loadExperiment(experimentId);
+                    
+                    spectrawlController.loadMsLimsExperiment(msLimsExperimentId);
 
                     LOGGER.debug("finished loading mslims experiment " + msLimsExperimentId);
                 } else {
@@ -155,7 +165,7 @@ public class ExperimentLoaderController {
                     spectrawlController.showSpectrawlProgressBar("loading experiment...");
                     LOGGER.debug("loading MGF file(s)");
 
-                    spectrawlController.loadExperiment(experimentLoaderPanel.getFileChooser().getSelectedFiles());
+                    spectrawlController.loadMgfExperiment(experimentLoaderPanel.getFileChooser().getSelectedFiles());
 
                     LOGGER.debug("finished loading MGF file(s)");
                 } else {
