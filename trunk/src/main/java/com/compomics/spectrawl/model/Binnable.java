@@ -1,6 +1,5 @@
 package com.compomics.spectrawl.model;
 
-import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 
 import java.util.TreeMap;
 
@@ -12,11 +11,7 @@ import java.util.TreeMap;
  * To change this template use File | Settings | File Templates.
  */
 public interface Binnable<T> {
-
-    public static final double FLOOR = PropertiesConfigurationHolder.getInstance().getDouble("BINS_FLOOR");
-    public static final double CEILING = PropertiesConfigurationHolder.getInstance().getDouble("BINS_CEILING");
-    public static final double BIN_SIZE = PropertiesConfigurationHolder.getInstance().getDouble("BIN_SIZE");
-
+    
     /**
      * Initialize the bins;
      * construct the bins with the corresponding floor, ceiling and bin size.

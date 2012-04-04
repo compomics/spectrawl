@@ -1,36 +1,37 @@
 package com.compomics.spectrawl.data.impl;
 
 import com.compomics.mslims.db.accessors.Spectrum;
+import com.compomics.mslims.db.accessors.Spectrum_file;
+import com.compomics.mslims.util.fileio.MascotGenericFile;
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
-import com.compomics.spectrawl.data.SpectrumLoader;
+import com.compomics.spectrawl.data.MsLimsSpectrumLoader;
 import com.compomics.spectrawl.filter.process.NoiseFilter;
 import com.compomics.spectrawl.filter.process.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
-import com.compomics.mslims.db.accessors.Spectrum_file;
-import com.compomics.mslims.util.fileio.MascotGenericFile;
 import com.compomics.spectrawl.util.PeakUtils;
 import com.compomics.util.experiment.massspectrometry.Peak;
-import org.apache.log4j.Logger;
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import org.apache.log4j.Logger;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 3/02/12 Time: 10:53 To change
  * this template use File | Settings | File Templates.
  */
-public class MsLimsSpectrumLoader implements SpectrumLoader {
+public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(MsLimsSpectrumLoader.class);
+    private static final Logger LOGGER = Logger.getLogger(MsLimsSpectrumLoaderImpl.class);
     private Connection connection;
     private Map<Long, Spectrum> mSLimsSpectra;
     private boolean doNoiseFiltering;
     private NoiseThresholdFinder noiseThresholdFinder;
     private NoiseFilter noiseFilter;
 
-    public MsLimsSpectrumLoader(Connection connection) {
+    public MsLimsSpectrumLoaderImpl(Connection connection) {
         this.connection = connection;
         doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
     }
@@ -57,7 +58,7 @@ public class MsLimsSpectrumLoader implements SpectrumLoader {
             Map<Double, Double> mSLimsPeaks = mascotGenericFile.getPeaks();
 
             //create new spectrum
-            spectrum = new SpectrumImpl(spectrumId);
+            spectrum = new SpectrumImpl(Long.toString(spectrumId));
 
             //filter the spectrum if necessary
             if (doNoiseFiltering) {

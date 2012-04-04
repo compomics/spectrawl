@@ -5,6 +5,7 @@
 package com.compomics.spectrawl.controller;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
+import com.compomics.spectrawl.model.BinConstants;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.util.GuiUtils;
 import com.compomics.spectrawl.view.ExperimentLoaderPanel;
@@ -60,6 +61,12 @@ public class ExperimentLoaderController {
         }
         return mgfFiles;
     }
+    
+    public void updateBinConstants(){
+        BinConstants.BINS_FLOOR.setValue(Double.parseDouble(experimentLoaderPanel.getBinFloorTextField().getText()));
+        BinConstants.BINS_CEILING.setValue(Double.parseDouble(experimentLoaderPanel.getBinCeilingTextField().getText()));
+        BinConstants.BIN_SIZE.setValue(Double.parseDouble(experimentLoaderPanel.getBinSizeTextField().getText()));
+    }
 
     private void initPanel() {
         //set progress bar invisible
@@ -98,22 +105,10 @@ public class ExperimentLoaderController {
                 Experiment.ExperimentType selectedExperimentType = (Experiment.ExperimentType) experimentLoaderPanel.getExperimentTypeComboBox().getSelectedItem();
                 switch (selectedExperimentType) {
                     case MSLIMS:
-                        if (!GuiUtils.isComponentPresent(experimentLoaderPanel.getMsLimsPanel(), experimentLoaderPanel.getExperimentSelectionPanel())) {
-                            experimentLoaderPanel.getExperimentSelectionPanel().add(experimentLoaderPanel.getMsLimsPanel());
-                        }
-                        if (GuiUtils.isComponentPresent(experimentLoaderPanel.getMgfPanel(), experimentLoaderPanel.getExperimentSelectionPanel())) {
-                            experimentLoaderPanel.getExperimentSelectionPanel().remove(experimentLoaderPanel.getMgfPanel());
-                        }
-                        experimentLoaderPanel.getExperimentSelectionPanel().revalidate();
+                        GuiUtils.switchChildPanels(experimentLoaderPanel.getExperimentSelectionPanel(), experimentLoaderPanel.getMsLimsPanel(), experimentLoaderPanel.getMgfPanel());                        
                         break;
                     case MGF:
-                        if (!GuiUtils.isComponentPresent(experimentLoaderPanel.getMgfPanel(), experimentLoaderPanel.getExperimentSelectionPanel())) {
-                            experimentLoaderPanel.getExperimentSelectionPanel().add(experimentLoaderPanel.getMgfPanel());
-                        }
-                        if (GuiUtils.isComponentPresent(experimentLoaderPanel.getMsLimsPanel(), experimentLoaderPanel.getExperimentSelectionPanel())) {
-                            experimentLoaderPanel.getExperimentSelectionPanel().remove(experimentLoaderPanel.getMsLimsPanel());
-                        }
-                        experimentLoaderPanel.getExperimentSelectionPanel().revalidate();
+                        GuiUtils.switchChildPanels(experimentLoaderPanel.getExperimentSelectionPanel(), experimentLoaderPanel.getMgfPanel(), experimentLoaderPanel.getMsLimsPanel());                      
                         break;
                 }
             }
@@ -135,13 +130,14 @@ public class ExperimentLoaderController {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                spectrawlController.resetChartPanel();                
+                spectrawlController.resetChartPanel();
+                
                 ExperimentLoaderSwingWorker experimentLoaderSwingWorker = new ExperimentLoaderSwingWorker();
                 experimentLoaderSwingWorker.execute();
             }
         });
     }
-
+        
     //swing worker
     private class ExperimentLoaderSwingWorker extends SwingWorker<Void, Void> {
 

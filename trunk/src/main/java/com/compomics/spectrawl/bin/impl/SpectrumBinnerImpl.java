@@ -1,10 +1,10 @@
 package com.compomics.spectrawl.bin.impl;
 
 import com.compomics.spectrawl.bin.SpectrumBinner;
+import com.compomics.spectrawl.model.BinConstants;
 import com.compomics.spectrawl.model.Binnable;
 import com.compomics.spectrawl.model.PeakBin;
 import com.compomics.spectrawl.model.SpectrumImpl;
-
 import java.util.TreeMap;
 
 /**
@@ -24,7 +24,7 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
             for (Double innerMass : spectrum.getPeakMap().keySet()) {
                 double massDelta = innerMass - outerMass;
                 //check if mass delta value lies within the bins floor and ceiling
-                if ((Binnable.FLOOR <= massDelta) && (massDelta < Binnable.CEILING)) {
+                if ((BinConstants.BINS_FLOOR.getValue() <= massDelta) && (massDelta < BinConstants.BINS_CEILING.getValue())) {
                     //add to peak bins
                     addToPeakBins(peakBins, massDelta, spectrum.getPeakMap().get(innerMass).intensity / spectrum.getTotalIntensity());
                 }
@@ -57,9 +57,9 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
     private TreeMap<Double, PeakBin> initPeakBins(TreeMap<Double, PeakBin> peakBins) {
         peakBins.clear();
 
-        int numberOfBins = (int) ((Binnable.CEILING - Binnable.FLOOR) / Binnable.BIN_SIZE);
+        int numberOfBins = (int) ((BinConstants.BINS_CEILING.getValue() - BinConstants.BINS_FLOOR.getValue()) / BinConstants.BIN_SIZE.getValue());
         for (int i = 0; i < numberOfBins; i++) {
-            peakBins.put(Binnable.FLOOR + (i * Binnable.BIN_SIZE), new PeakBin());
+            peakBins.put(BinConstants.BINS_FLOOR.getValue() + (i * BinConstants.BIN_SIZE.getValue()), new PeakBin());
         }
 
         return peakBins;

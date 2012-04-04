@@ -49,9 +49,9 @@ public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
     public void initBins() {
         spectrumBins = new TreeMap<Double, SpectrumBin>();
 
-        int numberOfBins = (int) ((Binnable.CEILING - Binnable.FLOOR) / Binnable.BIN_SIZE);
+        int numberOfBins = (int) ((BinConstants.BINS_CEILING.getValue() - BinConstants.BINS_FLOOR.getValue()) / BinConstants.BIN_SIZE.getValue());
         for (int i = 0; i < numberOfBins; i++) {
-            spectrumBins.put(Binnable.FLOOR + (i * Binnable.BIN_SIZE), new SpectrumBin());
+            spectrumBins.put(BinConstants.BINS_FLOOR.getValue() + (i * BinConstants.BIN_SIZE.getValue()), new SpectrumBin());
         }
     }
 

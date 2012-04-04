@@ -1,27 +1,26 @@
 package com.compomics.spectrawl.data.impl;
 
 import com.compomics.spectrawl.bin.SpectrumBinner;
-import com.compomics.spectrawl.data.ExperimentLoader;
-import com.compomics.spectrawl.data.SpectrumLoader;
+import com.compomics.spectrawl.data.MsLimsExperimentLoader;
+import com.compomics.spectrawl.data.MsLimsSpectrumLoader;
 import com.compomics.spectrawl.filter.analyze.Filter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
-import org.apache.log4j.Logger;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import org.apache.log4j.Logger;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 1/03/12 Time: 9:48 To change this
  * template use File | Settings | File Templates.
  */
-public class ExperimentLoaderImpl implements ExperimentLoader {
+public class MsLimsExperimentLoaderImpl implements MsLimsExperimentLoader {
 
-    private static final Logger LOGGER = Logger.getLogger(ExperimentLoaderImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(MsLimsExperimentLoaderImpl.class);
     
     private Filter<SpectrumImpl> spectrumFilter;
-    private SpectrumLoader spectrumLoader;
+    private MsLimsSpectrumLoader msLimsSpectrumLoader;
     private SpectrumBinner spectrumBinner;
 
     @Override
@@ -30,13 +29,13 @@ public class ExperimentLoaderImpl implements ExperimentLoader {
     }
     
     @Override
-    public SpectrumLoader getSpectrumLoader() {
-        return spectrumLoader;
+    public MsLimsSpectrumLoader getMsLimsSpectrumLoader() {
+        return msLimsSpectrumLoader;
     }
    
     @Override
-    public void setSpectrumLoader(SpectrumLoader spectrumLoader) {
-        this.spectrumLoader = spectrumLoader;
+    public void setMsLimsSpectrumLoader(MsLimsSpectrumLoader msLimsSpectrumLoader) {
+        this.msLimsSpectrumLoader = msLimsSpectrumLoader;
     }
 
     @Override
@@ -45,27 +44,27 @@ public class ExperimentLoaderImpl implements ExperimentLoader {
     }
 
     @Override
-    public Experiment loadExperiment(long experimentId) {
+    public Experiment loadExperiment(String experimentId) {
         return loadExperiment(experimentId, -1);
     }
 
     @Override
-    public Experiment loadExperiment(long experimentId, int numberOfSpectra) {
+    public Experiment loadExperiment(String experimentId, int numberOfSpectra) {
         Experiment experiment = new Experiment(experimentId);
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
 
-        //retrieve set of spectrum IDs from spectrumloader
+        //retrieve set of spectrum IDs from spectrum loader
         Set<Long> spectraIds = null;
         if (numberOfSpectra == -1) {
-            spectraIds = spectrumLoader.getSpectraIdsByExperimentId(experimentId);
+            spectraIds = msLimsSpectrumLoader.getSpectraIdsByExperimentId(Long.parseLong(experimentId));
         } else {
-            spectraIds = spectrumLoader.getSpectraIdsByExperimentId(experimentId, numberOfSpectra);
+            spectraIds = msLimsSpectrumLoader.getSpectraIdsByExperimentId(Long.parseLong(experimentId), numberOfSpectra);
         }
 
         LOGGER.debug("loading experiment with " + spectraIds.size() + " spectra before filtering.");
 
         for (Long spectrumId : spectraIds) {
-            SpectrumImpl spectrum = spectrumLoader.getSpectrumBySpectrumId(spectrumId);
+            SpectrumImpl spectrum = msLimsSpectrumLoader.getSpectrumBySpectrumId(spectrumId);
 
             //bin the spectrum
             spectrumBinner.binSpectrum(spectrum);
