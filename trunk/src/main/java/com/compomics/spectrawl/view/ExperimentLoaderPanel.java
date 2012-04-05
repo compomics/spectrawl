@@ -171,7 +171,7 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 1.0;
         mgfPanel.add(mgfFileLabel, gridBagConstraints);
 
-        mgfFilesListScrollPane.setPreferredSize(new java.awt.Dimension(200, 50));
+        mgfFilesListScrollPane.setPreferredSize(new java.awt.Dimension(300, 60));
 
         mgfFilesList.setEnabled(false);
         mgfFilesListScrollPane.setViewportView(mgfFilesList);
