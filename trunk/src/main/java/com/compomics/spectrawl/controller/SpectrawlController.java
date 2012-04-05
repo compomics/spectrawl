@@ -49,7 +49,12 @@ public class SpectrawlController {
     private ExperimentBinner experimentBinner;
     private NoiseFilter noiseFilter;
     private WinsorNoiseThresholdFinder winsorNoiseThresholdFinder;
-
+    
+    /**
+     * Constructor
+     * 
+     * @param spectrawlFrame the main gui
+     */
     public SpectrawlController(SpectrawlFrame spectrawlFrame) {
         //init child controllers
         experimentLoaderController = new ExperimentLoaderController(this);
@@ -70,7 +75,11 @@ public class SpectrawlController {
         noiseFilter = new NoiseFilterImpl();
         winsorNoiseThresholdFinder = new WinsorNoiseThresholdFinder();
     }
-
+    
+    /**
+     * Inits the main view
+     * 
+     */
     private void initGui() {
         //add panel components                        
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
@@ -83,16 +92,31 @@ public class SpectrawlController {
         spectrawlFrame.getAnalyzeFilterParentPanel().add(filterController.getAnalyzeFilterPanel(), gridBagConstraints);
         spectrawlFrame.getExperimentBinsParentPanel().add(experimentBinsController.getExperimentBinsPanel(), gridBagConstraints);
     }
-
+    
+    /**
+     * Gets the experiment
+     * 
+     * @return the experiment
+     */
     public Experiment getExperiment() {
         return experiment;
     }
-
+    
+    /**
+     * Sets the experiment
+     * 
+     * @param experiment the experiment
+     */
     public void setExperiment(Experiment experiment) {
         this.experiment = experiment;
     }
-
-    public void loadMsLimsExperiment(String experimentId) {
+    
+    /**
+     * Loads an mslims experiment
+     * 
+     * @param experimentId the mslims experiment id
+     */
+    public void loadMsLimsExperiment(String experimentId) {        
         //check if msLimsSpectrumLoader is initialized
         if (msLimsSpectrumLoader == null) {
             msLimsSpectrumLoader = new MsLimsSpectrumLoaderImpl(ConnectionLoader.getConnection());
@@ -112,12 +136,17 @@ public class SpectrawlController {
         msLimsExperimentLoader.setSpectrumFilter(filterController.getFilterChain());
 
         //load experiment
-        experiment = msLimsExperimentLoader.loadExperiment(experimentId, 100);
+        experiment = msLimsExperimentLoader.loadExperiment(experimentId);
         
         //bin experiment
         binExperiment();
     }
-
+    
+    /**
+     * Loads mgf files
+     * 
+     * @param mgfFiles the mgf files 
+     */
     public void loadMgfExperiment(File[] mgfFiles) {
         //check if mgfSpectrumLoader is initialized
         if (mgfSpectrumLoader == null) {
@@ -143,25 +172,44 @@ public class SpectrawlController {
         //bin experiment
         binExperiment();
     }
-
+    
+    /**
+     * Bins the experiment and displays the bins
+     * 
+     */
     public void binExperiment() {
         //bin experiment
         experimentBinner.binExperiment(experiment);
 
         //show experiment bins
+        experimentBinsController.showExperimentInfo("initial number of spectra:" + experiment.getNumberOfSpectra() + ", number of spectra after filtering: " + experiment.getNumberOfFilteredSpectra());
         experimentBinsController.viewExperimentBins(experiment);
     }
-
+    
+    /**
+     * Removes the current chart from the chart panel
+     * and resets the info label
+     * 
+     */
     public void resetChartPanel() {
         experimentBinsController.resetChartPanel();
     }
-
-    public void showSpectrawlProgressBar(String message) {
-        experimentLoaderController.showSpectrawlProgressBar(message);
+    
+    /**
+     * Shows or hides the progress bar
+     * 
+     * @param doShow the show or hide boolean
+     * @param message the progress message 
+     */
+    public void showSpectrawlProgressBar(boolean doShow, String message) {
+        experimentLoaderController.showSpectrawlProgressBar(doShow, message);
     }
-
-    public void hideSpectrawlProgressBar() {
-        experimentLoaderController.hideSpectrawlProgressBar();
+     
+    public String validateUserInput(){
+        String message = "";
+        message += experimentLoaderController.validateUserInput();
+        message += filterController.validateUserInput();
+        return message;        
     }
 
     public void showMessageDialog(String title, String message, int messageType) {

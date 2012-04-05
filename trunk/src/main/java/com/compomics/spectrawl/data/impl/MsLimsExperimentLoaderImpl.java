@@ -60,6 +60,9 @@ public class MsLimsExperimentLoaderImpl implements MsLimsExperimentLoader {
         } else {
             spectraIds = msLimsSpectrumLoader.getSpectraIdsByExperimentId(Long.parseLong(experimentId), numberOfSpectra);
         }
+        
+        //set number of initial spectra
+        experiment.setNumberOfSpectra(spectraIds.size());
 
         LOGGER.debug("loading experiment with " + spectraIds.size() + " spectra before filtering.");
 
@@ -75,6 +78,9 @@ public class MsLimsExperimentLoaderImpl implements MsLimsExperimentLoader {
                 spectra.add(spectrum);
             }
         }
+        
+        //set number of spectra after filtering
+        experiment.setNumberOfFilteredSpectra(spectra.size());
 
         LOGGER.debug("loading experiment with " + spectra.size() + " spectra after filtering.");
 

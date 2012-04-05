@@ -50,14 +50,14 @@ public class SpectrawlFrame extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         filtersTabbedPane = new javax.swing.JTabbedPane();
-        processFilterParentPanel = new javax.swing.JPanel();
         analyzeFilterParentPanel = new javax.swing.JPanel();
+        processFilterParentPanel = new javax.swing.JPanel();
         experimentLoaderParentPanel = new javax.swing.JPanel();
         experimentBinsParentPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Spectrawl");
-        setMinimumSize(new java.awt.Dimension(1200, 1100));
+        setMinimumSize(new java.awt.Dimension(1200, 900));
         java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
         layout.columnWidths = new int[] {0, 5, 0};
         layout.rowHeights = new int[] {0, 5, 0};
@@ -67,18 +67,18 @@ public class SpectrawlFrame extends javax.swing.JFrame {
         filtersTabbedPane.setMinimumSize(new java.awt.Dimension(4, 4));
         filtersTabbedPane.setPreferredSize(new java.awt.Dimension(4, 4));
 
-        processFilterParentPanel.setLayout(new java.awt.GridBagLayout());
-        filtersTabbedPane.addTab("process filter", processFilterParentPanel);
-
         analyzeFilterParentPanel.setLayout(new java.awt.GridBagLayout());
         filtersTabbedPane.addTab("analyze filter", analyzeFilterParentPanel);
+
+        processFilterParentPanel.setLayout(new java.awt.GridBagLayout());
+        filtersTabbedPane.addTab("process filter", processFilterParentPanel);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridheight = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.4;
+        gridBagConstraints.weightx = 0.3;
         gridBagConstraints.weighty = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
         getContentPane().add(filtersTabbedPane, gridBagConstraints);
@@ -89,8 +89,8 @@ public class SpectrawlFrame extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.6;
-        gridBagConstraints.weighty = 0.4;
+        gridBagConstraints.weightx = 0.7;
+        gridBagConstraints.weighty = 0.3;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         getContentPane().add(experimentLoaderParentPanel, gridBagConstraints);
 
@@ -100,8 +100,8 @@ public class SpectrawlFrame extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.6;
-        gridBagConstraints.weighty = 0.6;
+        gridBagConstraints.weightx = 0.7;
+        gridBagConstraints.weighty = 0.7;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
         getContentPane().add(experimentBinsParentPanel, gridBagConstraints);
 

@@ -4,6 +4,9 @@
  */
 package com.compomics.spectrawl.view;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 /**
  *
  * @author niels
@@ -17,6 +20,14 @@ public class ExperimentBinsPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    public JPanel getChartParentPanel() {
+        return chartParentPanel;
+    }
+
+    public JLabel getExperimentInfoLabel() {
+        return experimentInfoLabel;
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -25,9 +36,40 @@ public class ExperimentBinsPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        experimentInfoLabelPanel = new javax.swing.JPanel();
+        experimentInfoLabel = new javax.swing.JLabel();
+        chartParentPanel = new javax.swing.JPanel();
 
         setLayout(new java.awt.GridBagLayout());
+
+        experimentInfoLabelPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        experimentInfoLabelPanel.add(experimentInfoLabel, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
+        add(experimentInfoLabelPanel, gridBagConstraints);
+
+        chartParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
+        chartParentPanel.setPreferredSize(new java.awt.Dimension(20, 20));
+        chartParentPanel.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        add(chartParentPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel chartParentPanel;
+    private javax.swing.JLabel experimentInfoLabel;
+    private javax.swing.JPanel experimentInfoLabelPanel;
     // End of variables declaration//GEN-END:variables
 }

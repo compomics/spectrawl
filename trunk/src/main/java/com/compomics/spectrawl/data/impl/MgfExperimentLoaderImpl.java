@@ -65,6 +65,9 @@ public class MgfExperimentLoaderImpl implements MgfExperimentLoader {
                         
             LOGGER.debug("loading mgf file with " + mgfIndex.getNSpectra() + " spectra before filtering.");
             
+            //set number of initial spectra
+            experiment.setNumberOfSpectra(experiment.getNumberOfSpectra() + mgfIndex.getNSpectra());
+            
             //iterate over spectra
             for (String spectrumTitle : mgfIndex.getSpectrumTitles()) {
                 SpectrumImpl spectrum = mgfSpectrumLoader.getSpectrumByIndex(mgfIndex.getIndex(spectrumTitle), mgfFileName);
@@ -79,6 +82,9 @@ public class MgfExperimentLoaderImpl implements MgfExperimentLoader {
                 }
             }
         }
+        
+        //set number of filtered spectra
+        experiment.setNumberOfFilteredSpectra(spectra.size());
         
         LOGGER.debug("loading experiment with " + spectra.size() + " spectra after filtering.");
         

@@ -14,7 +14,7 @@ public enum BinConstants {
     
     BINS_FLOOR(PropertiesConfigurationHolder.getInstance().getDouble("BINS_FLOOR")),
     BINS_CEILING(PropertiesConfigurationHolder.getInstance().getDouble("BINS_CEILING")),
-    BIN_SIZE(PropertiesConfigurationHolder.getInstance().getDouble("BINS_FLOOR"));
+    BIN_SIZE(PropertiesConfigurationHolder.getInstance().getDouble("BIN_SIZE"));
     
     private double value;
     

@@ -2,7 +2,6 @@ package com.compomics.spectrawl.bin.impl;
 
 import com.compomics.spectrawl.bin.SpectrumBinner;
 import com.compomics.spectrawl.model.BinConstants;
-import com.compomics.spectrawl.model.Binnable;
 import com.compomics.spectrawl.model.PeakBin;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.TreeMap;
