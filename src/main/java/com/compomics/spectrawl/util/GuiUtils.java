@@ -6,6 +6,7 @@ package com.compomics.spectrawl.util;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.GridBagConstraints;
 import javax.swing.JPanel;
 
 /**
@@ -26,9 +27,9 @@ public class GuiUtils {
         return isPresent;
     }
     
-    public static void switchChildPanels(JPanel parentPanel, JPanel panelToAdd, JPanel panelToRemove) {
+    public static void switchChildPanels(JPanel parentPanel, JPanel panelToAdd, JPanel panelToRemove, GridBagConstraints gridBagConstraints) {
         if (!GuiUtils.isComponentPresent(parentPanel, panelToAdd)) {
-            parentPanel.add(panelToAdd);
+            parentPanel.add(panelToAdd, gridBagConstraints);
         }
         if (GuiUtils.isComponentPresent(parentPanel, panelToRemove)) {
             parentPanel.remove(panelToRemove);

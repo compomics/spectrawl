@@ -43,7 +43,7 @@ public class SpectrumBinFilter implements Filter<SpectrumImpl> {
 
         for (Double intensitySumFilterValue : intensitySumFilterValues) {
             Double key = spectrum.getBins().floorKey(intensitySumFilterValue);
-            if (spectrum.getBins().get(key).getIntensitySum() < intensityThreshold) {
+            if (key != null && spectrum.getBins().get(key).getIntensitySum() < intensityThreshold) {
                 passesFilter = Boolean.FALSE;
                 break;
             }

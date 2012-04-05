@@ -91,10 +91,7 @@ public class AnalyzeFilterPanel extends javax.swing.JPanel {
         filterThresholdLabel = new javax.swing.JLabel();
         filterThresholdTextField = new javax.swing.JTextField();
 
-        java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
-        layout.columnWidths = new int[] {0, 5, 0};
-        layout.rowHeights = new int[] {0};
-        setLayout(layout);
+        setLayout(new java.awt.GridBagLayout());
 
         peakFilterPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("peak filter"));
         peakFilterPanel.setMinimumSize(new java.awt.Dimension(4, 4));
@@ -167,8 +164,8 @@ public class AnalyzeFilterPanel extends javax.swing.JPanel {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.5;
         add(peakFilterPanel, gridBagConstraints);
 
         binFilterPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("bin filter"));
@@ -222,7 +219,7 @@ public class AnalyzeFilterPanel extends javax.swing.JPanel {
         gridBagConstraints.weightx = 0.5;
         binFilterPanel.add(removeBinButton, gridBagConstraints);
 
-        filterThresholdLabel.setText("threshold");
+        filterThresholdLabel.setText("intensity sum threshold");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
@@ -239,11 +236,11 @@ public class AnalyzeFilterPanel extends javax.swing.JPanel {
         binFilterPanel.add(filterThresholdTextField, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.5;
-        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 0.5;
         add(binFilterPanel, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables

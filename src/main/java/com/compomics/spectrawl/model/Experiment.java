@@ -16,6 +16,8 @@ public class Experiment implements Binnable<ExperimentBin> {
     private String experimentId;
     private List<SpectrumImpl> spectra;
     private TreeMap<Double, ExperimentBin> experimentBins;
+    private int numberOfSpectra;
+    private int numberOfFilteredSpectra;
 
     public Experiment(String experimentId) {
         this.experimentId = experimentId;
@@ -23,7 +25,23 @@ public class Experiment implements Binnable<ExperimentBin> {
 
     public String getExperimentId() {
         return experimentId;
-    }        
+    }
+
+    public int getNumberOfFilteredSpectra() {
+        return numberOfFilteredSpectra;
+    }
+
+    public void setNumberOfFilteredSpectra(int numberOfFilteredSpectra) {
+        this.numberOfFilteredSpectra = numberOfFilteredSpectra;
+    }
+
+    public int getNumberOfSpectra() {
+        return numberOfSpectra;
+    }
+
+    public void setNumberOfSpectra(int numberOfSpectra) {
+        this.numberOfSpectra = numberOfSpectra;
+    }
 
     public List<SpectrumImpl> getSpectra() {
         return spectra;
