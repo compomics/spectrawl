@@ -20,10 +20,14 @@ public class ExperimentBinsPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public JPanel getChartParentPanel() {
-        return chartParentPanel;
+    public JPanel getCountChartParentPanel() {
+        return countChartParentPanel;
     }
 
+    public JPanel getIntensityChartParentPanel() {
+        return intensityChartParentPanel;
+    }
+    
     public JLabel getExperimentInfoLabel() {
         return experimentInfoLabel;
     }
@@ -40,36 +44,48 @@ public class ExperimentBinsPanel extends javax.swing.JPanel {
 
         experimentInfoLabelPanel = new javax.swing.JPanel();
         experimentInfoLabel = new javax.swing.JLabel();
-        chartParentPanel = new javax.swing.JPanel();
+        chartsTabbedPane = new javax.swing.JTabbedPane();
+        intensityChartParentPanel = new javax.swing.JPanel();
+        countChartParentPanel = new javax.swing.JPanel();
 
+        setMinimumSize(new java.awt.Dimension(20, 20));
+        setPreferredSize(new java.awt.Dimension(20, 20));
         setLayout(new java.awt.GridBagLayout());
 
         experimentInfoLabelPanel.setLayout(new java.awt.GridBagLayout());
+
+        experimentInfoLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         experimentInfoLabelPanel.add(experimentInfoLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
         gridBagConstraints.weightx = 1.0;
         add(experimentInfoLabelPanel, gridBagConstraints);
 
-        chartParentPanel.setMinimumSize(new java.awt.Dimension(20, 20));
-        chartParentPanel.setPreferredSize(new java.awt.Dimension(20, 20));
-        chartParentPanel.setLayout(new java.awt.GridBagLayout());
+        chartsTabbedPane.setMinimumSize(new java.awt.Dimension(20, 20));
+        chartsTabbedPane.setPreferredSize(new java.awt.Dimension(20, 20));
+
+        intensityChartParentPanel.setLayout(new java.awt.GridBagLayout());
+        chartsTabbedPane.addTab("intensities chart", intensityChartParentPanel);
+
+        countChartParentPanel.setLayout(new java.awt.GridBagLayout());
+        chartsTabbedPane.addTab("count chart", countChartParentPanel);
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        add(chartParentPanel, gridBagConstraints);
+        add(chartsTabbedPane, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel chartParentPanel;
+    private javax.swing.JTabbedPane chartsTabbedPane;
+    private javax.swing.JPanel countChartParentPanel;
     private javax.swing.JLabel experimentInfoLabel;
     private javax.swing.JPanel experimentInfoLabelPanel;
+    private javax.swing.JPanel intensityChartParentPanel;
     // End of variables declaration//GEN-END:variables
 }
