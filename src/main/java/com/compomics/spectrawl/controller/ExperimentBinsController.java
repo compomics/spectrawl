@@ -25,9 +25,11 @@ public class ExperimentBinsController {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentBinsController.class);
     //model
-    DefaultCategoryDataset categoryDataset;
+    DefaultCategoryDataset intensitiesCategoryDataset;
+    DefaultCategoryDataset countCategoryDataset;
     //view
-    private ChartPanel chartPanel;
+    private ChartPanel intensitiesChartPanel;
+    private ChartPanel countChartPanel;
     private ExperimentBinsPanel experimentBinsPanel;
     //parent controller
     private SpectrawlController spectrawlController;
@@ -38,7 +40,8 @@ public class ExperimentBinsController {
      * @param spectrawlController the parent controller
      */
     public ExperimentBinsController(SpectrawlController spectrawlController) {
-        chartPanel = new ChartPanel(null);
+        intensitiesChartPanel = new ChartPanel(null);
+        countChartPanel = new ChartPanel(null);
         experimentBinsPanel = new ExperimentBinsPanel();
 
         this.spectrawlController = spectrawlController;
@@ -61,26 +64,37 @@ public class ExperimentBinsController {
      * @param experiment the experiment
      */
     public void viewExperimentBins(Experiment experiment) {
-        LOGGER.debug("initialize bins chart of experiment");
+        LOGGER.debug("initializing bins charts of experiment");
         //create new data set
-        categoryDataset = new DefaultCategoryDataset();
+        intensitiesCategoryDataset = new DefaultCategoryDataset();
+        countCategoryDataset = new DefaultCategoryDataset();
 
-        //add values
+        //add intensity values
         for (Double floorBin : experiment.getBins().keySet()) {
-            categoryDataset.addValue(experiment.getBins().get(floorBin).getHighestIntensityQuantiles().getPercentile_50(), "highestIntensity", floorBin.toString());
-            categoryDataset.addValue(experiment.getBins().get(floorBin).getIntensitySumQuantiles().getPercentile_50(), "intensitySum", floorBin.toString());
-            //categoryDataset.addValue(experiment.getBins().get(floorBin).getPeakCountQuantiles().getPercentile_50(), "peakCount", floorBin.toString());
+            //add intensity values
+            intensitiesCategoryDataset.addValue(experiment.getBins().get(floorBin).getHighestIntensityQuantiles().getPercentile_50(), "highestIntensity", floorBin.toString());
+            intensitiesCategoryDataset.addValue(experiment.getBins().get(floorBin).getIntensitySumQuantiles().getPercentile_50(), "intensitySum", floorBin.toString());
+            //add count values
+            countCategoryDataset.addValue(experiment.getBins().get(floorBin).getPeakCountQuantiles().getPercentile_50(), "peakCount", floorBin.toString());
         }
-        
-        //create chart
-        JFreeChart chart = ChartFactory.createBarChart("title", "bin", "relative intensity", categoryDataset, PlotOrientation.VERTICAL, true, true, false);        
-        CategoryPlot plot = (CategoryPlot) chart.getPlot();
-        CategoryAxis xAxis = (CategoryAxis) plot.getDomainAxis();
+                        
+        //create intensity chart
+        JFreeChart intensitiesChart = ChartFactory.createBarChart("experiment bins", "bin", "relative intensity", intensitiesCategoryDataset, PlotOrientation.VERTICAL, true, true, false);        
+        CategoryPlot intensitiesPlot = (CategoryPlot) intensitiesChart.getPlot();
+        CategoryAxis xAxis = (CategoryAxis) intensitiesPlot.getDomainAxis();
         xAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
         
-        //add chart to chart panel
-        chartPanel.setChart(chart);        
-        LOGGER.debug("finished initializing bins chart of experiment");
+        //create count chart
+        JFreeChart countChart = ChartFactory.createBarChart("experiment bins", "bin", "count", countCategoryDataset, PlotOrientation.VERTICAL, true, true, false);        
+        CategoryPlot countPlot = (CategoryPlot) countChart.getPlot();
+        xAxis = (CategoryAxis) countPlot.getDomainAxis();
+        xAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
+        
+        //add charts to panels
+        intensitiesChartPanel.setChart(intensitiesChart);
+        countChartPanel.setChart(countChart);
+        
+        LOGGER.debug("finished initializing bins charts of experiment");
     }
     
     /**
@@ -90,7 +104,8 @@ public class ExperimentBinsController {
      */
     public void resetChartPanel(){
         experimentBinsPanel.getExperimentInfoLabel().setText("");
-        chartPanel.setChart(null);
+        intensitiesChartPanel.setChart(null);
+        countChartPanel.setChart(null);
     }
     
     /**
@@ -113,6 +128,7 @@ public class ExperimentBinsController {
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
         
-        experimentBinsPanel.getChartParentPanel().add(chartPanel, gridBagConstraints);
+        experimentBinsPanel.getIntensityChartParentPanel().add(intensitiesChartPanel, gridBagConstraints);
+        experimentBinsPanel.getCountChartParentPanel().add(countChartPanel, gridBagConstraints);
     }
 }
