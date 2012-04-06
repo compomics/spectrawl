@@ -56,7 +56,9 @@ public class ExperimentBinsPanel extends javax.swing.JPanel {
 
         experimentInfoLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.WEST;
+        gridBagConstraints.weightx = 1.0;
         experimentInfoLabelPanel.add(experimentInfoLabel, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
