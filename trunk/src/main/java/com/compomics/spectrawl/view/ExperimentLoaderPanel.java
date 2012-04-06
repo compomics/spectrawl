@@ -280,8 +280,9 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.EAST;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LAST_LINE_END;
         gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
         experimentButtonPanel.add(loadExperimentButton, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();

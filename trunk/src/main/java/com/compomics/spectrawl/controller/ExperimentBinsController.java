@@ -72,10 +72,11 @@ public class ExperimentBinsController {
         //add intensity values
         for (Double floorBin : experiment.getBins().keySet()) {
             //add intensity values
-            intensitiesCategoryDataset.addValue(experiment.getBins().get(floorBin).getHighestIntensityQuantiles().getPercentile_50(), "highestIntensity", floorBin.toString());
-            intensitiesCategoryDataset.addValue(experiment.getBins().get(floorBin).getIntensitySumQuantiles().getPercentile_50(), "intensitySum", floorBin.toString());
+            intensitiesCategoryDataset.addValue(experiment.getBins().get(floorBin).getHighestIntensityQuantiles().getPercentile_50(), "highestIntensity (50% quantile)", floorBin.toString());
+            intensitiesCategoryDataset.addValue(experiment.getBins().get(floorBin).getIntensitySumQuantiles().getPercentile_50(), "intensitySum (50% quantile)", floorBin.toString());
             //add count values
-            countCategoryDataset.addValue(experiment.getBins().get(floorBin).getPeakCountQuantiles().getPercentile_50(), "peakCount", floorBin.toString());
+            countCategoryDataset.addValue(experiment.getBins().get(floorBin).getPeakCountQuantiles().getPercentile_50(), "peakCount (50% quantile)", floorBin.toString());
+            countCategoryDataset.addValue(experiment.getBins().get(floorBin).getPeakCountQuantiles().getMaximum(), "peakCount (max)", floorBin.toString());
         }
                         
         //create intensity chart
