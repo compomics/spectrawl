@@ -5,7 +5,6 @@
 package com.compomics.spectrawl.view;
 
 import com.compomics.spectrawl.controller.SpectrawlController;
-import java.awt.GridBagConstraints;
 import javax.swing.JPanel;
 
 /**
@@ -19,8 +18,9 @@ public class SpectrawlFrame extends javax.swing.JFrame {
      */
     public SpectrawlFrame() {
         initComponents();
-
         SpectrawlController spectrawlController = new SpectrawlController(this);
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     public JPanel getAnalyzeFilterParentPanel() {
@@ -145,7 +145,7 @@ public class SpectrawlFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new SpectrawlFrame().setVisible(true);
+                new SpectrawlFrame();
             }
         });
     }
