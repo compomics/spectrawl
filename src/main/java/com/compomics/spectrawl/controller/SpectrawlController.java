@@ -148,15 +148,15 @@ public class SpectrawlController {
      * @param mgfFiles the mgf files 
      */
     public void loadMgfExperiment(File[] mgfFiles) {
+        
         //check if mgfSpectrumLoader is initialized
         if (mgfSpectrumLoader == null) {
             mgfSpectrumLoader = new MgfSpectrumLoaderImpl();
             mgfSpectrumLoader.setNoiseFilter(noiseFilter);
             mgfSpectrumLoader.setNoiseThresholdFinder(winsorNoiseThresholdFinder);
-
             mgfExperimentLoader.setMgfSpectrumLoader(mgfSpectrumLoader);
         }
-
+        
         //check if filtering checkbox is selected
         if (filterController.isWinsorCheckBoxSelected()) {
             filterController.updateWinsorNoiseThresholdFinder(winsorNoiseThresholdFinder);
@@ -180,7 +180,7 @@ public class SpectrawlController {
     public void binExperiment() {
         //bin experiment
         experimentBinner.binExperiment(experiment);
-
+        
         //show experiment bins
         experimentBinsController.showExperimentInfo("initial number of spectra:" + experiment.getNumberOfSpectra() + ", number of spectra after filtering: " + experiment.getNumberOfFilteredSpectra());
         experimentBinsController.viewExperimentBins(experiment);
