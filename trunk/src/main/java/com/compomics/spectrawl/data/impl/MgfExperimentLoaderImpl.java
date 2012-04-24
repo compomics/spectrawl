@@ -11,6 +11,7 @@ import com.compomics.spectrawl.filter.analyze.Filter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.io.massspectrometry.MgfIndex;
+import com.compomics.util.experiment.massspectrometry.Spectrum;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,21 +54,21 @@ public class MgfExperimentLoaderImpl implements MgfExperimentLoader {
         Experiment experiment = new Experiment("");
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
 
-        //retrieve map of spectrum indexes from spectrum loader
-        Map<String, MgfIndex> mgfIndexes = mgfSpectrumLoader.getMgfIndexes(mgfFiles);
+        //retrieve map of spectrum titles from the spectrum loader
+        Map<String, List<String>> spectrumTitlesMap = mgfSpectrumLoader.getSpectrumTitles(mgfFiles);
                         
-        //iterate over indexes
-        for (String mgfFileName : mgfIndexes.keySet()) {
-            MgfIndex mgfIndex = mgfIndexes.get(mgfFileName);
+        //iterate over spectrum titles
+        for (String mgfFileName : spectrumTitlesMap.keySet()) {
+            List<String> spectrumTitles = spectrumTitlesMap.get(mgfFileName);
                         
-            LOGGER.debug("loading mgf file with " + mgfIndex.getNSpectra() + " spectra before filtering.");
+            LOGGER.debug("loading mgf file with " + spectrumTitles.size() + " spectra before filtering.");
             
             //set number of initial spectra
-            experiment.setNumberOfSpectra(experiment.getNumberOfSpectra() + mgfIndex.getNSpectra());
+            experiment.setNumberOfSpectra(experiment.getNumberOfSpectra() + spectrumTitles.size());
             
             //iterate over spectra
-            for (String spectrumTitle : mgfIndex.getSpectrumTitles()) {
-                SpectrumImpl spectrum = mgfSpectrumLoader.getSpectrumByIndex(mgfIndex.getIndex(spectrumTitle), mgfFileName);
+            for (String spectrumTitle : spectrumTitles) {
+                SpectrumImpl spectrum = mgfSpectrumLoader.getSpectrumByKey(Spectrum.getSpectrumKey(mgfFileName, spectrumTitle));
 
                 //bin the spectrum
                 spectrumBinner.binSpectrum(spectrum);

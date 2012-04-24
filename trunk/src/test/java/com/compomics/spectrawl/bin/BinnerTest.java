@@ -2,6 +2,7 @@ package com.compomics.spectrawl.bin;
 
 import com.compomics.spectrawl.bin.impl.ExperimentBinnerImpl;
 import com.compomics.spectrawl.bin.impl.SpectrumBinnerImpl;
+import com.compomics.spectrawl.bin.impl.SpectrumBinnerWithSortingImpl;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.ExperimentBin;
 import com.compomics.spectrawl.model.SpectrumBin;
@@ -10,6 +11,7 @@ import com.compomics.util.experiment.massspectrometry.Peak;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
@@ -130,7 +132,7 @@ public class BinnerTest {
         spectrum_6.setPeakList(peaks);
 
         //bin the spectra
-        SpectrumBinner spectrumBinner = new SpectrumBinnerImpl();
+        SpectrumBinner spectrumBinner = new SpectrumBinnerWithSortingImpl();
         spectrumBinner.binSpectrum(spectrum_1);
         spectrumBinner.binSpectrum(spectrum_2);
         spectrumBinner.binSpectrum(spectrum_3);

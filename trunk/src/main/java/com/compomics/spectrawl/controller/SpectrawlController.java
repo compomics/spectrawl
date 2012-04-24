@@ -7,16 +7,14 @@ package com.compomics.spectrawl.controller;
 import com.compomics.spectrawl.bin.ExperimentBinner;
 import com.compomics.spectrawl.bin.impl.ExperimentBinnerImpl;
 import com.compomics.spectrawl.bin.impl.SpectrumBinnerImpl;
-import com.compomics.spectrawl.data.ConnectionLoader;
-import com.compomics.spectrawl.data.MgfExperimentLoader;
-import com.compomics.spectrawl.data.MgfSpectrumLoader;
-import com.compomics.spectrawl.data.MsLimsExperimentLoader;
-import com.compomics.spectrawl.data.MsLimsSpectrumLoader;
+import com.compomics.spectrawl.bin.impl.SpectrumBinnerWithSortingImpl;
+import com.compomics.spectrawl.data.*;
 import com.compomics.spectrawl.data.impl.MgfExperimentLoaderImpl;
 import com.compomics.spectrawl.data.impl.MgfSpectrumLoaderImpl;
 import com.compomics.spectrawl.data.impl.MsLimsExperimentLoaderImpl;
 import com.compomics.spectrawl.data.impl.MsLimsSpectrumLoaderImpl;
 import com.compomics.spectrawl.filter.process.NoiseFilter;
+import com.compomics.spectrawl.filter.process.NoiseThresholdFinder;
 import com.compomics.spectrawl.filter.process.impl.NoiseFilterImpl;
 import com.compomics.spectrawl.filter.process.impl.WinsorNoiseThresholdFinder;
 import com.compomics.spectrawl.model.Experiment;
@@ -48,7 +46,7 @@ public class SpectrawlController {
     private MgfSpectrumLoader mgfSpectrumLoader;
     private ExperimentBinner experimentBinner;
     private NoiseFilter noiseFilter;
-    private WinsorNoiseThresholdFinder winsorNoiseThresholdFinder;
+    private NoiseThresholdFinder noiseThresholdFinder;
     
     /**
      * Constructor
@@ -68,12 +66,12 @@ public class SpectrawlController {
         msLimsExperimentLoader = new MsLimsExperimentLoaderImpl();
         mgfExperimentLoader = new MgfExperimentLoaderImpl();
         //set spectrum binner
-        msLimsExperimentLoader.setSpectrumBinner(new SpectrumBinnerImpl());
-        mgfExperimentLoader.setSpectrumBinner(new SpectrumBinnerImpl());
+        msLimsExperimentLoader.setSpectrumBinner(new SpectrumBinnerWithSortingImpl());
+        mgfExperimentLoader.setSpectrumBinner(new SpectrumBinnerWithSortingImpl());
         
         experimentBinner = new ExperimentBinnerImpl();
         noiseFilter = new NoiseFilterImpl();
-        winsorNoiseThresholdFinder = new WinsorNoiseThresholdFinder();
+        noiseThresholdFinder = new WinsorNoiseThresholdFinder();
     }
     
     /**
@@ -121,14 +119,14 @@ public class SpectrawlController {
         if (msLimsSpectrumLoader == null) {
             msLimsSpectrumLoader = new MsLimsSpectrumLoaderImpl(ConnectionLoader.getConnection());
             msLimsSpectrumLoader.setNoiseFilter(noiseFilter);
-            msLimsSpectrumLoader.setNoiseThresholdFinder(winsorNoiseThresholdFinder);
+            msLimsSpectrumLoader.setNoiseThresholdFinder(noiseThresholdFinder);
 
             msLimsExperimentLoader.setMsLimsSpectrumLoader(msLimsSpectrumLoader);
         }
 
         //check if filtering checkbox is selected
         if (filterController.isWinsorCheckBoxSelected()) {
-            filterController.updateWinsorNoiseThresholdFinder(winsorNoiseThresholdFinder);
+            filterController.updateWinsorizationFilterConstants();
         }
         msLimsSpectrumLoader.setDoNoiseFiltering(filterController.isWinsorCheckBoxSelected());
 
@@ -153,13 +151,13 @@ public class SpectrawlController {
         if (mgfSpectrumLoader == null) {
             mgfSpectrumLoader = new MgfSpectrumLoaderImpl();
             mgfSpectrumLoader.setNoiseFilter(noiseFilter);
-            mgfSpectrumLoader.setNoiseThresholdFinder(winsorNoiseThresholdFinder);
+            mgfSpectrumLoader.setNoiseThresholdFinder(noiseThresholdFinder);
             mgfExperimentLoader.setMgfSpectrumLoader(mgfSpectrumLoader);
         }
         
         //check if filtering checkbox is selected
         if (filterController.isWinsorCheckBoxSelected()) {
-            filterController.updateWinsorNoiseThresholdFinder(winsorNoiseThresholdFinder);
+            filterController.updateWinsorizationFilterConstants();
         }
         mgfSpectrumLoader.setDoNoiseFiltering(filterController.isWinsorCheckBoxSelected());
 

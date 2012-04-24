@@ -5,7 +5,7 @@
 package com.compomics.spectrawl.controller;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
-import com.compomics.spectrawl.model.BinConstants;
+import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.util.GuiUtils;
 import com.compomics.spectrawl.view.ExperimentLoaderPanel;
@@ -96,9 +96,9 @@ public class ExperimentLoaderController {
      * 
      */
     public void updateBinConstants() {
-        BinConstants.BINS_FLOOR.setValue(Double.parseDouble(experimentLoaderPanel.getBinFloorTextField().getText()));
-        BinConstants.BINS_CEILING.setValue(Double.parseDouble(experimentLoaderPanel.getBinCeilingTextField().getText()));
-        BinConstants.BIN_SIZE.setValue(Double.parseDouble(experimentLoaderPanel.getBinSizeTextField().getText()));
+        BinParams.BINS_FLOOR.setValue(Double.parseDouble(experimentLoaderPanel.getBinFloorTextField().getText()));
+        BinParams.BINS_CEILING.setValue(Double.parseDouble(experimentLoaderPanel.getBinCeilingTextField().getText()));
+        BinParams.BIN_SIZE.setValue(Double.parseDouble(experimentLoaderPanel.getBinSizeTextField().getText()));
     }
     
     /**
