@@ -4,13 +4,15 @@ import com.compomics.spectrawl.bin.SpectrumBinner;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.PeakBin;
 import com.compomics.spectrawl.model.SpectrumImpl;
+import java.util.SortedSet;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 28/02/12 Time: 15:04 To change
  * this template use File | Settings | File Templates.
  */
-public class SpectrumBinnerImpl implements SpectrumBinner {
+public class SpectrumBinnerWithSortingImpl implements SpectrumBinner {
 
     @Override
     public void binSpectrum(SpectrumImpl spectrum) {
@@ -18,14 +20,20 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
         spectrum.initBins();
         
         TreeMap<Double, PeakBin> peakBins = new TreeMap<Double, PeakBin>();
-        for (Double outerMass : spectrum.getPeakMap().keySet()) {
+        TreeSet<Double> sortedKeys = new TreeSet<Double>(spectrum.getPeakMap().keySet());
+        //outer loop
+        for (Double outerMass : sortedKeys) {
             peakBins = initPeakBins(peakBins);
-            for (Double innerMass : spectrum.getPeakMap().keySet()) {
+            //inner loop            
+            for (Double innerMass : sortedKeys) {
                 double massDelta = innerMass - outerMass;
                 //check if mass delta value lies within the bins floor and ceiling
                 if ((BinParams.BINS_FLOOR.getValue() <= massDelta) && (massDelta < BinParams.BINS_CEILING.getValue())) {
                     //add to peak bins
                     addToPeakBins(peakBins, massDelta, spectrum.getPeakMap().get(innerMass).intensity / spectrum.getTotalIntensity());
+                }
+                else if(massDelta >= BinParams.BINS_CEILING.getValue()){
+                    break;
                 }
             }
             //add peak bins to spectrum bin

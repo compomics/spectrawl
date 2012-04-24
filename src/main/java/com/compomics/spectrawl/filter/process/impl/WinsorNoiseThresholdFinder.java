@@ -1,7 +1,7 @@
 package com.compomics.spectrawl.filter.process.impl;
 
-import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 import com.compomics.spectrawl.filter.process.NoiseThresholdFinder;
+import com.compomics.spectrawl.model.FilterParams;
 import com.compomics.spectrawl.util.MathUtils;
 
 /**
@@ -9,39 +9,7 @@ import com.compomics.spectrawl.util.MathUtils;
  * this template use File | Settings | File Templates.
  */
 public class WinsorNoiseThresholdFinder implements NoiseThresholdFinder {
-
-    private double winsorConstant;
-    private double winsorOutlierLimit; // the value to multiply the standard deviation with to define the outlier
-    private double winsorConvergenceCriterion;
-
-    ///// ///// ///// ///// ////////// ///// ///// ///// /////
-    // constructor
-    public WinsorNoiseThresholdFinder() {
-        winsorConstant = PropertiesConfigurationHolder.getInstance().getDouble("WINSOR.CONSTANT");
-        winsorOutlierLimit = PropertiesConfigurationHolder.getInstance().getDouble("WINSOR.CONVERGENCE_CRITERION");
-        winsorConvergenceCriterion = PropertiesConfigurationHolder.getInstance().getDouble("WINSOR.OUTLIER_LIMIT");
-    }
-
-    public WinsorNoiseThresholdFinder(double winsorisationConstant, double outlierLimit, double convergenceCriterium) {
-        winsorConstant = winsorisationConstant;
-        winsorOutlierLimit = outlierLimit;
-        winsorConvergenceCriterion = convergenceCriterium;
-    }
-
-    ///// ///// ///// ///// ////////// ///// ///// ///// /////
-    // setters
-    public void setWinsorConstant(double winsorConstant) {
-        this.winsorConstant = winsorConstant;
-    }
-
-    public void setWinsorConvergenceCriterion(double winsorConvergenceCriterion) {
-        this.winsorConvergenceCriterion = winsorConvergenceCriterion;
-    }
-
-    public void setWinsorOutlierLimit(double winsorOutlierLimit) {
-        this.winsorOutlierLimit = winsorOutlierLimit;
-    }
-
+        
     ///// ///// ///// ///// ////////// ///// ///// ///// /////
     // public methods
     /**
@@ -51,6 +19,7 @@ public class WinsorNoiseThresholdFinder implements NoiseThresholdFinder {
      * @param signalValues list of signal values.
      * @return the calculated treshold separating noise from signal values.
      */
+    @Override
     public double findNoiseThreshold(double[] signalValues) {
         // get winsorised peaks (where outlier spectrum intensities are redused to lower values)
         double[] intensities = winsorise(signalValues);
@@ -58,9 +27,9 @@ public class WinsorNoiseThresholdFinder implements NoiseThresholdFinder {
         double median = MathUtils.calculateMedian(intensities);
         double standardDeviation = MathUtils.calculateStandardDeviation(intensities);
 
-        return median + winsorOutlierLimit * standardDeviation;
+        return median + FilterParams.WINSOR_OUTLIER_LIMIT.getValue() * standardDeviation;
     }
-
+            
     ///// ///// ///// ///// ////////// ///// ///// ///// /////
     // private methods
     private double[] winsorise(double[] signalValues) {
@@ -70,8 +39,8 @@ public class WinsorNoiseThresholdFinder implements NoiseThresholdFinder {
         double previousMAD = 3d * currentMAD; // initial start value
         double[] correctedIntensities = new double[signalValues.length];
 
-        while (((previousMAD - currentMAD) / previousMAD) >= winsorConvergenceCriterion) {
-            correctedIntensities = reduceOutliers(signalValues, median + (winsorConstant * currentMAD));
+        while (((previousMAD - currentMAD) / previousMAD) >= FilterParams.WINSOR_CONVERGENCE_CRITERION.getValue()) {
+            correctedIntensities = reduceOutliers(signalValues, median + (FilterParams.WINSOR_CONTSTANT.getValue() * currentMAD));
             previousMAD = currentMAD;
             currentMAD = calcIntensityMAD(correctedIntensities, median);
         }

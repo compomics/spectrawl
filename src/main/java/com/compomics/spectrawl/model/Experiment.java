@@ -59,9 +59,9 @@ public class Experiment implements Binnable<ExperimentBin> {
     public void initBins() {
         experimentBins = new TreeMap<Double, ExperimentBin>();
 
-        int numberOfBins = (int) ((BinConstants.BINS_CEILING.getValue() - BinConstants.BINS_FLOOR.getValue()) / BinConstants.BIN_SIZE.getValue());
+        int numberOfBins = (int) ((BinParams.BINS_CEILING.getValue() - BinParams.BINS_FLOOR.getValue()) / BinParams.BIN_SIZE.getValue());
         for (int i = 0; i < numberOfBins; i++) {
-            experimentBins.put(BinConstants.BINS_FLOOR.getValue() + (i * BinConstants.BIN_SIZE.getValue()), new ExperimentBin());
+            experimentBins.put(BinParams.BINS_FLOOR.getValue() + (i * BinParams.BIN_SIZE.getValue()), new ExperimentBin());
         }
     }
 

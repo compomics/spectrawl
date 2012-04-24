@@ -6,22 +6,22 @@ package com.compomics.spectrawl.data.impl;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 import com.compomics.spectrawl.data.MgfSpectrumLoader;
-import com.compomics.spectrawl.data.SpectrumLoader;
 import com.compomics.spectrawl.filter.process.NoiseFilter;
 import com.compomics.spectrawl.filter.process.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.io.massspectrometry.MgfIndex;
 import com.compomics.util.experiment.io.massspectrometry.MgfReader;
-import com.compomics.util.experiment.massspectrometry.MSnSpectrum;
+import com.compomics.util.experiment.massspectrometry.SpectrumFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import org.apache.log4j.Logger;
+import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 
 /**
  *
@@ -33,11 +33,9 @@ public class MgfSpectrumLoaderImpl implements MgfSpectrumLoader {
     private boolean doNoiseFiltering;
     private NoiseThresholdFinder noiseThresholdFinder;
     private NoiseFilter noiseFilter;
-    private Map<String, File> mgfFiles;
-    //private Map<String, MgfIndex> mgfIndexes;
 
     public MgfSpectrumLoaderImpl() {        
-        doNoiseFiltering = doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
+        doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
     }
 
     @Override
@@ -54,34 +52,37 @@ public class MgfSpectrumLoaderImpl implements MgfSpectrumLoader {
     public void setNoiseFilter(NoiseFilter noiseFilter) {
         this.noiseFilter = noiseFilter;
     }
-
+            
     @Override
-    public Map<String, MgfIndex> getMgfIndexes(Map<String, File> mgfFiles) {
-        this.mgfFiles = mgfFiles;
-        Map<String, MgfIndex> mgfIndexes = new HashMap<String, MgfIndex>();
+    public Map<String, List<String>> getSpectrumTitles(Map<String, File> mgfFiles) {     
+        Map<String, List<String>> spectrumTitles = new HashMap<String, List<String>>();
+        
         for (String mgfFileName : mgfFiles.keySet()) {
             try {
-                mgfIndexes.put(mgfFileName, MgfReader.getIndexMap(mgfFiles.get(mgfFileName)));
+                //add spectra of current mgf file to spectrum factory
+                SpectrumFactory.getInstance().addSpectra(mgfFiles.get(mgfFileName));
+                spectrumTitles.put(mgfFileName, SpectrumFactory.getInstance().getSpectrumTitles(mgfFileName));
             } catch (FileNotFoundException ex) {
                 LOGGER.error(ex.getMessage(), ex);
             } catch (IOException ex) {
                 LOGGER.error(ex.getMessage(), ex);
+            } catch (ClassNotFoundException ex) {
+                LOGGER.error(ex.getMessage(), ex);
             }
         }
-        return mgfIndexes;
+        return spectrumTitles;
     }
 
     @Override
-    public SpectrumImpl getSpectrumByIndex(long index, String mgfFileName) {
-        SpectrumImpl spectrum = null;
+    public SpectrumImpl getSpectrumByKey(String spectrumKey) {
+        SpectrumImpl spectrum = null;        
         try {
-            RandomAccessFile randomAccessFile = new RandomAccessFile(mgfFiles.get(mgfFileName), "r");
-            spectrum = new SpectrumImpl(MgfReader.getSpectrum(randomAccessFile, index, mgfFileName));
-        } catch (FileNotFoundException ex) {
-            LOGGER.error(ex.getMessage(), ex);
+            spectrum = new SpectrumImpl(SpectrumFactory.getInstance().getSpectrum(spectrumKey));
         } catch (IOException ex) {
             LOGGER.error(ex.getMessage(), ex);
         } catch (IllegalArgumentException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+        } catch (MzMLUnmarshallerException ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
         return spectrum;

@@ -1,5 +1,8 @@
 package com.compomics.spectrawl.filter.process;
 
+import com.compomics.spectrawl.model.FilterParams;
+import java.util.Map;
+
 /**
  * Created by IntelliJ IDEA.
  * User: niels
@@ -16,5 +19,5 @@ public interface NoiseThresholdFinder {
      * @return the noise threshold
      */
     double findNoiseThreshold(double[] intensities);
-
+        
 }

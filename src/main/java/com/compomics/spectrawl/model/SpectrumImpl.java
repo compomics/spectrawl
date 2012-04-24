@@ -1,6 +1,6 @@
 package com.compomics.spectrawl.model;
 
-import com.compomics.util.experiment.massspectrometry.MSnSpectrum;
+import com.compomics.util.experiment.massspectrometry.Spectrum;
 import java.util.TreeMap;
 
 /**
@@ -10,10 +10,17 @@ import java.util.TreeMap;
  * Time: 13:47
  * To change this template use File | Settings | File Templates.
  */
-public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
+public class SpectrumImpl extends Spectrum implements Binnable<SpectrumBin> {
 
     private String spectrumId;
+    /**
+     * The spectrum bins (key: bin floor, value: spectrum bin)
+     */
     private TreeMap<Double, SpectrumBin> spectrumBins;
+    /**
+     * The spectrum noise threshold used for filtering
+     */
+    private double noiseTreshold;
 
     public SpectrumImpl(){
         super();
@@ -24,11 +31,15 @@ public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
         this.spectrumId = spectrumId;
     }
     
-    public SpectrumImpl(MSnSpectrum mSnSpectrum){
-        super(mSnSpectrum.getLevel(), mSnSpectrum.getPrecursor(), mSnSpectrum.getSpectrumTitle(), mSnSpectrum.getPeakMap(), mSnSpectrum.getFileName(), mSnSpectrum.getScanStartTime());
+    public SpectrumImpl(Spectrum spectrum){        
+        this.level = spectrum.getLevel();
+        this.spectrumTitle = spectrum.getSpectrumTitle();
+        this.peakList = spectrum.getPeakMap();
+        this.fileName = spectrum.getFileName();
+        this.scanStartTime = spectrum.getScanStartTime();
         this.spectrumId = spectrumTitle;
     }
-
+    
     /**
      * Add the peak bins to the corresponding spectrum bins
      *
@@ -45,13 +56,21 @@ public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
         }
     }
 
+    public double getNoiseTreshold() {
+        return noiseTreshold;
+    }
+
+    public void setNoiseTreshold(double noiseTreshold) {
+        this.noiseTreshold = noiseTreshold;
+    }
+        
     @Override
     public void initBins() {
         spectrumBins = new TreeMap<Double, SpectrumBin>();
 
-        int numberOfBins = (int) ((BinConstants.BINS_CEILING.getValue() - BinConstants.BINS_FLOOR.getValue()) / BinConstants.BIN_SIZE.getValue());
+        int numberOfBins = (int) ((BinParams.BINS_CEILING.getValue() - BinParams.BINS_FLOOR.getValue()) / BinParams.BIN_SIZE.getValue());
         for (int i = 0; i < numberOfBins; i++) {
-            spectrumBins.put(BinConstants.BINS_FLOOR.getValue() + (i * BinConstants.BIN_SIZE.getValue()), new SpectrumBin());
+            spectrumBins.put(BinParams.BINS_FLOOR.getValue() + (i * BinParams.BIN_SIZE.getValue()), new SpectrumBin());
         }
     }
 

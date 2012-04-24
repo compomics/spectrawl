@@ -1,17 +1,15 @@
 package com.compomics.spectrawl.filter.process;
 
-import com.compomics.spectrawl.filter.process.NoiseThresholdFinder;
 import com.compomics.spectrawl.filter.process.impl.WinsorNoiseThresholdFinder;
-import org.apache.commons.lang.ArrayUtils;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang.ArrayUtils;
+import static org.junit.Assert.assertTrue;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * Created by IntelliJ IDEA.
@@ -42,7 +40,7 @@ public class WinsorNoiseThresholdFinderTest {
 
     @Test
     public void testWinsorNoiseTresholdFinder(){
-        NoiseThresholdFinder noiseTresholdFinder = new WinsorNoiseThresholdFinder(1.5, 2, 0.01);
+        NoiseThresholdFinder noiseTresholdFinder = new WinsorNoiseThresholdFinder();
         double threshold = noiseTresholdFinder.findNoiseThreshold(values);
 
         assertTrue(threshold < 105D);

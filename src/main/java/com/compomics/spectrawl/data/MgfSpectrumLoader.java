@@ -8,6 +8,7 @@ import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.io.massspectrometry.MgfIndex;
 import java.io.File;
 import java.io.RandomAccessFile;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,18 +18,17 @@ import java.util.Map;
 public interface MgfSpectrumLoader extends SpectrumLoader {
 
     /**
-     * Gets the mgf indexes for the given mgf files
+     * Gets the spectrum titles for the given mgf files
      *
-     * @return the indexes map (key: mgf file name, value: MgfIndex file)
+     * @return the spectrum titles map (key: the mgf file name, value: the
+     * spectrum titles of the spectra in the mgf file)
      */
-    Map<String, MgfIndex> getMgfIndexes(Map<String, File> mgfFiles);
+    Map<String, List<String>> getSpectrumTitles(Map<String, File> mgfFiles);
 
     /**
-     * Gets the spectrum by index
+     * Gets the spectrum by spectrum key
      *
-     * @param index the index of the spectrum in the file
-     * @param mfgFileName the name of the mgf file
      * @return the spectrum
      */
-    SpectrumImpl getSpectrumByIndex(long index, String mgfFileName);
+    SpectrumImpl getSpectrumByKey(String spectrumKey);
 }
