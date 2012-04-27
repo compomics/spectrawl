@@ -339,15 +339,17 @@ public class FiltersSetupDialog extends javax.swing.JDialog implements PtmDialog
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         FilterChainImpl filterChainImpl = new FilterChainImpl(FilterChain.FilterChainType.OR);
-        PTM ptm;
         ArrayList<PTM> availablePTMs = new ArrayList<PTM>();
         for (String ptmName : selectedPtms) {
-            ptm = ptmFactory.getPTM(ptmName);
+            PTM ptm = ptmFactory.getPTM(ptmName);
             filterChainImpl.addFilter(FilterChainImpl.getFilterChain(ptm));
             availablePTMs.add(ptm);
         }
         for (String peptideFragment : selectedPeptideFragments) {
-            filterChainImpl.addFilter(FilterChainImpl.getFilterChain(peptideFragment, null, availablePTMs)); //@TODO: add annotation preferences for charges to search
+            filterChainImpl.addFilter(FilterChainImpl.getFilterChain(peptideFragment, new ArrayList<Integer>())); //@TODO: add annotation preferences for charges to search
+            for (PTM ptm : availablePTMs) {
+                filterChainImpl.addFilter(FilterChainImpl.getFilterChain(peptideFragment, new ArrayList<Integer>(), ptm)); //@TODO: add annotation preferences for charges to search
+            }
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
