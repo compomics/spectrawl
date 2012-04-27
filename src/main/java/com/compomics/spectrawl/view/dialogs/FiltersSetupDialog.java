@@ -10,9 +10,13 @@ import com.compomics.util.experiment.biology.PTM;
 import com.compomics.util.experiment.biology.PTMFactory;
 import com.compomics.util.gui.dialogs.PtmDialog;
 import com.compomics.util.gui.dialogs.PtmDialogParent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.xmlpull.v1.XmlPullParserException;
 import uk.ac.ebi.kraken.interfaces.uniprot.comments.PtmComment;
 
 /**
@@ -37,12 +41,22 @@ public class FiltersSetupDialog extends javax.swing.JDialog implements PtmDialog
      * The peptide fragments available for selection
      */
     private ArrayList<String> selectedPeptideFragments = new ArrayList<String>();
+    /**
+     * Modification file.
+     */
+    private final String MODIFICATIONS_FILE = "resources/conf/spectrawl_mods.xml";
+    /**
+     * User modification file.
+     */
+    private final String USER_MODIFICATIONS_FILE = "resources/conf/spectrawl_usermods.xml";
 
     /**
      * Creates new form FiltersSetupDialog
      */
-    public FiltersSetupDialog(java.awt.Frame parent, boolean modal) {
+    public FiltersSetupDialog(java.awt.Frame parent, boolean modal) throws IOException, XmlPullParserException {
         super(parent, modal);
+        ptmFactory.importModifications(new File(MODIFICATIONS_FILE), false);
+        ptmFactory.importModifications(new File(USER_MODIFICATIONS_FILE), false);
         availablePtms.addAll(ptmFactory.getPTMs());
         Collections.sort(availablePtms);
         initComponents();
@@ -327,7 +341,7 @@ public class FiltersSetupDialog extends javax.swing.JDialog implements PtmDialog
         FilterChainImpl filterChainImpl = new FilterChainImpl(FilterChain.FilterChainType.OR);
         PTM ptm;
         ArrayList<PTM> availablePTMs = new ArrayList<PTM>();
-        for (String ptmName : selectedPtms)  {
+        for (String ptmName : selectedPtms) {
             ptm = ptmFactory.getPTM(ptmName);
             filterChainImpl.addFilter(FilterChainImpl.getFilterChain(ptm));
             availablePTMs.add(ptm);
@@ -341,7 +355,6 @@ public class FiltersSetupDialog extends javax.swing.JDialog implements PtmDialog
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    
     /**
      * @param args the command line arguments
      */
@@ -379,15 +392,19 @@ public class FiltersSetupDialog extends javax.swing.JDialog implements PtmDialog
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                FiltersSetupDialog dialog = new FiltersSetupDialog(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                try {
+                    FiltersSetupDialog dialog = new FiltersSetupDialog(new javax.swing.JFrame(), true);
+                    dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
+                        @Override
+                        public void windowClosing(java.awt.event.WindowEvent e) {
+                            System.exit(0);
+                        }
+                    });
+                    dialog.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -416,9 +433,10 @@ public class FiltersSetupDialog extends javax.swing.JDialog implements PtmDialog
     public void updateModifications() {
         ((DefaultTableModel) availablePTMsTable.getModel()).fireTableDataChanged();
     }
-    
+
     /**
      * Adds user sequences to the table
+     *
      * @param newSequences the new sequences
      */
     public void addSequences(ArrayList<String> newSequences) {
