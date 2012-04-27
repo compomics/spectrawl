@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class SpectrumMzRatioFilter implements Filter<SpectrumImpl> {
 
+    //@TODO: add a name to the filter?
+    
     private double mzRatioTolerance;
     private List<Double> mzRatioFilterValues;
 
