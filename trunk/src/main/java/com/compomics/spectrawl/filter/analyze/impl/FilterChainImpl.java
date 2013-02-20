@@ -6,10 +6,8 @@ import com.compomics.util.experiment.biology.AminoAcid;
 import com.compomics.util.experiment.biology.NeutralLoss;
 import com.compomics.util.experiment.biology.PTM;
 import com.compomics.util.experiment.biology.ions.ReporterIon;
-
 import java.util.ArrayList;
 import java.util.List;
-import sun.misc.Perf;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 16/02/12 Time: 14:02 To change

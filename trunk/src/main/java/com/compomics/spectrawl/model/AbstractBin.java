@@ -1,7 +1,5 @@
 package com.compomics.spectrawl.model;
 
-import java.util.TreeMap;
-
 /**
  * Created by IntelliJ IDEA.
  * User: niels
@@ -9,7 +7,7 @@ import java.util.TreeMap;
  * Time: 14:11
  * To change this template use File | Settings | File Templates.
  */
-public class AbstractBin {
+public abstract class AbstractBin {
 
     protected int peakCount;
     protected double highestIntensity;
@@ -33,6 +31,7 @@ public class AbstractBin {
         return intensitySum;
     }
 
+    @Override
     public String toString() {
         return "peak count: " + peakCount + ", intensity sum: " + intensitySum + ", highest intensity: " + highestIntensity;
     }

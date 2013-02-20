@@ -46,6 +46,7 @@ public class SpectrumMzRatioFilter implements Filter<SpectrumImpl> {
         for (double mzRatioFilterValue : mzRatioFilterValues) {
             if (!passesMzRatioFilterValue(spectrum, mzRatioFilterValue)) {
                 passesFilter = Boolean.FALSE;
+                break;
             }
         }
 
@@ -57,16 +58,16 @@ public class SpectrumMzRatioFilter implements Filter<SpectrumImpl> {
     }
 
     private boolean passesMzRatioFilterValue(SpectrumImpl spectrum, double mzRatioFilterValue) {
-        boolean passesFilterValue = Boolean.FALSE;
+        boolean passesMzRatioFilterValue = Boolean.FALSE;
         for (Peak peak : spectrum.getPeakList()) {
             double mzRatio = peak.mz;
             if (Math.abs(mzRatio - mzRatioFilterValue) < mzRatioTolerance) {
-                passesFilterValue = Boolean.TRUE;
+                passesMzRatioFilterValue = Boolean.TRUE;
                 break;
             }
         }
 
-        return passesFilterValue;
+        return passesMzRatioFilterValue;
     }
 
 
