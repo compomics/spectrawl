@@ -9,7 +9,6 @@ import com.compomics.spectrawl.filter.analyze.FilterChain;
 import com.compomics.spectrawl.filter.analyze.impl.FilterChainImpl;
 import com.compomics.spectrawl.filter.analyze.impl.SpectrumBinFilter;
 import com.compomics.spectrawl.filter.analyze.impl.SpectrumMzRatioFilter;
-import com.compomics.spectrawl.filter.process.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.FilterParams;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.spectrawl.view.AnalyzeFilterPanel;
@@ -104,7 +103,7 @@ public class FilterController {
      * 
      */
     public void updateWinsorizationFilterConstants() {
-        FilterParams.WINSOR_CONTSTANT.setValue(Double.parseDouble(processFilterPanel.getWinsorConstantTextField().getText()));
+        FilterParams.WINSOR_CONSTANT.setValue(Double.parseDouble(processFilterPanel.getWinsorConstantTextField().getText()));
         FilterParams.WINSOR_CONVERGENCE_CRITERION.setValue(Double.parseDouble(processFilterPanel.getWinsorConvergenceCriterionTextField().getText()));
         FilterParams.WINSOR_OUTLIER_LIMIT.setValue(Double.parseDouble(processFilterPanel.getWinsorOutlierLimitTextField().getText()));
     }

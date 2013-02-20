@@ -12,7 +12,7 @@ import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
  */
 public enum FilterParams {
     
-    WINSOR_CONTSTANT(PropertiesConfigurationHolder.getInstance().getDouble("WINSOR.CONSTANT")),
+    WINSOR_CONSTANT(PropertiesConfigurationHolder.getInstance().getDouble("WINSOR.CONSTANT")),
     WINSOR_CONVERGENCE_CRITERION(PropertiesConfigurationHolder.getInstance().getDouble("WINSOR.CONVERGENCE_CRITERION")),
     WINSOR_OUTLIER_LIMIT(PropertiesConfigurationHolder.getInstance().getDouble("WINSOR.OUTLIER_LIMIT"));
     

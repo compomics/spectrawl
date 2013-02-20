@@ -9,17 +9,13 @@ import com.compomics.spectrawl.data.MgfSpectrumLoader;
 import com.compomics.spectrawl.filter.process.NoiseFilter;
 import com.compomics.spectrawl.filter.process.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
-import com.compomics.util.experiment.io.massspectrometry.MgfIndex;
-import com.compomics.util.experiment.io.massspectrometry.MgfReader;
 import com.compomics.util.experiment.massspectrometry.SpectrumFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 

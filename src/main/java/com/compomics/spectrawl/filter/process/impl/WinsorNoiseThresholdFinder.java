@@ -40,7 +40,7 @@ public class WinsorNoiseThresholdFinder implements NoiseThresholdFinder {
         double[] correctedIntensities = new double[signalValues.length];
 
         while (((previousMAD - currentMAD) / previousMAD) >= FilterParams.WINSOR_CONVERGENCE_CRITERION.getValue()) {
-            correctedIntensities = reduceOutliers(signalValues, median + (FilterParams.WINSOR_CONTSTANT.getValue() * currentMAD));
+            correctedIntensities = reduceOutliers(signalValues, median + (FilterParams.WINSOR_CONSTANT.getValue() * currentMAD));
             previousMAD = currentMAD;
             currentMAD = calcIntensityMAD(correctedIntensities, median);
         }
