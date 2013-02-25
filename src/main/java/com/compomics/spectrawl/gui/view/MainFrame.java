@@ -4,8 +4,8 @@
  */
 package com.compomics.spectrawl.gui.view;
 
-import com.compomics.spectrawl.gui.controller.MainController;
 import java.awt.Color;
+import java.awt.Frame;
 import javax.swing.JPanel;
 
 /**
@@ -21,6 +21,7 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();    
         this.getContentPane().setBackground(new Color(255, 255, 255));
         setLocationRelativeTo(null);
+        setExtendedState(Frame.MAXIMIZED_BOTH);
         setVisible(true);
     }
 
