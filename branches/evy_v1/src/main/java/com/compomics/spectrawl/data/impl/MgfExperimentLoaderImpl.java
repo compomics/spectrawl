@@ -4,13 +4,12 @@
  */
 package com.compomics.spectrawl.data.impl;
 
-import com.compomics.spectrawl.bin.SpectrumBinner;
+import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.data.MgfExperimentLoader;
 import com.compomics.spectrawl.data.MgfSpectrumLoader;
-import com.compomics.spectrawl.filter.analyze.Filter;
+import com.compomics.spectrawl.logic.filter.analyze.Filter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
-import com.compomics.util.experiment.io.massspectrometry.MgfIndex;
 import com.compomics.util.experiment.massspectrometry.Spectrum;
 import java.io.File;
 import java.util.ArrayList;
@@ -29,12 +28,10 @@ public class MgfExperimentLoaderImpl implements MgfExperimentLoader {
     private MgfSpectrumLoader mgfSpectrumLoader;
     private SpectrumBinner spectrumBinner;
 
-    @Override
     public void setSpectrumFilter(Filter<SpectrumImpl> spectrumFilter) {
         this.spectrumFilter = spectrumFilter;
     }
 
-    @Override
     public void setSpectrumBinner(SpectrumBinner spectrumBinner) {
         this.spectrumBinner = spectrumBinner;
     }
@@ -44,7 +41,6 @@ public class MgfExperimentLoaderImpl implements MgfExperimentLoader {
         return mgfSpectrumLoader;
     }
 
-    @Override
     public void setMgfSpectrumLoader(MgfSpectrumLoader mgfSpectrumLoader) {
         this.mgfSpectrumLoader = mgfSpectrumLoader;
     }
@@ -61,7 +57,7 @@ public class MgfExperimentLoaderImpl implements MgfExperimentLoader {
         for (String mgfFileName : spectrumTitlesMap.keySet()) {
             List<String> spectrumTitles = spectrumTitlesMap.get(mgfFileName);
                         
-            LOGGER.debug("loading mgf file with " + spectrumTitles.size() + " spectra before filtering.");
+            LOGGER.info("start loading mgf file with " + spectrumTitles.size() + " spectra before filtering");
             
             //set number of initial spectra
             experiment.setNumberOfSpectra(experiment.getNumberOfSpectra() + spectrumTitles.size());
@@ -84,7 +80,7 @@ public class MgfExperimentLoaderImpl implements MgfExperimentLoader {
         //set number of filtered spectra
         experiment.setNumberOfFilteredSpectra(spectra.size());
         
-        LOGGER.debug("loading experiment with " + spectra.size() + " spectra after filtering.");
+        LOGGER.info("dibe loading experiment with " + spectra.size() + " spectra after filtering");
         
         //set experiment spectra
         experiment.setSpectra(spectra);

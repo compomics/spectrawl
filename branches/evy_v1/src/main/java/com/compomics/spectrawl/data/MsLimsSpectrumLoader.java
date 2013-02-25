@@ -12,9 +12,9 @@ import java.util.Set;
  * @author niels
  */
 public interface MsLimsSpectrumLoader extends SpectrumLoader {
-    
+
     /**
-     * Gets the spectrum by spectrum ID
+     * Get the spectrum by spectrum ID.
      *
      * @param spectrumId the spectrum ID
      * @return the spectra
@@ -22,7 +22,7 @@ public interface MsLimsSpectrumLoader extends SpectrumLoader {
     SpectrumImpl getSpectrumBySpectrumId(long spectrumId);
 
     /**
-     * Gets the spectra IDs by experiment ID
+     * Get the spectra IDs by experiment ID.
      *
      * @param experimentId the experiment ID
      * @return the spectra IDs
@@ -30,12 +30,11 @@ public interface MsLimsSpectrumLoader extends SpectrumLoader {
     Set<Long> getSpectraIdsByExperimentId(long experimentId);
 
     /**
-     * Gets the spectra IDs by experiment ID
+     * Get the spectra IDs by experiment ID.
      *
-     * @param experimentId    the experiment ID
+     * @param experimentId the experiment ID
      * @param numberOfSpectra the number of spectra to load
      * @return the spectra IDs
      */
     Set<Long> getSpectraIdsByExperimentId(long experimentId, int numberOfSpectra);
-    
 }

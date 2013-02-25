@@ -1,9 +1,9 @@
 package com.compomics.spectrawl.data.impl;
 
-import com.compomics.spectrawl.bin.SpectrumBinner;
+import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.data.MsLimsExperimentLoader;
 import com.compomics.spectrawl.data.MsLimsSpectrumLoader;
-import com.compomics.spectrawl.filter.analyze.Filter;
+import com.compomics.spectrawl.logic.filter.analyze.Filter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.ArrayList;
@@ -23,7 +23,6 @@ public class MsLimsExperimentLoaderImpl implements MsLimsExperimentLoader {
     private MsLimsSpectrumLoader msLimsSpectrumLoader;
     private SpectrumBinner spectrumBinner;
 
-    @Override
     public void setSpectrumFilter(Filter<SpectrumImpl> spectrumFilter) {
         this.spectrumFilter = spectrumFilter;
     }
@@ -33,12 +32,10 @@ public class MsLimsExperimentLoaderImpl implements MsLimsExperimentLoader {
         return msLimsSpectrumLoader;
     }
    
-    @Override
     public void setMsLimsSpectrumLoader(MsLimsSpectrumLoader msLimsSpectrumLoader) {
         this.msLimsSpectrumLoader = msLimsSpectrumLoader;
     }
 
-    @Override
     public void setSpectrumBinner(SpectrumBinner spectrumBinner) {
         this.spectrumBinner = spectrumBinner;
     }
@@ -64,7 +61,7 @@ public class MsLimsExperimentLoaderImpl implements MsLimsExperimentLoader {
         //set number of initial spectra
         experiment.setNumberOfSpectra(spectraIds.size());
 
-        LOGGER.debug("loading experiment with " + spectraIds.size() + " spectra before filtering.");
+        LOGGER.info("start loading experiment with " + spectraIds.size() + " spectra before filtering");
 
         for (Long spectrumId : spectraIds) {
             SpectrumImpl spectrum = msLimsSpectrumLoader.getSpectrumBySpectrumId(spectrumId);
@@ -82,7 +79,7 @@ public class MsLimsExperimentLoaderImpl implements MsLimsExperimentLoader {
         //set number of spectra after filtering
         experiment.setNumberOfFilteredSpectra(spectra.size());
 
-        LOGGER.debug("loading experiment with " + spectra.size() + " spectra after filtering.");
+        LOGGER.info("done loading experiment with " + spectra.size() + " spectra after filtering");
                 
         //set experiment spectra
         experiment.setSpectra(spectra);

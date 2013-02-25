@@ -4,14 +4,14 @@ import com.compomics.mslims.db.accessors.Spectrum;
 import com.compomics.mslims.db.accessors.Spectrum_file;
 import com.compomics.mslims.util.fileio.MascotGenericFile;
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
+import com.compomics.spectrawl.data.ConnectionLoader;
 import com.compomics.spectrawl.data.MsLimsSpectrumLoader;
-import com.compomics.spectrawl.filter.process.NoiseFilter;
-import com.compomics.spectrawl.filter.process.NoiseThresholdFinder;
+import com.compomics.spectrawl.logic.filter.process.NoiseFilter;
+import com.compomics.spectrawl.logic.filter.process.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.spectrawl.util.PeakUtils;
 import com.compomics.util.experiment.massspectrometry.Peak;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,16 +25,39 @@ import org.apache.log4j.Logger;
 public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
 
     private static final Logger LOGGER = Logger.getLogger(MsLimsSpectrumLoaderImpl.class);
-    private Connection connection;
+    private ConnectionLoader connectionLoader;
     private Map<Long, Spectrum> mSLimsSpectra;
     private boolean doNoiseFiltering;
     private NoiseThresholdFinder noiseThresholdFinder;
     private NoiseFilter noiseFilter;
 
-    public MsLimsSpectrumLoaderImpl(Connection connection) {
-        this.connection = connection;
+    public MsLimsSpectrumLoaderImpl() {
         doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
     }
+
+    public ConnectionLoader getConnectionLoader() {
+        return connectionLoader;
+    }
+
+    public void setConnectionLoader(ConnectionLoader connectionLoader) {
+        this.connectionLoader = connectionLoader;
+    }      
+
+    public NoiseThresholdFinder getNoiseThresholdFinder() {
+        return noiseThresholdFinder;
+    }
+
+    public void setNoiseThresholdFinder(NoiseThresholdFinder noiseThresholdFinder) {
+        this.noiseThresholdFinder = noiseThresholdFinder;
+    }
+
+    public NoiseFilter getNoiseFilter() {
+        return noiseFilter;
+    }
+
+    public void setNoiseFilter(NoiseFilter noiseFilter) {
+        this.noiseFilter = noiseFilter;
+    }        
 
     @Override
     public void setDoNoiseFiltering(boolean doNoiseFiltering) {
@@ -47,18 +70,18 @@ public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
 
         try {
             //retrieve spectrum file
-            Spectrum_file spectrum_file = Spectrum_file.findFromID(spectrumId, connection);
+            Spectrum_file spectrum_file = Spectrum_file.findFromID(spectrumId, connectionLoader.getConnection());
 
             //retrieve MSLims spectrum from map
-            com.compomics.mslims.db.accessors.Spectrum msLimsSpectrum = (com.compomics.mslims.db.accessors.Spectrum) mSLimsSpectra.get(spectrumId);
+            com.compomics.mslims.db.accessors.Spectrum msLimsSpectrum = (com.compomics.mslims.db.accessors.Spectrum) mSLimsSpectra.get(spectrumId);            
 
             //generate mascotgenericfile to retrieve peaks
-            MascotGenericFile mascotGenericFile = new MascotGenericFile(msLimsSpectrum.getFilename(), new String(spectrum_file.getUnzippedFile()));
+            MascotGenericFile mascotGenericFile = new MascotGenericFile(msLimsSpectrum.getFilename(), new String(spectrum_file.getUnzippedFile()));            
             //retrieve peaks
             Map<Double, Double> mSLimsPeaks = mascotGenericFile.getPeaks();
 
             //create new spectrum
-            spectrum = new SpectrumImpl(Long.toString(spectrumId));
+            spectrum = new SpectrumImpl(Long.toString(spectrumId), msLimsSpectrum.getFilename(), mascotGenericFile.getCharge(), mascotGenericFile.getPrecursorMZ());
 
             //filter the spectrum if necessary
             if (doNoiseFiltering) {
@@ -99,7 +122,7 @@ public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
         mSLimsSpectra = new HashMap<Long, Spectrum>();
 
         try {
-            com.compomics.mslims.db.accessors.Spectrum[] mSLimsSpectraArray = com.compomics.mslims.db.accessors.Spectrum.getAllSpectraForProject(experimentId, connection);
+            com.compomics.mslims.db.accessors.Spectrum[] mSLimsSpectraArray = com.compomics.mslims.db.accessors.Spectrum.getAllSpectraForProject(experimentId, connectionLoader.getConnection());
 
             if (numberOfSpectra == -1 || numberOfSpectra > mSLimsSpectraArray.length) {
                 numberOfSpectra = mSLimsSpectraArray.length;
@@ -113,15 +136,5 @@ public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
         }
 
         return mSLimsSpectra.keySet();
-    }
-
-    @Override
-    public void setNoiseThresholdFinder(NoiseThresholdFinder noiseThresholdFinder) {
-        this.noiseThresholdFinder = noiseThresholdFinder;
-    }
-
-    @Override
-    public void setNoiseFilter(NoiseFilter noiseFilter) {
-        this.noiseFilter = noiseFilter;
     }
 }

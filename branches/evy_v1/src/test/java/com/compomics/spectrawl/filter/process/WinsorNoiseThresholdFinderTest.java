@@ -1,6 +1,7 @@
 package com.compomics.spectrawl.filter.process;
 
-import com.compomics.spectrawl.filter.process.impl.WinsorNoiseThresholdFinder;
+import com.compomics.spectrawl.logic.filter.process.NoiseThresholdFinder;
+import com.compomics.spectrawl.logic.filter.process.impl.WinsorNoiseThresholdFinder;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

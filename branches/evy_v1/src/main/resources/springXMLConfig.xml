@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"               
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"              
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       
+       ">
+    
+    <!-- Property placeholder-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="resources/spectrawl.properties"/>
+    </bean>   
+    
+    <!-- data loader beans -->
+    <bean id="mgfExperimentLoader"
+          class="com.compomics.spectrawl.data.impl.MgfExperimentLoaderImpl">
+        <property name="mgfSpectrumLoader" ref="mgfSpectrumLoader"/>
+        <property name="spectrumBinner" ref="spectrumBinner"/>
+        <property name="spectrumFilter" ref="filterChain"/>
+    </bean>
+    
+    <bean id="mgfSpectrumLoader"
+          class="com.compomics.spectrawl.data.impl.MgfSpectrumLoaderImpl">
+        <property name="noiseFilter" ref="noiseFilter"/>
+        <property name="noiseThresholdFinder" ref="noiseThresholdFinder"/>
+    </bean>
+    
+    <bean id="msLimsExperimentLoader"
+          class="com.compomics.spectrawl.data.impl.MsLimsExperimentLoaderImpl">
+        <property name="msLimsSpectrumLoader" ref="msLimsSpectrumLoader"/>
+        <property name="spectrumBinner" ref="spectrumBinner"/>
+        <property name="spectrumFilter" ref="filterChain"/>
+    </bean>
+    
+    <bean id="msLimsSpectrumLoader"
+          class="com.compomics.spectrawl.data.impl.MsLimsSpectrumLoaderImpl">
+        <property name="noiseFilter" ref="noiseFilter"/>
+        <property name="noiseThresholdFinder" ref="noiseThresholdFinder"/>
+        <property name="connectionLoader" ref="connectionLoader"/>
+    </bean>
+    
+    <bean id="connectionLoader"
+          class="com.compomics.spectrawl.data.ConnectionLoader">
+    </bean>
+    
+    <!-- logic beans -->
+    <bean id="experimentBinner"
+          class="com.compomics.spectrawl.logic.bin.impl.ExperimentBinnerImpl">
+    </bean>
+    
+    <bean id="spectrumBinner"
+          class="com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerWithSortingImpl">
+    </bean>
+    
+    <bean id="noiseFilter"
+          class="com.compomics.spectrawl.logic.filter.process.impl.NoiseFilterImpl">
+    </bean>
+    
+    <bean id="noiseThresholdFinder"
+          class="com.compomics.spectrawl.logic.filter.process.impl.WinsorNoiseThresholdFinder">
+    </bean> 
+    
+    <bean id="filterChain"
+          class="com.compomics.spectrawl.logic.filter.analyze.impl.FilterChainImpl">
+    </bean>
+    
+    <!-- guava event bus bean -->
+    <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>     
+    
+    <!-- controller beans --> 
+    <bean id="mainController"
+          class="com.compomics.spectrawl.gui.controller.MainController">
+        <property name="experimentLoaderController" ref="experimentLoaderController"/>
+        <property name="filterController" ref="filterController"/>
+        <property name="resultController" ref="resultController"/>
+        <property name="eventBus" ref="eventBus"/>
+    </bean> 
+    
+    <bean id="experimentLoaderController"
+          class="com.compomics.spectrawl.gui.controller.ExperimentLoaderController">
+        <property name="mainController" ref="mainController"/>
+        <property name="progressController" ref="progressController"/>
+        <property name="mgfExperimentLoader" ref="mgfExperimentLoader"/>
+        <property name="msLimsExperimentLoader" ref="msLimsExperimentLoader"/>
+        <property name="experimentBinner" ref="experimentBinner"/>        
+        <property name="eventBus" ref="eventBus"/>        
+    </bean>
+    
+    <bean id="filterController"
+          class="com.compomics.spectrawl.gui.controller.FilterController">
+        <property name="spectrumFilterChain" ref="filterChain"/>   
+    </bean>
+    
+    <bean id="resultController"
+          class="com.compomics.spectrawl.gui.controller.ResultController">
+    </bean>
+    
+    <bean id="progressController"
+          class="com.compomics.spectrawl.gui.controller.ProgressController">
+        <property name="experimentLoaderController" ref="experimentLoaderController"/>   
+    </bean>
+                           
+</beans>

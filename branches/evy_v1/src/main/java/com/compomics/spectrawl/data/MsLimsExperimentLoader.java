@@ -10,24 +10,10 @@ import com.compomics.spectrawl.model.Experiment;
  *
  * @author niels
  */
-public interface MsLimsExperimentLoader extends ExperimentLoader {
-    
-    /**
-     * Gets the mslims spectrum loader
-     * 
-     * @return the mslims spectrum loader
-     */
-    MsLimsSpectrumLoader getMsLimsSpectrumLoader();
-    
-    /**
-     * Sets the mslims spectrum loader
-     *
-     * @param msLimsSpectrumLoader the mslims spectrum loader
-     */
-    void setMsLimsSpectrumLoader(MsLimsSpectrumLoader msLimsSpectrumLoader);
+public interface MsLimsExperimentLoader {
        
     /**
-     * Loads the experiment
+     * Load the experiment by experiment ID with all spectra.
      *
      * @param experimentId the experiment ID
      * @return the experiment
@@ -35,12 +21,19 @@ public interface MsLimsExperimentLoader extends ExperimentLoader {
     Experiment loadExperiment(String experimentId);
 
     /**
-     * Loads the experiment
+     * Load the experiment by experiment ID, restricting the loaded number of spectra.
      *
      * @param experimentId    the experiment ID
      * @param numberOfSpectra the number of spectra to retrieve
      * @return the experiment
      */
     Experiment loadExperiment(String experimentId, int numberOfSpectra);
+    
+    /**
+     * Get the MsLimsSpectrumLoader
+     * 
+     * @return MsLimsSpectrumLoader
+     */
+    MsLimsSpectrumLoader getMsLimsSpectrumLoader();
     
 }

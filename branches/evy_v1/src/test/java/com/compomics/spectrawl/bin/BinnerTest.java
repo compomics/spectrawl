@@ -1,8 +1,10 @@
 package com.compomics.spectrawl.bin;
 
-import com.compomics.spectrawl.bin.impl.ExperimentBinnerImpl;
-import com.compomics.spectrawl.bin.impl.SpectrumBinnerImpl;
-import com.compomics.spectrawl.bin.impl.SpectrumBinnerWithSortingImpl;
+import com.compomics.spectrawl.logic.bin.ExperimentBinner;
+import com.compomics.spectrawl.logic.bin.SpectrumBinner;
+import com.compomics.spectrawl.logic.bin.impl.ExperimentBinnerImpl;
+import com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerImpl;
+import com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerWithSortingImpl;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.ExperimentBin;
 import com.compomics.spectrawl.model.SpectrumBin;
@@ -12,9 +14,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,8 +28,14 @@ import org.junit.Test;
  * Time: 11:19
  * To change this template use File | Settings | File Templates.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:springXMLConfig.xml")
 public class BinnerTest {
 
+    @Autowired
+    private ExperimentBinner experimentBinner;
+    @Autowired
+    private SpectrumBinner spectrumBinner;
     private Experiment experiment;
 
     @Before
@@ -132,7 +143,6 @@ public class BinnerTest {
         spectrum_6.setPeakList(peaks);
 
         //bin the spectra
-        SpectrumBinner spectrumBinner = new SpectrumBinnerWithSortingImpl();
         spectrumBinner.binSpectrum(spectrum_1);
         spectrumBinner.binSpectrum(spectrum_2);
         spectrumBinner.binSpectrum(spectrum_3);
@@ -153,7 +163,6 @@ public class BinnerTest {
         experiment.setSpectra(spectra);
 
         //bin the experiment
-        ExperimentBinner experimentBinner = new ExperimentBinnerImpl();
         experimentBinner.binExperiment(experiment);
     }
 

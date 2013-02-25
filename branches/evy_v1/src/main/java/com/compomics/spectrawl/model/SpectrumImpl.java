@@ -12,7 +12,18 @@ import java.util.TreeMap;
  */
 public class SpectrumImpl extends Spectrum implements Binnable<SpectrumBin> {
 
+    /**
+     * The spectrum ID
+     */
     private String spectrumId;
+    /**
+     * The precursor charge
+     */
+    private int charge;
+    /**
+     * The precursor M/Z ratio
+     */
+    private double precursorMzRatio;
     /**
      * The spectrum bins (key: bin floor, value: spectrum bin)
      */
@@ -26,9 +37,17 @@ public class SpectrumImpl extends Spectrum implements Binnable<SpectrumBin> {
         super();
     }
     
-    public SpectrumImpl(String spectrumId) {
+    public SpectrumImpl(String spectrumId) {        
+        super();
+        this.spectrumId = spectrumId;        
+    }
+    
+    public SpectrumImpl(String spectrumId, String fileName, int charge, double precursorMzRatio){
         super();
         this.spectrumId = spectrumId;
+        this.fileName = fileName;
+        this.charge = charge;
+        this.precursorMzRatio = precursorMzRatio;
     }
     
     public SpectrumImpl(Spectrum spectrum){        
@@ -39,6 +58,30 @@ public class SpectrumImpl extends Spectrum implements Binnable<SpectrumBin> {
         this.scanStartTime = spectrum.getScanStartTime();
         this.spectrumId = spectrumTitle;
     }
+
+    public String getSpectrumId() {
+        return spectrumId;
+    }
+
+    public void setSpectrumId(String spectrumId) {
+        this.spectrumId = spectrumId;
+    }
+
+    public int getCharge() {
+        return charge;
+    }
+
+    public void setCharge(int charge) {
+        this.charge = charge;
+    }
+
+    public double getPrecursorMzRatio() {
+        return precursorMzRatio;
+    }
+
+    public void setPrecursorMzRatio(double precursorMzRatio) {
+        this.precursorMzRatio = precursorMzRatio;
+    }        
     
     /**
      * Add the peak bins to the corresponding spectrum bins
