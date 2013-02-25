@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -318,6 +319,8 @@ public class ExperimentLoaderController {
             } catch (ExecutionException ex) {
                 LOGGER.error(ex.getMessage(), ex);
                 eventBus.post(new UnexpectedErrorMessageEvent(ex.getMessage()));
+            } catch (CancellationException ex) {
+                LOGGER.info("loading experiment cancelled");                
             } finally {
                 //hide progress bar
                 progressController.hideProgressDialog();
