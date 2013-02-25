@@ -266,10 +266,10 @@ public class ExperimentLoaderController {
             updateBinConstants();
 
             //update filters if winsorization checkbox is selected
-            if (mainController.getFilterController().isWinsorCheckBoxSelected()) {                
-                mainController.getFilterController().updateFilterChain();
+            if (mainController.getFilterController().isWinsorCheckBoxSelected()) {                                
+                mainController.getFilterController().updateWinsorisationParameters();
             }
-            mainController.getFilterController().updateWinsorisationParameters();
+            mainController.getFilterController().updateFilterChain();
 
             Experiment experiment = null;
             if (experimentType.equals(Experiment.ExperimentType.MSLIMS)) {
