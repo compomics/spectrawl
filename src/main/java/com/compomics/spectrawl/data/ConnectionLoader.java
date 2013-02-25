@@ -8,29 +8,35 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Created by IntelliJ IDEA.
- * User: niels
- * Date: 8/03/12
- * Time: 9:33
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: niels Date: 8/03/12 Time: 9:33 To change this
+ * template use File | Settings | File Templates.
  */
 public class ConnectionLoader {
 
     private static final Logger LOGGER = org.apache.log4j.Logger.getLogger(ConnectionLoader.class);
+    private Connection connection;
 
-    private static Connection connection;
+    /**
+     * If there's an open connection, close it.
+     */
+    public void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
 
-    public static void closeConnection() {
-        if (connection != null) {
-            try {
                 connection.close();
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage(), e);
             }
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
-    public static Connection getConnection() {
+    /**
+     * Get a connection. If there's no connection, get one from the
+     * DriverManager.
+     *
+     * @return the connection
+     */
+    public Connection getConnection() throws SQLException {
         if (connection == null) {
             try {
                 Class.forName(PropertiesConfigurationHolder.getInstance().getString("DRIVER"));
@@ -41,9 +47,7 @@ public class ConnectionLoader {
                 connection = DriverManager.getConnection(url, username, password);
             } catch (ClassNotFoundException e) {
                 LOGGER.error(e.getMessage(), e);
-            } catch (SQLException e) {
-                LOGGER.error(e.getMessage(), e);
-            }
+            } 
         }
         return connection;
     }

@@ -6,8 +6,8 @@ package com.compomics.spectrawl.data.impl;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 import com.compomics.spectrawl.data.MgfSpectrumLoader;
-import com.compomics.spectrawl.filter.process.NoiseFilter;
-import com.compomics.spectrawl.filter.process.NoiseThresholdFinder;
+import com.compomics.spectrawl.logic.filter.process.NoiseFilter;
+import com.compomics.spectrawl.logic.filter.process.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.SpectrumFactory;
 import java.io.File;
@@ -39,12 +39,10 @@ public class MgfSpectrumLoaderImpl implements MgfSpectrumLoader {
         this.doNoiseFiltering = doNoiseFiltering;
     }
 
-    @Override
     public void setNoiseThresholdFinder(NoiseThresholdFinder noiseThresholdFinder) {
         this.noiseThresholdFinder = noiseThresholdFinder;
     }
 
-    @Override
     public void setNoiseFilter(NoiseFilter noiseFilter) {
         this.noiseFilter = noiseFilter;
     }

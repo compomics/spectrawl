@@ -12,28 +12,21 @@ import java.util.Map;
  *
  * @author niels
  */
-public interface MgfExperimentLoader extends ExperimentLoader {
-    
+public interface MgfExperimentLoader {
+        
     /**
-     * Gets the mgf spectrum loader
+     * Load the experiment from the given MGF files.
      * 
-     * @return the mgf spectrum loader
-     */
-    MgfSpectrumLoader getMgfSpectrumLoader();
-    
-    /**
-     * Sets the mgf spectrum loader
-     *
-     * @param mgfSpectrumLoader the mgf spectrum loader
-     */
-    void setMgfSpectrumLoader(MgfSpectrumLoader mgfSpectrumLoader);
-       
-    /**
-     * Loads the experiment
-     *
-     * @param experimentId the experiment ID
+     * @param mgfFiles the MGF files
      * @return the experiment
      */
     Experiment loadExperiment(Map<String, File> mgfFiles);
+    
+    /**
+     * Get the MgfSpectrumLoader
+     * 
+     * @return MgfSpectrumLoader
+     */
+    MgfSpectrumLoader getMgfSpectrumLoader();
     
 }
