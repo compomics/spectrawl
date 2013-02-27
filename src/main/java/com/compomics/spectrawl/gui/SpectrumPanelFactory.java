@@ -25,7 +25,7 @@ public class SpectrumPanelFactory {
         // remove the border
         spectrumPanel.setBorder(null);
 
-        spectrumPanel.showAnnotatedPeaksOnly(true);
+        //spectrumPanel.showAnnotatedPeaksOnly(true);
 
         return spectrumPanel;
     }
