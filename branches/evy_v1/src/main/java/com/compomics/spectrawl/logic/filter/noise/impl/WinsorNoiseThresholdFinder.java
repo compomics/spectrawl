@@ -1,6 +1,6 @@
-package com.compomics.spectrawl.logic.filter.process.impl;
+package com.compomics.spectrawl.logic.filter.noise.impl;
 
-import com.compomics.spectrawl.logic.filter.process.NoiseThresholdFinder;
+import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.FilterParams;
 import com.compomics.spectrawl.util.MathUtils;
 

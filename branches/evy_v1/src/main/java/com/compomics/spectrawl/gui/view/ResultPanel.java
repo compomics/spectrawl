@@ -87,11 +87,11 @@ public class ResultPanel extends javax.swing.JPanel {
 
         intensityChartParentPanel.setBackground(new java.awt.Color(255, 255, 255));
         intensityChartParentPanel.setLayout(new java.awt.GridBagLayout());
-        chartsTabbedPane.addTab("intensities chart", intensityChartParentPanel);
+        chartsTabbedPane.addTab("Intensities chart", intensityChartParentPanel);
 
         countChartParentPanel.setBackground(new java.awt.Color(255, 255, 255));
         countChartParentPanel.setLayout(new java.awt.GridBagLayout());
-        chartsTabbedPane.addTab("count chart", countChartParentPanel);
+        chartsTabbedPane.addTab("Count chart", countChartParentPanel);
 
         spectraPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -152,11 +152,11 @@ public class ResultPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(spectrumTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(spectrumDetailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 237, Short.MAX_VALUE)
+                .addComponent(spectrumDetailPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        chartsTabbedPane.addTab("spectra", spectraPanel);
+        chartsTabbedPane.addTab("Spectra", spectraPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -175,7 +175,7 @@ public class ResultPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(experimentInfoLabelPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chartsTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                .addComponent(chartsTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

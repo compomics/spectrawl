@@ -7,13 +7,15 @@ package com.compomics.spectrawl.gui.controller;
 import com.compomics.spectrawl.gui.event.MessageEvent;
 import com.compomics.spectrawl.gui.event.UnexpectedErrorMessageEvent;
 import com.compomics.spectrawl.gui.view.MainFrame;
-import com.compomics.spectrawl.model.Experiment;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -23,7 +25,7 @@ import org.apache.log4j.Logger;
  *
  * @author niels
  */
-public class MainController {
+public class MainController implements ActionListener {
 
     private static final Logger LOGGER = Logger.getLogger(MainController.class);
     //model
@@ -32,13 +34,10 @@ public class MainController {
     private MainFrame mainFrame;
     //child controllers
     private ExperimentLoaderController experimentLoaderController;
-    private FilterController filterController;
+    private FilterConfigController filterConfigController;
     private ResultController resultController;
     //services
     private EventBus eventBus;
-
-    public MainController() {
-    }
 
     public ExperimentLoaderController getExperimentLoaderController() {
         return experimentLoaderController;
@@ -48,12 +47,12 @@ public class MainController {
         this.experimentLoaderController = experimentLoaderController;
     }
 
-    public FilterController getFilterController() {
-        return filterController;
+    public FilterConfigController getFilterConfigController() {
+        return filterConfigController;
     }
 
-    public void setFilterController(FilterController filterController) {
-        this.filterController = filterController;
+    public void setFilterConfigController(FilterConfigController filterConfigController) {
+        this.filterConfigController = filterConfigController;
     }
 
     public ResultController getResultController() {
@@ -97,7 +96,7 @@ public class MainController {
 
         //init child controllers
         experimentLoaderController.init();
-        filterController.init();
+        filterConfigController.init();
         resultController.init();
 
         //add panel components                        
@@ -107,30 +106,32 @@ public class MainController {
         gridBagConstraints.weighty = 1.0;
 
         mainFrame.getExperimentLoaderParentPanel().add(experimentLoaderController.getExperimentLoaderPanel(), gridBagConstraints);
-        mainFrame.getProcessFilterParentPanel().add(filterController.getProcessFilterPanel(), gridBagConstraints);
-        mainFrame.getAnalyzeFilterParentPanel().add(filterController.getAnalyzeFilterPanel(), gridBagConstraints);
         mainFrame.getExperimentBinsParentPanel().add(resultController.getResultPanel(), gridBagConstraints);
+        
+        //add action listeners
+        mainFrame.getExitMenuItem().addActionListener(this);
+        mainFrame.getFilterSettingsMenuItem().addActionListener(this);
     }
 
     /**
      * This method is called when an experiment is loaded. The user input is
-     * loaded and all result panels are resetted.     
+     * loaded and all result panels are resetted.
      */
     public void onLoadExperiment() {
         List<String> validationMessages = validateUserInput();
         if (validationMessages.isEmpty()) {
             resultController.clear();
-            experimentLoaderController.loadExperiment();            
+            experimentLoaderController.loadExperiment();
         } else {
             validationMessages.add(0, "Validation errors found:");
             eventBus.post(new MessageEvent("Validation errors", validationMessages, JOptionPane.WARNING_MESSAGE));
         }
     }
-    
+
     /**
      * On canceled method, clears the resources.
      */
-    public void onCanceled(){
+    public void onCanceled() {
         resultController.clear();
     }
 
@@ -143,7 +144,17 @@ public class MainController {
     public void onMessageEvent(MessageEvent messageEvent) {
         showMessageDialog(messageEvent.getMessageTitle(), messageEvent.getMessage(), messageEvent.getMessageType());
     }
-    
+
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        if (((JMenuItem) actionEvent.getSource()).getText().equalsIgnoreCase("Filter Settings")) {
+            filterConfigController.getFilterConfigDialog().setVisible(true);
+        } else if (((JMenuItem) actionEvent.getSource()).getText().equalsIgnoreCase("Exit")) { // modification details
+            mainFrame.dispose();
+            System.exit(0);
+        }
+    }
+
     /**
      * Shows a message dialog.
      *
@@ -165,7 +176,7 @@ public class MainController {
             JOptionPane.showMessageDialog(mainFrame.getContentPane(), message, title, messageType);
         }
     }
-    
+
     /**
      * Validate the user input in all child panels.
      *
@@ -174,8 +185,7 @@ public class MainController {
     private List<String> validateUserInput() {
         List<String> validationMessages = new ArrayList<String>();
         validationMessages.addAll(experimentLoaderController.validateUserInput());
-        validationMessages.addAll(filterController.validateUserInput());
+        validationMessages.addAll(filterConfigController.validateUserInput());
         return validationMessages;
     }
-    
 }

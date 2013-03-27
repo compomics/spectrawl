@@ -6,8 +6,8 @@ package com.compomics.spectrawl.data.impl;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 import com.compomics.spectrawl.data.MgfSpectrumLoader;
-import com.compomics.spectrawl.logic.filter.process.NoiseFilter;
-import com.compomics.spectrawl.logic.filter.process.NoiseThresholdFinder;
+import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
+import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.SpectrumFactory;
 import java.io.File;

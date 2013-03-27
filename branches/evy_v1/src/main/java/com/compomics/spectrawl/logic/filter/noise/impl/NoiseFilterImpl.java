@@ -1,6 +1,6 @@
-package com.compomics.spectrawl.logic.filter.process.impl;
+package com.compomics.spectrawl.logic.filter.noise.impl;
 
-import com.compomics.spectrawl.logic.filter.process.NoiseFilter;
+import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
 
 import java.util.HashMap;
 import java.util.Map;

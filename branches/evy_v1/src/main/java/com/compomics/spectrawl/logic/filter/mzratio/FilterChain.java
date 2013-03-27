@@ -1,4 +1,4 @@
-package com.compomics.spectrawl.logic.filter.analyze;
+package com.compomics.spectrawl.logic.filter.mzratio;
 
 /**
  * Created by IntelliJ IDEA.

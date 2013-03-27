@@ -7,7 +7,7 @@ package com.compomics.spectrawl.data.impl;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.data.MgfExperimentLoader;
 import com.compomics.spectrawl.data.MgfSpectrumLoader;
-import com.compomics.spectrawl.logic.filter.analyze.Filter;
+import com.compomics.spectrawl.logic.filter.mzratio.Filter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Spectrum;
