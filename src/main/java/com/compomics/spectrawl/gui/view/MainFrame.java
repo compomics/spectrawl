@@ -6,6 +6,7 @@ package com.compomics.spectrawl.gui.view;
 
 import java.awt.Color;
 import java.awt.Frame;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 /**
@@ -18,15 +19,11 @@ public class MainFrame extends javax.swing.JFrame {
      * Creates new form SpectrawlFrame
      */
     public MainFrame() {
-        initComponents();    
+        initComponents();
         this.getContentPane().setBackground(new Color(255, 255, 255));
         setLocationRelativeTo(null);
         setExtendedState(Frame.MAXIMIZED_BOTH);
         setVisible(true);
-    }
-
-    public JPanel getAnalyzeFilterParentPanel() {
-        return analyzeFilterParentPanel;
     }
 
     public JPanel getExperimentBinsParentPanel() {
@@ -37,9 +34,13 @@ public class MainFrame extends javax.swing.JFrame {
         return experimentLoaderParentPanel;
     }
 
-    public JPanel getProcessFilterParentPanel() {
-        return processFilterParentPanel;
+    public JMenuItem getExitMenuItem() {
+        return exitMenuItem;
     }
+
+    public JMenuItem getFilterSettingsMenuItem() {
+        return filterSettingsMenuItem;
+    }        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -52,10 +53,12 @@ public class MainFrame extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         experimentLoaderParentPanel = new javax.swing.JPanel();
-        filtersTabbedPane = new javax.swing.JTabbedPane();
-        analyzeFilterParentPanel = new javax.swing.JPanel();
-        processFilterParentPanel = new javax.swing.JPanel();
         experimentBinsParentPanel = new javax.swing.JPanel();
+        menuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        exitMenuItem = new javax.swing.JMenuItem();
+        editMenu = new javax.swing.JMenu();
+        filterSettingsMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Spectrawl");
@@ -79,28 +82,6 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
         getContentPane().add(experimentLoaderParentPanel, gridBagConstraints);
 
-        filtersTabbedPane.setBackground(new java.awt.Color(255, 255, 255));
-        filtersTabbedPane.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        filtersTabbedPane.setMinimumSize(new java.awt.Dimension(4, 4));
-        filtersTabbedPane.setOpaque(true);
-        filtersTabbedPane.setPreferredSize(new java.awt.Dimension(4, 4));
-
-        analyzeFilterParentPanel.setLayout(new java.awt.GridBagLayout());
-        filtersTabbedPane.addTab("analyze filter", analyzeFilterParentPanel);
-
-        processFilterParentPanel.setLayout(new java.awt.GridBagLayout());
-        filtersTabbedPane.addTab("process filter", processFilterParentPanel);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.3;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
-        getContentPane().add(filtersTabbedPane, gridBagConstraints);
-
         experimentBinsParentPanel.setBackground(new java.awt.Color(255, 255, 255));
         experimentBinsParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         experimentBinsParentPanel.setLayout(new java.awt.GridBagLayout());
@@ -113,14 +94,31 @@ public class MainFrame extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
         getContentPane().add(experimentBinsParentPanel, gridBagConstraints);
 
+        fileMenu.setText("File");
+
+        exitMenuItem.setText("Exit");
+        fileMenu.add(exitMenuItem);
+
+        menuBar.add(fileMenu);
+
+        editMenu.setText("Edit");
+
+        filterSettingsMenuItem.setText("Filter Settings");
+        editMenu.add(filterSettingsMenuItem);
+
+        menuBar.add(editMenu);
+
+        setJMenuBar(menuBar);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel analyzeFilterParentPanel;
+    private javax.swing.JMenu editMenu;
+    private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JPanel experimentBinsParentPanel;
     private javax.swing.JPanel experimentLoaderParentPanel;
-    private javax.swing.JTabbedPane filtersTabbedPane;
-    private javax.swing.JPanel processFilterParentPanel;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenuItem filterSettingsMenuItem;
+    private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
 }

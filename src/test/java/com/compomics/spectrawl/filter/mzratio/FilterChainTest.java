@@ -1,14 +1,12 @@
-package com.compomics.spectrawl.filter.analyze;
+package com.compomics.spectrawl.filter.mzratio;
 
-import com.compomics.spectrawl.logic.filter.analyze.Filter;
-import com.compomics.spectrawl.logic.filter.analyze.FilterChain;
+import com.compomics.spectrawl.logic.filter.mzratio.Filter;
+import com.compomics.spectrawl.logic.filter.mzratio.FilterChain;
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.bin.impl.ExperimentBinnerImpl;
-import com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerImpl;
-import com.compomics.spectrawl.logic.filter.analyze.impl.FilterChainImpl;
-import com.compomics.spectrawl.logic.filter.analyze.impl.SpectrumBinFilter;
-import com.compomics.spectrawl.logic.filter.analyze.impl.SpectrumMzRatioFilter;
+import com.compomics.spectrawl.logic.filter.mzratio.impl.FilterChainImpl;
+import com.compomics.spectrawl.logic.filter.mzratio.impl.SpectrumMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.mzratio.impl.SpectrumMzRatioFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Peak;
@@ -90,11 +88,11 @@ public class FilterChainTest {
     }
 
     @Test
-    public void testSpectrumBinFilter() {
+    public void testSpectrumMzDeltaFilter() {
         List<Double> filterValues = new ArrayList<Double>();
         filterValues.add(120D);
         filterValues.add(200D);
-        Filter<SpectrumImpl> filter = new SpectrumBinFilter(0.3, filterValues);
+        Filter<SpectrumImpl> filter = new SpectrumMzDeltaFilter(0.3, filterValues);
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
         assertTrue(filter.passesFilter(spectrum, Boolean.FALSE));
@@ -114,7 +112,7 @@ public class FilterChainTest {
         List<Double> filterValues = new ArrayList<Double>();
         filterValues.add(120D);
         filterValues.add(200D);
-        Filter<SpectrumImpl> binFilter = new SpectrumBinFilter(0.8, filterValues);
+        Filter<SpectrumImpl> binFilter = new SpectrumMzDeltaFilter(0.8, filterValues);
 
         andFilterChain.addFilter(mzRatioFilter);
         orFilterChain.addFilter(mzRatioFilter);

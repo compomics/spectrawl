@@ -43,7 +43,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="experimentInfoLabelPanel" min="-2" pref="19" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="chartsTabbedPane" pref="459" max="32767" attributes="0"/>
+              <Component id="chartsTabbedPane" pref="553" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -94,8 +94,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="intensities chart">
-                <Property name="tabTitle" type="java.lang.String" value="intensities chart"/>
+              <JTabbedPaneConstraints tabName="Intensities chart">
+                <Property name="tabTitle" type="java.lang.String" value="Intensities chart"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -110,8 +110,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="count chart">
-                <Property name="tabTitle" type="java.lang.String" value="count chart"/>
+              <JTabbedPaneConstraints tabName="Count chart">
+                <Property name="tabTitle" type="java.lang.String" value="Count chart"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -126,8 +126,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="spectra">
-                <Property name="tabTitle" type="java.lang.String" value="spectra"/>
+              <JTabbedPaneConstraints tabName="Spectra">
+                <Property name="tabTitle" type="java.lang.String" value="Spectra"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -151,7 +151,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="spectrumTablePanel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="spectrumDetailPanel" pref="237" max="32767" attributes="0"/>
+                      <Component id="spectrumDetailPanel" pref="331" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

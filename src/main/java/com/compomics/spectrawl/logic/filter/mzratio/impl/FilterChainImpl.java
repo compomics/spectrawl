@@ -1,7 +1,7 @@
-package com.compomics.spectrawl.logic.filter.analyze.impl;
+package com.compomics.spectrawl.logic.filter.mzratio.impl;
 
-import com.compomics.spectrawl.logic.filter.analyze.Filter;
-import com.compomics.spectrawl.logic.filter.analyze.FilterChain;
+import com.compomics.spectrawl.logic.filter.mzratio.Filter;
+import com.compomics.spectrawl.logic.filter.mzratio.FilterChain;
 import com.compomics.util.experiment.biology.AminoAcid;
 import com.compomics.util.experiment.biology.NeutralLoss;
 import com.compomics.util.experiment.biology.PTM;
@@ -77,7 +77,7 @@ public class FilterChainImpl<T> implements FilterChain<T> {
     public static FilterChainImpl getFilterChain(PTM ptm) {
         FilterChainImpl result = new FilterChainImpl(FilterChainType.OR);
         for (NeutralLoss neutralLoss : ptm.getNeutralLosses()) {
-            result.addFilter(new SpectrumBinFilter(neutralLoss.mass, null)); // Not sure whether I got that right
+            result.addFilter(new SpectrumMzDeltaFilter(neutralLoss.mass, null)); // Not sure whether I got that right
         }
         for (ReporterIon reporterIon : ptm.getReporterIons()) {
             result.addFilter(new SpectrumMzRatioFilter(reporterIon.getTheoreticMass(), new ArrayList<Double>())); //@TODO: add mzRatioFilterValues

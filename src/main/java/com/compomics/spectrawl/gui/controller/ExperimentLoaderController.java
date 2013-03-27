@@ -266,10 +266,10 @@ public class ExperimentLoaderController {
             updateBinConstants();
 
             //update filters if winsorization checkbox is selected
-            if (mainController.getFilterController().isWinsorCheckBoxSelected()) {                                
-                mainController.getFilterController().updateWinsorisationParameters();
+            if (mainController.getFilterConfigController().isWinsorCheckBoxSelected()) {                                
+                mainController.getFilterConfigController().updateWinsorisationParameters();
             }
-            mainController.getFilterController().updateFilterChain();
+            mainController.getFilterConfigController().updateFilterChain();
 
             Experiment experiment = null;
             if (experimentType.equals(Experiment.ExperimentType.MSLIMS)) {
@@ -279,7 +279,7 @@ public class ExperimentLoaderController {
                 LOGGER.info("start loading MsLims experiment " + msLimsExperimentId);
 
                 //load experiment
-                msLimsExperimentLoader.getMsLimsSpectrumLoader().setDoNoiseFiltering(mainController.getFilterController().isWinsorCheckBoxSelected());
+                msLimsExperimentLoader.getMsLimsSpectrumLoader().setDoNoiseFiltering(mainController.getFilterConfigController().isWinsorCheckBoxSelected());
                 experiment = msLimsExperimentLoader.loadExperiment(msLimsExperimentId);
 
                 LOGGER.info("done loading MsLims experiment " + msLimsExperimentId);
@@ -289,7 +289,7 @@ public class ExperimentLoaderController {
                 LOGGER.info("start loading MGF file(s)");
 
                 //load experiment with selected mgf files
-                mgfExperimentLoader.getMgfSpectrumLoader().setDoNoiseFiltering(mainController.getFilterController().isWinsorCheckBoxSelected());
+                mgfExperimentLoader.getMgfSpectrumLoader().setDoNoiseFiltering(mainController.getFilterConfigController().isWinsorCheckBoxSelected());
                 experiment = mgfExperimentLoader.loadExperiment(getMgfFiles());
 
                 LOGGER.info("done loading MGF file(s)");

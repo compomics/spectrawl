@@ -1,4 +1,4 @@
-package com.compomics.spectrawl.logic.filter.process;
+package com.compomics.spectrawl.logic.filter.noise;
 
 import java.util.Map;
 

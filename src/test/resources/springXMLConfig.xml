@@ -7,13 +7,13 @@
     <!-- Property placeholder-->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
-                <list>
-                        <value>${property_file.source}:resources/spectrawl.properties
-                        </value>
-                </list>
+            <list>
+                <value>classpath:resources/spectrawl.properties
+                </value>
+            </list>
         </property>
         <property name="ignoreUnresolvablePlaceholders">
-                <value>true</value>
+            <value>true</value>
         </property>       
     </bean>   
     

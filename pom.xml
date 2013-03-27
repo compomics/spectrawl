@@ -26,6 +26,14 @@
 
     <build>
         
+        <!-- Copy the resources required during building -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>            
+        </resources>            
+        
         <extensions> 
             <extension> 
                 <groupId>org.apache.maven.wagon</groupId> 
@@ -111,7 +119,7 @@
                                 </resource>
                             </resources>
                         </configuration>
-                    </execution>
+                    </execution>                    
                     <execution>
                         <id>copy-package-license</id>
                         <phase>package</phase>
@@ -251,11 +259,7 @@
                 <exclusion>
                     <artifactId>ols-dialog</artifactId>
                     <groupId>no.uib</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>braf</artifactId>
-                    <groupId>uk.ac.ebi.pride.tools</groupId>
-                </exclusion>
+                </exclusion>               
             </exclusions>
         </dependency>
 
@@ -309,5 +313,20 @@
         </dependency>
 
     </dependencies>
+    
+    <profiles>
+        <profile>
+            <id>development</id>
+            <properties>
+                <property_file.source>classpath</property_file.source>    
+            </properties>
+        </profile>
+        <profile>
+            <id>production</id>
+            <properties>
+                <property_file.source>file</property_file.source> 
+            </properties>   
+        </profile>
+    </profiles>
 
 </project>
