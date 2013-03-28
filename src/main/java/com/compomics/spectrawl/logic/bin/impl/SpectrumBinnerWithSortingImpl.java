@@ -29,7 +29,8 @@ public class SpectrumBinnerWithSortingImpl implements SpectrumBinner {
                 //check if mass delta value lies within the bins floor and ceiling
                 if ((BinParams.BINS_FLOOR.getValue() <= massDelta) && (massDelta < BinParams.BINS_CEILING.getValue())) {
                     //add to peak bins
-                    addToPeakBins(peakBins, massDelta, spectrum.getPeakMap().get(innerMass).intensity / spectrum.getTotalIntensity());
+//                    addToPeakBins(peakBins, massDelta, spectrum.getPeakMap().get(innerMass).intensity / spectrum.getTotalIntensity());
+                    addToPeakBins(peakBins, massDelta, (spectrum.getPeakMap().get(innerMass).intensity / spectrum.getTotalIntensity()) * spectrum.getPeakMap().get(outerMass).intensity / spectrum.getTotalIntensity());
                 }
                 else if(massDelta >= BinParams.BINS_CEILING.getValue()){
                     break;
