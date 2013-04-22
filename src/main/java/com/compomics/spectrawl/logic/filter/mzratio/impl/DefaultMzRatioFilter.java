@@ -12,14 +12,14 @@ import java.util.List;
  * Time: 16:01
  * To change this template use File | Settings | File Templates.
  */
-public class SpectrumMzRatioFilter implements Filter<SpectrumImpl> {
+public class DefaultMzRatioFilter implements Filter<SpectrumImpl> {
 
     //@TODO: add a name to the filter?
     
     private double mzRatioTolerance;
     private List<Double> mzRatioFilterValues;
 
-    public SpectrumMzRatioFilter(double mzRatioTolerance, List<Double> mzRatioFilterValues) {
+    public DefaultMzRatioFilter(double mzRatioTolerance, List<Double> mzRatioFilterValues) {
         this.mzRatioTolerance = mzRatioTolerance;
         this.mzRatioFilterValues = mzRatioFilterValues;        
     }
@@ -42,10 +42,10 @@ public class SpectrumMzRatioFilter implements Filter<SpectrumImpl> {
         
     @Override
     public boolean passesFilter(SpectrumImpl spectrum, boolean doInvert) {
-        boolean passesFilter = Boolean.TRUE;
+        boolean passesFilter = true;
         for (double mzRatioFilterValue : mzRatioFilterValues) {
             if (!passesMzRatioFilterValue(spectrum, mzRatioFilterValue)) {
-                passesFilter = Boolean.FALSE;
+                passesFilter = false;
                 break;
             }
         }
@@ -61,6 +61,7 @@ public class SpectrumMzRatioFilter implements Filter<SpectrumImpl> {
         boolean passesMzRatioFilterValue = Boolean.FALSE;
         for (Peak peak : spectrum.getPeakList()) {
             double mzRatio = peak.mz;
+            //@todo consider twice the tolerance or not?
             if (Math.abs(mzRatio - mzRatioFilterValue) < mzRatioTolerance) {
                 passesMzRatioFilterValue = Boolean.TRUE;
                 break;

@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springXMLConfig.xml")
-public class FilterChainTest {
+public class DefaultMzDeltaFilterTest {
 
     @Autowired
     SpectrumBinner spectrumBinner;
@@ -73,35 +73,14 @@ public class FilterChainTest {
     }
 
     @Test
-    public void testFilterChain() {
-        FilterChain<SpectrumImpl> andFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.AND);
-        FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.OR);
-        FilterChain<SpectrumImpl> combinedFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.OR);
-
-        //add 2 filters to the first two filter chains
-        List<Double> mzRatioFilterValues = new ArrayList<Double>();
-        mzRatioFilterValues.add(230D);
-        Filter<SpectrumImpl> mzRatioFilter = new DefaultMzRatioFilter(0.5, mzRatioFilterValues);
+    public void testPassesFilter() {
         List<Double> filterValues = new ArrayList<Double>();
         filterValues.add(120D);
         filterValues.add(200D);
-        Filter<SpectrumImpl> binFilter = new DefaultMzDeltaFilter(0.8, filterValues);
-
-        andFilterChain.addFilter(mzRatioFilter);
-        orFilterChain.addFilter(mzRatioFilter);
-        andFilterChain.addFilter(binFilter);
-        orFilterChain.addFilter(binFilter);
-
-        //add the first two filter chains to the last one
-        combinedFilterChain.addFilter(andFilterChain);
-        combinedFilterChain.addFilter(orFilterChain);
+        Filter<SpectrumImpl> filter = new DefaultMzDeltaFilter(0.3, filterValues);
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
-
-        assertFalse(andFilterChain.passesFilter(spectrum, Boolean.FALSE));
-        assertTrue(orFilterChain.passesFilter(spectrum, Boolean.FALSE));
-
-        assertTrue(combinedFilterChain.passesFilter(spectrum, Boolean.FALSE));
-        assertFalse(combinedFilterChain.passesFilter(spectrum, Boolean.TRUE));
+        assertTrue(filter.passesFilter(spectrum, Boolean.FALSE));
+        assertFalse(filter.passesFilter(spectrum, Boolean.TRUE));
     }
 }

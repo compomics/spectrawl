@@ -55,7 +55,7 @@
     </bean>
     
     <bean id="spectrumBinner"
-          class="com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerWithSortingImpl">
+          class="com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerImpl">
     </bean>
     
     <bean id="noiseFilter"
@@ -64,7 +64,12 @@
     
     <bean id="noiseThresholdFinder"
           class="com.compomics.spectrawl.logic.filter.noise.impl.WinsorNoiseThresholdFinder">
-    </bean> 
+    </bean>
+    
+    <bean id="fixedCombMzDeltaFilter"
+          class="com.compomics.spectrawl.logic.filter.mzratio.impl.FixedCombMzDeltaFilter">
+        <property name="spectrumBinner" ref="spectrumBinner"/>        
+    </bean>  
     
     <bean id="filterChain"
           class="com.compomics.spectrawl.logic.filter.mzratio.impl.FilterChainImpl">

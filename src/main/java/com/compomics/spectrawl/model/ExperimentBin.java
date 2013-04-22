@@ -37,6 +37,7 @@ public class ExperimentBin {
         this.highestIntensityQuantiles = highestIntensityQuantiles;
     }
 
+    @Override
     public String toString() {
         String s = "";
         if(peakCountQuantiles != null){
