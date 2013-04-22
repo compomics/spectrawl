@@ -11,12 +11,12 @@ import java.util.List;
  * Time: 9:18
  * To change this template use File | Settings | File Templates.
  */
-public class SpectrumMzDeltaFilter implements Filter<SpectrumImpl> {
+public class DefaultMzDeltaFilter implements Filter<SpectrumImpl> {
     
     private double intensityThreshold;
     private List<Double> intensitySumFilterValues;
 
-    public SpectrumMzDeltaFilter(double intensityThreshold, List<Double> intensitySumFilterValues) {
+    public DefaultMzDeltaFilter(double intensityThreshold, List<Double> intensitySumFilterValues) {
         this.intensityThreshold = intensityThreshold;
         this.intensitySumFilterValues = intensitySumFilterValues;
     }
@@ -39,12 +39,12 @@ public class SpectrumMzDeltaFilter implements Filter<SpectrumImpl> {
             
     @Override
     public boolean passesFilter(SpectrumImpl spectrum, boolean doInvert) {
-        boolean passesFilter = Boolean.TRUE;
+        boolean passesFilter = true;
 
         for (Double intensitySumFilterValue : intensitySumFilterValues) {
             Double key = spectrum.getBins().floorKey(intensitySumFilterValue);
             if (key != null && spectrum.getBins().get(key).getIntensitySum() < intensityThreshold) {
-                passesFilter = Boolean.FALSE;
+                passesFilter = false;
                 break;
             }
         }

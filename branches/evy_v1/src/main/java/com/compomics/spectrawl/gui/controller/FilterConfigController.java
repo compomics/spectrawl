@@ -7,8 +7,8 @@ package com.compomics.spectrawl.gui.controller;
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 import com.compomics.spectrawl.gui.view.FilterConfigDialog;
 import com.compomics.spectrawl.logic.filter.mzratio.FilterChain;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.SpectrumMzDeltaFilter;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.SpectrumMzRatioFilter;
+import com.compomics.spectrawl.logic.filter.mzratio.impl.DefaultMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.mzratio.impl.DefaultMzRatioFilter;
 import com.compomics.spectrawl.model.FilterParams;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.awt.event.ActionEvent;
@@ -28,8 +28,8 @@ public class FilterConfigController {
     //model
     private DefaultListModel mzRatioFilterListModel;
     private DefaultListModel mzDeltaFilterListModel;
-    private SpectrumMzDeltaFilter spectrumMzDeltaFilter;
-    private SpectrumMzRatioFilter spectrumMzRatioFilter;
+    private DefaultMzDeltaFilter defaultMzDeltaFilter;
+    private DefaultMzRatioFilter defaultMzRatioFilter;
     //view
     private FilterConfigDialog filterConfigDialog;
     //parent controller
@@ -65,12 +65,12 @@ public class FilterConfigController {
         filterConfigDialog = new FilterConfigDialog(mainController.getMainFrame(), true);
 
         //init filters
-        spectrumMzDeltaFilter = new SpectrumMzDeltaFilter(0.0, new ArrayList<Double>());
-        spectrumMzRatioFilter = new SpectrumMzRatioFilter(0.0, new ArrayList<Double>());
+        defaultMzDeltaFilter = new DefaultMzDeltaFilter(0.0, new ArrayList<Double>());
+        defaultMzRatioFilter = new DefaultMzRatioFilter(0.0, new ArrayList<Double>());
         spectrumFilterChain.setFilterChainType(FilterChain.FilterChainType.AND);
         //add filters to chain
-        spectrumFilterChain.addFilter(spectrumMzDeltaFilter);
-        spectrumFilterChain.addFilter(spectrumMzRatioFilter);
+        spectrumFilterChain.addFilter(defaultMzDeltaFilter);
+        spectrumFilterChain.addFilter(defaultMzRatioFilter);
 
         initMzRatioFilterPanel();
         initNoiseFilterPanel();
@@ -130,20 +130,20 @@ public class FilterConfigController {
      */
     private void updateFilters() {
         //update spectrumMzRatioFilter
-        spectrumMzRatioFilter.getMzRatioFilterValues().clear();
+        defaultMzRatioFilter.getMzRatioFilterValues().clear();
         if (!mzRatioFilterListModel.isEmpty()) {
-            spectrumMzRatioFilter.setMzRatioTolerance(Double.parseDouble(filterConfigDialog.getMzToleranceTextField().getText()));
+            defaultMzRatioFilter.setMzRatioTolerance(Double.parseDouble(filterConfigDialog.getMzToleranceTextField().getText()));
         }
         for (Object value : mzRatioFilterListModel.toArray()) {
-            spectrumMzRatioFilter.getMzRatioFilterValues().add((Double) value);
+            defaultMzRatioFilter.getMzRatioFilterValues().add((Double) value);
         }
         //update spectrumBinFilter
-        spectrumMzDeltaFilter.getIntensitySumFilterValues().clear();
+        defaultMzDeltaFilter.getIntensitySumFilterValues().clear();
         if (!mzDeltaFilterListModel.isEmpty()) {
-            spectrumMzDeltaFilter.setIntensityThreshold(Double.parseDouble(filterConfigDialog.getIntensityThresholdTextField().getText()));
+            defaultMzDeltaFilter.setIntensityThreshold(Double.parseDouble(filterConfigDialog.getIntensityThresholdTextField().getText()));
         }
         for (Object value : mzDeltaFilterListModel.toArray()) {
-            spectrumMzDeltaFilter.getIntensitySumFilterValues().add((Double) value);
+            defaultMzDeltaFilter.getIntensitySumFilterValues().add((Double) value);
         }
     }
 

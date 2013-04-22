@@ -1,11 +1,8 @@
 package com.compomics.spectrawl.filter.mzratio;
 
 import com.compomics.spectrawl.logic.filter.mzratio.Filter;
-import com.compomics.spectrawl.logic.filter.mzratio.FilterChain;
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.FilterChainImpl;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.DefaultMzDeltaFilter;
 import com.compomics.spectrawl.logic.filter.mzratio.impl.DefaultMzRatioFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
@@ -29,7 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springXMLConfig.xml")
-public class FilterChainTest {
+public class DefaultMzRatioFilterTest {
 
     @Autowired
     SpectrumBinner spectrumBinner;
@@ -73,35 +70,14 @@ public class FilterChainTest {
     }
 
     @Test
-    public void testFilterChain() {
-        FilterChain<SpectrumImpl> andFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.AND);
-        FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.OR);
-        FilterChain<SpectrumImpl> combinedFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.OR);
-
-        //add 2 filters to the first two filter chains
+    public void testPassesFilter() {
         List<Double> mzRatioFilterValues = new ArrayList<Double>();
+        mzRatioFilterValues.add(220.3);
         mzRatioFilterValues.add(230D);
-        Filter<SpectrumImpl> mzRatioFilter = new DefaultMzRatioFilter(0.5, mzRatioFilterValues);
-        List<Double> filterValues = new ArrayList<Double>();
-        filterValues.add(120D);
-        filterValues.add(200D);
-        Filter<SpectrumImpl> binFilter = new DefaultMzDeltaFilter(0.8, filterValues);
-
-        andFilterChain.addFilter(mzRatioFilter);
-        orFilterChain.addFilter(mzRatioFilter);
-        andFilterChain.addFilter(binFilter);
-        orFilterChain.addFilter(binFilter);
-
-        //add the first two filter chains to the last one
-        combinedFilterChain.addFilter(andFilterChain);
-        combinedFilterChain.addFilter(orFilterChain);
+        Filter<SpectrumImpl> filter = new DefaultMzRatioFilter(0.5, mzRatioFilterValues);
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
-
-        assertFalse(andFilterChain.passesFilter(spectrum, Boolean.FALSE));
-        assertTrue(orFilterChain.passesFilter(spectrum, Boolean.FALSE));
-
-        assertTrue(combinedFilterChain.passesFilter(spectrum, Boolean.FALSE));
-        assertFalse(combinedFilterChain.passesFilter(spectrum, Boolean.TRUE));
+        assertTrue(filter.passesFilter(spectrum, Boolean.FALSE));
+        assertFalse(filter.passesFilter(spectrum, Boolean.TRUE));
     }
 }
