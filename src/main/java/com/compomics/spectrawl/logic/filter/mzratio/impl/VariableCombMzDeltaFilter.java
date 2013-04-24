@@ -8,22 +8,12 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * This filter looks for a number of consecutive fixed M/Z delta values between
- * peaks, between a minimum and a maximum value.
+ * This filter looks for a number of consecutive variable M/Z delta values between
+ * peaks.
  */
-public class FixedCombMzDeltaFilter implements Filter<SpectrumImpl> {
+public class VariableCombMzDeltaFilter implements Filter<SpectrumImpl> {
 
-    private double intensityThreshold;
-    /**
-     * The mininum number of consecutive M/Z delta values considered in order to
-     * pass the filter
-     */
-    private int minConsecMzDeltas;
-    /**
-     * The maximum number of consecutive M/Z delta values considered in order to
-     * pass the filter
-     */
-    private int maxConsecMzDeltas;
+    private double intensityThreshold;    
     private double mzDeltaFilterValue;
     private SpectrumBinner spectrumBinner;
 
@@ -36,7 +26,7 @@ public class FixedCombMzDeltaFilter implements Filter<SpectrumImpl> {
     }
 
     public void init(double intensityThreshold, int minConsecBins, int maxConsecBins, double mzDeltaFilterValue) {
-        if (minConsecBins > maxConsecBins) {
+        if(minConsecBins > maxConsecBins){
             throw new IllegalArgumentException("The ");
         }
         this.intensityThreshold = intensityThreshold;

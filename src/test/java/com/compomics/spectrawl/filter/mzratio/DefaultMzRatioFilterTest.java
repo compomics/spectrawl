@@ -77,7 +77,7 @@ public class DefaultMzRatioFilterTest {
         Filter<SpectrumImpl> filter = new DefaultMzRatioFilter(0.5, mzRatioFilterValues);
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
-        assertTrue(filter.passesFilter(spectrum, Boolean.FALSE));
-        assertFalse(filter.passesFilter(spectrum, Boolean.TRUE));
+        assertTrue(filter.passesFilter(spectrum, false));
+        assertFalse(filter.passesFilter(spectrum, true));
     }
 }
