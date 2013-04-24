@@ -98,10 +98,10 @@ public class FilterChainTest {
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
 
-        assertFalse(andFilterChain.passesFilter(spectrum, Boolean.FALSE));
-        assertTrue(orFilterChain.passesFilter(spectrum, Boolean.FALSE));
+        assertFalse(andFilterChain.passesFilter(spectrum, false));
+        assertTrue(orFilterChain.passesFilter(spectrum, false));
 
-        assertTrue(combinedFilterChain.passesFilter(spectrum, Boolean.FALSE));
-        assertFalse(combinedFilterChain.passesFilter(spectrum, Boolean.TRUE));
+        assertTrue(combinedFilterChain.passesFilter(spectrum, false));
+        assertFalse(combinedFilterChain.passesFilter(spectrum, true));
     }
 }

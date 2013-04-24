@@ -6,11 +6,7 @@ import com.compomics.util.experiment.massspectrometry.Peak;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: niels
- * Date: 15/02/12
- * Time: 16:01
- * To change this template use File | Settings | File Templates.
+ * This filter looks for the presence of given M/Z ratio values in a spectrum.
  */
 public class DefaultMzRatioFilter implements Filter<SpectrumImpl> {
 

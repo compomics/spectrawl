@@ -5,11 +5,7 @@ import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: niels
- * Date: 17/02/12
- * Time: 9:18
- * To change this template use File | Settings | File Templates.
+ * This filter looks for the presence of given M/Z delta values in a spectrum.
  */
 public class DefaultMzDeltaFilter implements Filter<SpectrumImpl> {
     
