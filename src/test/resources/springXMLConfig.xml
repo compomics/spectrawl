@@ -71,6 +71,11 @@
         <property name="spectrumBinner" ref="spectrumBinner"/>        
     </bean> 
     
+    <bean id="variableCombMzDeltaFilter"
+          class="com.compomics.spectrawl.logic.filter.mzratio.impl.VariableCombMzDeltaFilter">
+        <property name="spectrumBinner" ref="spectrumBinner"/>        
+    </bean> 
+    
     <bean id="filterChain"
           class="com.compomics.spectrawl.logic.filter.mzratio.impl.FilterChainImpl">
     </bean>

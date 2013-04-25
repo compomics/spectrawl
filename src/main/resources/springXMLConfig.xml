@@ -7,13 +7,13 @@
     <!-- Property placeholder-->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
-                <list>
-                        <value>${property_file.source}:resources/spectrawl.properties
-                        </value>
-                </list>
+            <list>
+                <value>${property_file.source}:resources/spectrawl.properties
+                </value>
+            </list>
         </property>
         <property name="ignoreUnresolvablePlaceholders">
-                <value>true</value>
+            <value>true</value>
         </property>       
     </bean>   
     
@@ -70,6 +70,11 @@
           class="com.compomics.spectrawl.logic.filter.mzratio.impl.FixedCombMzDeltaFilter">
         <property name="spectrumBinner" ref="spectrumBinner"/>        
     </bean>  
+    
+    <bean id="variableCombMzDeltaFilter"
+          class="com.compomics.spectrawl.logic.filter.mzratio.impl.VariableCombMzDeltaFilter">
+        <property name="spectrumBinner" ref="spectrumBinner"/>        
+    </bean>
     
     <bean id="filterChain"
           class="com.compomics.spectrawl.logic.filter.mzratio.impl.FilterChainImpl">
