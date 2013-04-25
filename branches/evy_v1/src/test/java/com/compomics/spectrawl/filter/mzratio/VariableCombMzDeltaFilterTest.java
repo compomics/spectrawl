@@ -2,7 +2,7 @@ package com.compomics.spectrawl.filter.mzratio;
 
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.FixedCombMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.mzratio.impl.VariableCombMzDeltaFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Peak;
@@ -23,14 +23,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springXMLConfig.xml")
-public class FixedCombMzDeltaFilterTest {
+public class VariableCombMzDeltaFilterTest {
 
     @Autowired
     SpectrumBinner spectrumBinner;
     @Autowired
     ExperimentBinner experimentBinner;
     @Autowired
-    FixedCombMzDeltaFilter fixedCombMzDeltaFilter;
+    VariableCombMzDeltaFilter variableCombMzDeltaFilter;
     private Experiment experiment;
 
     @Before
@@ -42,14 +42,14 @@ public class FixedCombMzDeltaFilterTest {
         peaks.put(100D, peak);
         peak = new Peak(150.5, 100D);
         peaks.put(150.5, peak);
-        peak = new Peak(201D, 40D);
-        peaks.put(201D, peak);
-        peak = new Peak(251.5, 100D);
-        peaks.put(251.5, peak);
+        peak = new Peak(180D, 40D);
+        peaks.put(180D, peak);
+        peak = new Peak(211.5, 100D);
+        peaks.put(211.5, peak);
         peak = new Peak(302D, 100D);
         peaks.put(302D, peak);
-        peak = new Peak(352.5, 100D);
-        peaks.put(352.5, peak);
+        peak = new Peak(322.5, 100D);
+        peaks.put(322.5, peak);
 
         //add some random peaks
         peak = new Peak(160.5, 100D);
@@ -79,8 +79,8 @@ public class FixedCombMzDeltaFilterTest {
     }
 
     /**
-     * Test the scenario where the number of consecutive M/Z deltas exceeds the
-     * maximum value. In this case, the spectrum should fail to pass the filter.
+     * Test the scenario where the filter M/Z deltas are found in the
+     * spectrum. In this case, the spectrum should pass the filter.
      */
     @Test
     public void testPassesFilter_1() {
@@ -88,14 +88,15 @@ public class FixedCombMzDeltaFilterTest {
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
 
         //init filter        
-        fixedCombMzDeltaFilter.init(0.01, 2, 4, 50.5);
-        boolean filterOutcome = fixedCombMzDeltaFilter.passesFilter(spectrum, false);
-        Assert.assertFalse(filterOutcome);
+        double[] mzDeltaValues = {50.5, 29.5, 31.5, 90.5, 20.5};
+        variableCombMzDeltaFilter.init(0.01, mzDeltaValues);
+        boolean filterOutcome = variableCombMzDeltaFilter.passesFilter(spectrum, false);
+        Assert.assertTrue(filterOutcome);
     }
-
+    
     /**
-     * Test the scenario where the number of consecutive M/Z deltas lies within the
-     * specified interval. In this case, the test should pass the filter.
+     * Test the scenario where the filter M/Z deltas are found in the
+     * spectrum. In this case, the spectrum should pass the filter.
      */
     @Test
     public void testPassesFilter_2() {
@@ -103,14 +104,15 @@ public class FixedCombMzDeltaFilterTest {
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
 
         //init filter        
-        fixedCombMzDeltaFilter.init(0.01, 4, 6, 50.5);
-        boolean filterOutcome = fixedCombMzDeltaFilter.passesFilter(spectrum, false);
+        double[] mzDeltaValues = {50.5, 29.5, 31.5};
+        variableCombMzDeltaFilter.init(0.01, mzDeltaValues);
+        boolean filterOutcome = variableCombMzDeltaFilter.passesFilter(spectrum, false);
         Assert.assertTrue(filterOutcome);
     }
     
     /**
-     * Test the scenario where the number of consecutive M/Z deltas lies within the
-     * specified interval, and the interval contains only one value. In this case, the test should pass the filter.
+     * Test the scenario where the filter M/Z deltas are not found in the
+     * spectrum. In this case, the spectrum shouldn't pass the filter.
      */
     @Test
     public void testPassesFilter_3() {
@@ -118,23 +120,10 @@ public class FixedCombMzDeltaFilterTest {
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
 
         //init filter        
-        fixedCombMzDeltaFilter.init(0.01, 5, 5, 50.5);
-        boolean filterOutcome = fixedCombMzDeltaFilter.passesFilter(spectrum, false);
-        Assert.assertTrue(filterOutcome);
-    }
-    
-    /**
-     * Test the scenario where the number of consecutive M/Z deltas doesn't lay within the
-     * specified interval. In this case, the test shouldn't pass the filter.
-     */
-    @Test
-    public void testPassesFilter_4() {
-        //get the spectrum
-        SpectrumImpl spectrum = experiment.getSpectra().get(0);
-
-        //init filter        
-        fixedCombMzDeltaFilter.init(0.01, 7, 10, 50.5);
-        boolean filterOutcome = fixedCombMzDeltaFilter.passesFilter(spectrum, false);
+        double[] mzDeltaValues = {10.3, 79.5, 37.5, 102.5, 10.5};
+        variableCombMzDeltaFilter.init(0.01, mzDeltaValues);
+        boolean filterOutcome = variableCombMzDeltaFilter.passesFilter(spectrum, false);
         Assert.assertFalse(filterOutcome);
     }
+    
 }

@@ -8,13 +8,16 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * This filter looks for a number of consecutive variable M/Z delta values between
- * peaks.
+ * This filter looks for a number of consecutive variable M/Z delta values
+ * between peaks.
  */
 public class VariableCombMzDeltaFilter implements Filter<SpectrumImpl> {
 
-    private double intensityThreshold;    
-    private double mzDeltaFilterValue;
+    private double intensityThreshold;
+    /**
+     * The consecutive M/Z delta values to filter for.
+     */
+    private double[] mzDeltaFilterValues;
     private SpectrumBinner spectrumBinner;
 
     public SpectrumBinner getSpectrumBinner() {
@@ -25,14 +28,9 @@ public class VariableCombMzDeltaFilter implements Filter<SpectrumImpl> {
         this.spectrumBinner = spectrumBinner;
     }
 
-    public void init(double intensityThreshold, int minConsecBins, int maxConsecBins, double mzDeltaFilterValue) {
-        if(minConsecBins > maxConsecBins){
-            throw new IllegalArgumentException("The ");
-        }
+    public void init(double intensityThreshold, double[] mzDeltaFilterValues) {
         this.intensityThreshold = intensityThreshold;
-        this.minConsecMzDeltas = minConsecBins;
-        this.maxConsecMzDeltas = maxConsecBins;
-        this.mzDeltaFilterValue = mzDeltaFilterValue;
+        this.mzDeltaFilterValues = mzDeltaFilterValues;
     }
 
     @Override
@@ -49,29 +47,24 @@ public class VariableCombMzDeltaFilter implements Filter<SpectrumImpl> {
              * look for one peak at the relevant M/Z delta values with the other
              * peaks, contained in the peakBins map. Start counting the given
              * range of consecutive M/Z delta values; break if the a certain M/Z
-             * delta value is not present.
+             * delta value is not present (below the intensitythreshold).
              */
-            int consecMzDeltas = 1;
-            for (int i = 1; i <= maxConsecMzDeltas + 1; i++) {
+            int consecMzDeltas = 0;
+            double currentMzDeltaValue = 0.0;
+            for (int i = 0; i < mzDeltaFilterValues.length; i++) {
                 //get the key based on the current M/Z delta value
-                double currentMzDeltaValue = mzDeltaFilterValue * consecMzDeltas;
+                currentMzDeltaValue += mzDeltaFilterValues[i];
                 Double key = peakBins.floorKey(currentMzDeltaValue);
                 if (key != null && peakBins.get(key).getIntensitySum() < intensityThreshold) {
                     //no need to go on
                     break;
-                } else {
+                }
+                else{
                     consecMzDeltas++;
                 }
             }
-            if (consecMzDeltas < minConsecMzDeltas) {
-                //do nothing
-                System.out.println("do nothing");
-            } else if (minConsecMzDeltas <= consecMzDeltas && consecMzDeltas <= maxConsecMzDeltas) {
-                //we still need to look at other peaks because the maximum number might be exceeded there, so just break innner loop. 
+            if(consecMzDeltas == mzDeltaFilterValues.length){
                 passesFilter = true;
-            } else {
-                //as soon as the maximum consecutive number of consecutive M/Z delta values has been reached for one peak, the spectrum fails the filter.
-                passesFilter = false;
                 break;
             }
         }

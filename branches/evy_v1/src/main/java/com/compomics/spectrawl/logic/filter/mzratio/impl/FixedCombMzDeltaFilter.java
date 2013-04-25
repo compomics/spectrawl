@@ -37,7 +37,7 @@ public class FixedCombMzDeltaFilter implements Filter<SpectrumImpl> {
 
     public void init(double intensityThreshold, int minConsecBins, int maxConsecBins, double mzDeltaFilterValue) {
         if (minConsecBins > maxConsecBins) {
-            throw new IllegalArgumentException("The ");
+            throw new IllegalArgumentException("The minimum number of consecutive bins is larger than the maximum number of consecutive bins,");
         }
         this.intensityThreshold = intensityThreshold;
         this.minConsecMzDeltas = minConsecBins;
@@ -59,7 +59,7 @@ public class FixedCombMzDeltaFilter implements Filter<SpectrumImpl> {
              * look for one peak at the relevant M/Z delta values with the other
              * peaks, contained in the peakBins map. Start counting the given
              * range of consecutive M/Z delta values; break if the a certain M/Z
-             * delta value is not present.
+             * delta value is not present (below the intensitythreshold).
              */
             int consecMzDeltas = 1;
             for (int i = 1; i <= maxConsecMzDeltas + 1; i++) {
@@ -77,7 +77,7 @@ public class FixedCombMzDeltaFilter implements Filter<SpectrumImpl> {
                 //do nothing
                 System.out.println("do nothing");
             } else if (minConsecMzDeltas <= consecMzDeltas && consecMzDeltas <= maxConsecMzDeltas) {
-                //we still need to look at other peaks because the maximum number might be exceeded there, so just break innner loop. 
+                //we still need to look at other peaks because the maximum number might be exceeded there, so just break the innner loop. 
                 passesFilter = true;
             } else {
                 //as soon as the maximum consecutive number of consecutive M/Z delta values has been reached for one peak, the spectrum fails the filter.
