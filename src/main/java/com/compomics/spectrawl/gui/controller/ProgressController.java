@@ -6,12 +6,15 @@ import com.compomics.util.gui.waiting.waitinghandlers.ProgressDialogX;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Niels Hulstaert Hulstaert
  * @author Harald Barsnes
  */
+@Component("progressController")
 public class ProgressController extends WindowAdapter {
 
     //model
@@ -20,16 +23,9 @@ public class ProgressController extends WindowAdapter {
     //view
     private ProgressDialogX progressDialog;
     //parent controller
+    @Autowired
     private ExperimentLoaderController experimentLoaderController;        
-
-    public ExperimentLoaderController getExperimentLoaderController() {
-        return experimentLoaderController;
-    }
-
-    public void setExperimentLoaderController(ExperimentLoaderController experimentLoaderController) {
-        this.experimentLoaderController = experimentLoaderController;
-    }    
-
+      
     public void init() {
         progressFinished = Boolean.FALSE;
         //set this controller in PipelineProgressAppender

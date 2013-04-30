@@ -17,20 +17,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 
 /**
  *
  * @author niels
  */
+@Repository("mgfSpectrumLoader")
 public class MgfSpectrumLoaderImpl implements MgfSpectrumLoader {
 
     private static final Logger LOGGER = Logger.getLogger(MgfSpectrumLoaderImpl.class);
     private boolean doNoiseFiltering;
+    @Autowired
     private NoiseThresholdFinder noiseThresholdFinder;
+    @Autowired
     private NoiseFilter noiseFilter;
 
-    public MgfSpectrumLoaderImpl() {        
+    public MgfSpectrumLoaderImpl() {
         doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
     }
 
@@ -39,18 +44,10 @@ public class MgfSpectrumLoaderImpl implements MgfSpectrumLoader {
         this.doNoiseFiltering = doNoiseFiltering;
     }
 
-    public void setNoiseThresholdFinder(NoiseThresholdFinder noiseThresholdFinder) {
-        this.noiseThresholdFinder = noiseThresholdFinder;
-    }
-
-    public void setNoiseFilter(NoiseFilter noiseFilter) {
-        this.noiseFilter = noiseFilter;
-    }
-            
     @Override
-    public Map<String, List<String>> getSpectrumTitles(Map<String, File> mgfFiles) {     
+    public Map<String, List<String>> getSpectrumTitles(Map<String, File> mgfFiles) {
         Map<String, List<String>> spectrumTitles = new HashMap<String, List<String>>();
-        
+
         for (String mgfFileName : mgfFiles.keySet()) {
             try {
                 //add spectra of current mgf file to spectrum factory
@@ -69,7 +66,7 @@ public class MgfSpectrumLoaderImpl implements MgfSpectrumLoader {
 
     @Override
     public SpectrumImpl getSpectrumByKey(String spectrumKey) {
-        SpectrumImpl spectrum = null;        
+        SpectrumImpl spectrum = null;
         try {
             spectrum = new SpectrumImpl(SpectrumFactory.getInstance().getSpectrum(spectrumKey));
         } catch (IOException ex) {

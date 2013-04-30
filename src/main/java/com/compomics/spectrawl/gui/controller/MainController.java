@@ -20,11 +20,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author niels
  */
+@Component("mainController")
 public class MainController implements ActionListener {
 
     private static final Logger LOGGER = Logger.getLogger(MainController.class);
@@ -33,47 +36,31 @@ public class MainController implements ActionListener {
     //view
     private MainFrame mainFrame;
     //child controllers
+    @Autowired
     private ExperimentLoaderController experimentLoaderController;
+    @Autowired
     private FilterConfigController filterConfigController;
+    @Autowired
     private ResultController resultController;
     //services
-    private EventBus eventBus;
+    @Autowired
+    private EventBus eventBus;    
+
+    public MainFrame getMainFrame() {
+        return mainFrame;
+    }
 
     public ExperimentLoaderController getExperimentLoaderController() {
         return experimentLoaderController;
-    }
-
-    public void setExperimentLoaderController(ExperimentLoaderController experimentLoaderController) {
-        this.experimentLoaderController = experimentLoaderController;
     }
 
     public FilterConfigController getFilterConfigController() {
         return filterConfigController;
     }
 
-    public void setFilterConfigController(FilterConfigController filterConfigController) {
-        this.filterConfigController = filterConfigController;
-    }
-
     public ResultController getResultController() {
         return resultController;
-    }
-
-    public void setResultController(ResultController resultController) {
-        this.resultController = resultController;
-    }
-
-    public EventBus getEventBus() {
-        return eventBus;
-    }
-
-    public void setEventBus(EventBus eventBus) {
-        this.eventBus = eventBus;
-    }
-
-    public MainFrame getMainFrame() {
-        return mainFrame;
-    }
+    }        
 
     /**
      * Init the controller.
@@ -110,7 +97,9 @@ public class MainController implements ActionListener {
         
         //add action listeners
         mainFrame.getExitMenuItem().addActionListener(this);
-        mainFrame.getFilterSettingsMenuItem().addActionListener(this);
+        mainFrame.getAdvancedMzDeltaFilterSettingsMenuItem().addActionListener(this);
+        mainFrame.getMzDeltaFilterSettingsMenuItem().addActionListener(this);
+        mainFrame.getMzRatioFilterSettingsMenuItem().addActionListener(this);
     }
 
     /**
@@ -147,12 +136,16 @@ public class MainController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        if (((JMenuItem) actionEvent.getSource()).getText().equalsIgnoreCase("Filter Settings")) {
-            filterConfigController.getFilterConfigDialog().setVisible(true);
-        } else if (((JMenuItem) actionEvent.getSource()).getText().equalsIgnoreCase("Exit")) { // modification details
+        if (((JMenuItem) actionEvent.getSource()).getText().equalsIgnoreCase("Exit")) {
             mainFrame.dispose();
             System.exit(0);
-        }
+        } else if (((JMenuItem) actionEvent.getSource()).getText().equalsIgnoreCase("M/Z ratio")) {
+            filterConfigController.getMzRatioFilterDialog().setVisible(true);
+        } else if (((JMenuItem) actionEvent.getSource()).getText().equalsIgnoreCase("Basic")) {
+            filterConfigController.getMzDeltaFilterDialog().setVisible(true);
+        } else if (((JMenuItem) actionEvent.getSource()).getText().equalsIgnoreCase("Advanced")) {
+            filterConfigController.getAdvancedMzDeltaFilterDialog().setVisible(true);
+        } 
     }
 
     /**

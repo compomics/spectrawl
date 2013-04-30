@@ -8,11 +8,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 28/02/12 Time: 15:04 To change
  * this template use File | Settings | File Templates.
  */
+@Component("spectrumBinner")
 public class SpectrumBinnerImpl implements SpectrumBinner {
 
     @Override

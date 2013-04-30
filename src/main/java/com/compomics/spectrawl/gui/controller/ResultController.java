@@ -31,11 +31,14 @@ import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author niels
  */
+@Component("resultController")
 public class ResultController {
 
     private static final Logger LOGGER = Logger.getLogger(ResultController.class);
@@ -47,6 +50,7 @@ public class ResultController {
     private ChartPanel countChartPanel;
     private ResultPanel resultPanel;
     //parent controller
+    @Autowired
     private MainController mainController;
     //services
     private SpectrumPanelFactory spectrumPanelFactory;

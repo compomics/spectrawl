@@ -8,14 +8,14 @@ import java.util.List;
 /**
  * This filter looks for the presence of given M/Z ratio values in a spectrum.
  */
-public class DefaultMzRatioFilter implements Filter<SpectrumImpl> {
+public class BasicMzRatioFilter implements Filter<SpectrumImpl> {
 
     //@TODO: add a name to the filter?
     
     private double mzRatioTolerance;
     private List<Double> mzRatioFilterValues;
 
-    public DefaultMzRatioFilter(double mzRatioTolerance, List<Double> mzRatioFilterValues) {
+    public BasicMzRatioFilter(double mzRatioTolerance, List<Double> mzRatioFilterValues) {
         this.mzRatioTolerance = mzRatioTolerance;
         this.mzRatioFilterValues = mzRatioFilterValues;        
     }

@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"               
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"              
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       
-       ">
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"       
+       xmlns:context="http://www.springframework.org/schema/context"       
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <context:annotation-config/>
     
     <!-- Property placeholder-->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -15,106 +19,34 @@
         <property name="ignoreUnresolvablePlaceholders">
             <value>true</value>
         </property>       
-    </bean>   
-    
-    <!-- data loader beans -->
-    <bean id="mgfExperimentLoader"
-          class="com.compomics.spectrawl.data.impl.MgfExperimentLoaderImpl">
-        <property name="mgfSpectrumLoader" ref="mgfSpectrumLoader"/>
-        <property name="spectrumBinner" ref="spectrumBinner"/>
-        <property name="spectrumFilter" ref="filterChain"/>
-    </bean>
-    
-    <bean id="mgfSpectrumLoader"
-          class="com.compomics.spectrawl.data.impl.MgfSpectrumLoaderImpl">
-        <property name="noiseFilter" ref="noiseFilter"/>
-        <property name="noiseThresholdFinder" ref="noiseThresholdFinder"/>
-    </bean>
-    
-    <bean id="msLimsExperimentLoader"
-          class="com.compomics.spectrawl.data.impl.MsLimsExperimentLoaderImpl">
-        <property name="msLimsSpectrumLoader" ref="msLimsSpectrumLoader"/>
-        <property name="spectrumBinner" ref="spectrumBinner"/>
-        <property name="spectrumFilter" ref="filterChain"/>
-    </bean>
-    
-    <bean id="msLimsSpectrumLoader"
-          class="com.compomics.spectrawl.data.impl.MsLimsSpectrumLoaderImpl">
-        <property name="noiseFilter" ref="noiseFilter"/>
-        <property name="noiseThresholdFinder" ref="noiseThresholdFinder"/>
-        <property name="connectionLoader" ref="connectionLoader"/>
-    </bean>
-    
-    <bean id="connectionLoader"
-          class="com.compomics.spectrawl.data.ConnectionLoader">
-    </bean>
-    
-    <!-- logic beans -->
-    <bean id="experimentBinner"
-          class="com.compomics.spectrawl.logic.bin.impl.ExperimentBinnerImpl">
-    </bean>
-    
-    <bean id="spectrumBinner"
-          class="com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerImpl">
-    </bean>
-    
-    <bean id="noiseFilter"
-          class="com.compomics.spectrawl.logic.filter.noise.impl.NoiseFilterImpl">
-    </bean>
-    
-    <bean id="noiseThresholdFinder"
-          class="com.compomics.spectrawl.logic.filter.noise.impl.WinsorNoiseThresholdFinder">
-    </bean>
-    
-    <bean id="fixedCombMzDeltaFilter"
-          class="com.compomics.spectrawl.logic.filter.mzratio.impl.FixedCombMzDeltaFilter">
-        <property name="spectrumBinner" ref="spectrumBinner"/>        
-    </bean>  
-    
-    <bean id="variableCombMzDeltaFilter"
-          class="com.compomics.spectrawl.logic.filter.mzratio.impl.VariableCombMzDeltaFilter">
-        <property name="spectrumBinner" ref="spectrumBinner"/>        
-    </bean>
-    
-    <bean id="filterChain"
-          class="com.compomics.spectrawl.logic.filter.mzratio.impl.FilterChainImpl">
-    </bean>
-    
-    <!-- guava event bus bean -->
-    <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>     
-    
-    <!-- controller beans --> 
-    <bean id="mainController"
-          class="com.compomics.spectrawl.gui.controller.MainController">
-        <property name="experimentLoaderController" ref="experimentLoaderController"/>
-        <property name="filterConfigController" ref="filterConfigController"/>
-        <property name="resultController" ref="resultController"/>
-        <property name="eventBus" ref="eventBus"/>
     </bean> 
     
-    <bean id="experimentLoaderController"
-          class="com.compomics.spectrawl.gui.controller.ExperimentLoaderController">
-        <property name="mainController" ref="mainController"/>
-        <property name="progressController" ref="progressController"/>
-        <property name="mgfExperimentLoader" ref="mgfExperimentLoader"/>
-        <property name="msLimsExperimentLoader" ref="msLimsExperimentLoader"/>
-        <property name="experimentBinner" ref="experimentBinner"/>        
-        <property name="eventBus" ref="eventBus"/>        
-    </bean>
+    <!-- repository beans -->
+    <context:component-scan base-package="com.compomics.spectrawl.data">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan> 
     
-    <bean id="filterConfigController"
-          class="com.compomics.spectrawl.gui.controller.FilterConfigController">
-        <property name="mainController" ref="mainController"/>   
-        <property name="spectrumFilterChain" ref="filterChain"/>   
+    <!-- component beans -->
+    <context:component-scan base-package="com.compomics.spectrawl">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Component"/>
+    </context:component-scan>             
+                        
+    <!-- concurrency beans -->
+    <!--    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+     <property name="corePoolSize" value="5" />
+     <property name="maxPoolSize" value="10" />
+     <property name="queueCapacity" value="25" />
+    </bean>-->
+
+    <bean id="taskExecutor" class="java.util.concurrent.Executors" 
+          factory-method="newFixedThreadPool"
+          destroy-method="shutdown">
+        <constructor-arg type="int" value="${}"/>
     </bean>
-    
-    <bean id="resultController"
-          class="com.compomics.spectrawl.gui.controller.ResultController">
-    </bean>
-    
-    <bean id="progressController"
-          class="com.compomics.spectrawl.gui.controller.ProgressController">
-        <property name="experimentLoaderController" ref="experimentLoaderController"/>   
-    </bean>
+                                                                                                                                                                                 
+    <!-- guava event bus bean -->
+    <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>                     
                            
 </beans>

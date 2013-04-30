@@ -1,17 +1,18 @@
 package com.compomics.spectrawl.logic.bin.impl;
 
-import com.compomics.spectrawl.gui.controller.ExperimentLoaderController;
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.model.*;
 import org.apache.commons.math.stat.descriptive.DescriptiveStatistics;
 
 import java.util.Set;
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 14/02/12 Time: 13:48 To change
  * this template use File | Settings | File Templates.
  */
+@Component("experimentBinner")
 public class ExperimentBinnerImpl implements ExperimentBinner {
     private static final Logger LOGGER = Logger.getLogger(ExperimentBinnerImpl.class);
 
