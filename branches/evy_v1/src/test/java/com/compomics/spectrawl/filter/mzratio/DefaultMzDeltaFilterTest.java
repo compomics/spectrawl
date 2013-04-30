@@ -3,7 +3,7 @@ package com.compomics.spectrawl.filter.mzratio;
 import com.compomics.spectrawl.logic.filter.mzratio.Filter;
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.DefaultMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.mzratio.impl.BasicMzDeltaFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Peak;
@@ -74,7 +74,7 @@ public class DefaultMzDeltaFilterTest {
         List<Double> filterValues = new ArrayList<Double>();
         filterValues.add(120D);
         filterValues.add(200D);
-        Filter<SpectrumImpl> filter = new DefaultMzDeltaFilter(0.3, filterValues);
+        Filter<SpectrumImpl> filter = new BasicMzDeltaFilter(0.3, filterValues);
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
         assertTrue(filter.passesFilter(spectrum, false));

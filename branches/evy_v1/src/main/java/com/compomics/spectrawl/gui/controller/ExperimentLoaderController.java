@@ -27,11 +27,14 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author niels
  */
+@Component("experimentLoaderController")
 public class ExperimentLoaderController {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentLoaderController.class);
@@ -42,74 +45,32 @@ public class ExperimentLoaderController {
     //view
     private ExperimentLoaderPanel experimentLoaderPanel;
     //parent controller
+    @Autowired
     private MainController mainController;
     //child controllers
+    @Autowired
     private ProgressController progressController;
     //services
+    @Autowired
     private EventBus eventBus;
+    @Autowired
     private MsLimsExperimentLoader msLimsExperimentLoader;
+    @Autowired
     private MgfExperimentLoader mgfExperimentLoader;
-    private ExperimentBinner experimentBinner;
-
-    public MsLimsExperimentLoader getMsLimsExperimentLoader() {
-        return msLimsExperimentLoader;
-    }
-
-    public void setMsLimsExperimentLoader(MsLimsExperimentLoader msLimsExperimentLoader) {
-        this.msLimsExperimentLoader = msLimsExperimentLoader;
-    }
-
-    public MgfExperimentLoader getMgfExperimentLoader() {
-        return mgfExperimentLoader;
-    }
-
-    public void setMgfExperimentLoader(MgfExperimentLoader mgfExperimentLoader) {
-        this.mgfExperimentLoader = mgfExperimentLoader;
-    }
-
-    public MainController getMainController() {
-        return mainController;
-    }
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
-
-    public EventBus getEventBus() {
-        return eventBus;
-    }
-
-    public void setEventBus(EventBus eventBus) {
-        this.eventBus = eventBus;
-    }
-
-    public ExperimentBinner getExperimentBinner() {
-        return experimentBinner;
-    }
-
-    public void setExperimentBinner(ExperimentBinner experimentBinner) {
-        this.experimentBinner = experimentBinner;
-    }
+    @Autowired
+    private ExperimentBinner experimentBinner;    
 
     public DefaultListModel getMgfFilesListModel() {
         return mgfFilesListModel;
     }
-
-    public void setMgfFilesListModel(DefaultListModel mgfFilesListModel) {
-        this.mgfFilesListModel = mgfFilesListModel;
-    }
-
-    public ProgressController getProgressController() {
-        return progressController;
-    }
-
-    public void setProgressController(ProgressController progressController) {
-        this.progressController = progressController;
-    }
-
+    
     public ExperimentLoaderPanel getExperimentLoaderPanel() {
         return experimentLoaderPanel;
     }
+
+    public MainController getMainController() {
+        return mainController;
+    }        
 
     /**
      * Init the controller.
@@ -266,7 +227,7 @@ public class ExperimentLoaderController {
             updateBinConstants();
 
             //update filters if winsorization checkbox is selected
-            if (mainController.getFilterConfigController().isWinsorCheckBoxSelected()) {                                
+            if (mainController.getFilterConfigController().isWinsorCheckBoxSelected()) {
                 mainController.getFilterConfigController().updateWinsorisationParameters();
             }
             mainController.getFilterConfigController().updateFilterChain();
@@ -320,7 +281,7 @@ public class ExperimentLoaderController {
                 LOGGER.error(ex.getMessage(), ex);
                 eventBus.post(new UnexpectedErrorMessageEvent(ex.getMessage()));
             } catch (CancellationException ex) {
-                LOGGER.info("loading experiment cancelled");                
+                LOGGER.info("loading experiment cancelled");
             } finally {
                 //hide progress bar
                 progressController.hideProgressDialog();

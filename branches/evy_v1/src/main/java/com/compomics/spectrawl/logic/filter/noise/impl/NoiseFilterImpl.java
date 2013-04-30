@@ -4,6 +4,7 @@ import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,6 +13,7 @@ import java.util.Map;
  * Time: 12:05
  * To change this template use File | Settings | File Templates.
  */
+@Component("noiseFilter")
 public class NoiseFilterImpl implements NoiseFilter {
 
     private double filteredIntensitiesSum;

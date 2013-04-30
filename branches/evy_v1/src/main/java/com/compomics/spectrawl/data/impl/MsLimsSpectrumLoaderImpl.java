@@ -17,47 +17,29 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 3/02/12 Time: 10:53 To change
  * this template use File | Settings | File Templates.
  */
+@Repository("msLimsSpectrumLoader")
 public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
 
     private static final Logger LOGGER = Logger.getLogger(MsLimsSpectrumLoaderImpl.class);
-    private ConnectionLoader connectionLoader;
     private Map<Long, Spectrum> mSLimsSpectra;
     private boolean doNoiseFiltering;
+    @Autowired
+    private ConnectionLoader connectionLoader;
+    @Autowired
     private NoiseThresholdFinder noiseThresholdFinder;
+    @Autowired
     private NoiseFilter noiseFilter;
 
     public MsLimsSpectrumLoaderImpl() {
         doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
     }
-
-    public ConnectionLoader getConnectionLoader() {
-        return connectionLoader;
-    }
-
-    public void setConnectionLoader(ConnectionLoader connectionLoader) {
-        this.connectionLoader = connectionLoader;
-    }      
-
-    public NoiseThresholdFinder getNoiseThresholdFinder() {
-        return noiseThresholdFinder;
-    }
-
-    public void setNoiseThresholdFinder(NoiseThresholdFinder noiseThresholdFinder) {
-        this.noiseThresholdFinder = noiseThresholdFinder;
-    }
-
-    public NoiseFilter getNoiseFilter() {
-        return noiseFilter;
-    }
-
-    public void setNoiseFilter(NoiseFilter noiseFilter) {
-        this.noiseFilter = noiseFilter;
-    }        
 
     @Override
     public void setDoNoiseFiltering(boolean doNoiseFiltering) {
@@ -73,10 +55,10 @@ public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
             Spectrum_file spectrum_file = Spectrum_file.findFromID(spectrumId, connectionLoader.getConnection());
 
             //retrieve MSLims spectrum from map
-            com.compomics.mslims.db.accessors.Spectrum msLimsSpectrum = (com.compomics.mslims.db.accessors.Spectrum) mSLimsSpectra.get(spectrumId);            
+            com.compomics.mslims.db.accessors.Spectrum msLimsSpectrum = (com.compomics.mslims.db.accessors.Spectrum) mSLimsSpectra.get(spectrumId);
 
             //generate mascotgenericfile to retrieve peaks
-            MascotGenericFile mascotGenericFile = new MascotGenericFile(msLimsSpectrum.getFilename(), new String(spectrum_file.getUnzippedFile()));            
+            MascotGenericFile mascotGenericFile = new MascotGenericFile(msLimsSpectrum.getFilename(), new String(spectrum_file.getUnzippedFile()));
             //retrieve peaks
             Map<Double, Double> mSLimsPeaks = mascotGenericFile.getPeaks();
 

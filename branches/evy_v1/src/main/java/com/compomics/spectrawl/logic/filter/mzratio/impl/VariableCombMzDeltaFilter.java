@@ -6,11 +6,14 @@ import com.compomics.spectrawl.model.PeakBin;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.Map;
 import java.util.TreeMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * This filter looks for a number of consecutive variable M/Z delta values
  * between peaks.
  */
+@Component("variableCombMzDeltaFilter")
 public class VariableCombMzDeltaFilter implements Filter<SpectrumImpl> {
 
     private double intensityThreshold;
@@ -18,16 +21,9 @@ public class VariableCombMzDeltaFilter implements Filter<SpectrumImpl> {
      * The consecutive M/Z delta values to filter for.
      */
     private double[] mzDeltaFilterValues;
+    @Autowired
     private SpectrumBinner spectrumBinner;
-
-    public SpectrumBinner getSpectrumBinner() {
-        return spectrumBinner;
-    }
-
-    public void setSpectrumBinner(SpectrumBinner spectrumBinner) {
-        this.spectrumBinner = spectrumBinner;
-    }
-
+    
     public void init(double intensityThreshold, double[] mzDeltaFilterValues) {
         this.intensityThreshold = intensityThreshold;
         this.mzDeltaFilterValues = mzDeltaFilterValues;

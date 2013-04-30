@@ -7,12 +7,12 @@ import java.util.List;
 /**
  * This filter looks for the presence of given M/Z delta values in a spectrum.
  */
-public class DefaultMzDeltaFilter implements Filter<SpectrumImpl> {
+public class BasicMzDeltaFilter implements Filter<SpectrumImpl> {
     
     private double intensityThreshold;
     private List<Double> intensitySumFilterValues;
 
-    public DefaultMzDeltaFilter(double intensityThreshold, List<Double> intensitySumFilterValues) {
+    public BasicMzDeltaFilter(double intensityThreshold, List<Double> intensitySumFilterValues) {
         this.intensityThreshold = intensityThreshold;
         this.intensitySumFilterValues = intensitySumFilterValues;
     }

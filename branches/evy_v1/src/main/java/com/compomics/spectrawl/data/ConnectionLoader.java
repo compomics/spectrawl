@@ -6,11 +6,13 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 8/03/12 Time: 9:33 To change this
  * template use File | Settings | File Templates.
  */
+@Component("connectionLoader")
 public class ConnectionLoader {
 
     private static final Logger LOGGER = org.apache.log4j.Logger.getLogger(ConnectionLoader.class);
@@ -22,7 +24,6 @@ public class ConnectionLoader {
     public void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {
-
                 connection.close();
             }
         } catch (SQLException e) {
@@ -47,7 +48,7 @@ public class ConnectionLoader {
                 connection = DriverManager.getConnection(url, username, password);
             } catch (ClassNotFoundException e) {
                 LOGGER.error(e.getMessage(), e);
-            } 
+            }
         }
         return connection;
     }

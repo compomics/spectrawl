@@ -16,14 +16,31 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="editMenu">
+        <Menu class="javax.swing.JMenu" name="filterMenu">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
+            <Property name="text" type="java.lang.String" value="Filter"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="filterSettingsMenuItem">
+            <Menu class="javax.swing.JMenu" name="mzDeltaFilterMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Filter Settings"/>
+                <Property name="text" type="java.lang.String" value="M/Z delta"/>
+              </Properties>
+              <SubComponents>
+                <MenuItem class="javax.swing.JMenuItem" name="mzDeltaFilterSettingsMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Basic"/>
+                  </Properties>
+                </MenuItem>
+                <MenuItem class="javax.swing.JMenuItem" name="advancedMzDeltaFilterSettingsMenuItem">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Advanced"/>
+                  </Properties>
+                </MenuItem>
+              </SubComponents>
+            </Menu>
+            <MenuItem class="javax.swing.JMenuItem" name="mzRatioFilterSettingsMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="M/Z ratio"/>
               </Properties>
             </MenuItem>
           </SubComponents>

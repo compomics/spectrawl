@@ -8,11 +8,13 @@ import com.compomics.util.experiment.biology.PTM;
 import com.compomics.util.experiment.biology.ions.ReporterIon;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 16/02/12 Time: 14:02 To change
  * this template use File | Settings | File Templates.
  */
+@Component("filterChain")
 public class FilterChainImpl<T> implements FilterChain<T> {
 
     //@TODO add a name to the chain? Like when a modification the modification name?
@@ -77,10 +79,10 @@ public class FilterChainImpl<T> implements FilterChain<T> {
     public static FilterChainImpl getFilterChain(PTM ptm) {
         FilterChainImpl result = new FilterChainImpl(FilterChainType.OR);
         for (NeutralLoss neutralLoss : ptm.getNeutralLosses()) {
-            result.addFilter(new DefaultMzDeltaFilter(neutralLoss.mass, null)); // Not sure whether I got that right
+            result.addFilter(new BasicMzDeltaFilter(neutralLoss.mass, null)); // Not sure whether I got that right
         }
         for (ReporterIon reporterIon : ptm.getReporterIons()) {
-            result.addFilter(new DefaultMzRatioFilter(reporterIon.getTheoreticMass(), new ArrayList<Double>())); //@TODO: add mzRatioFilterValues
+            result.addFilter(new BasicMzRatioFilter(reporterIon.getTheoreticMass(), new ArrayList<Double>())); //@TODO: add mzRatioFilterValues
         }
         return result;
     }

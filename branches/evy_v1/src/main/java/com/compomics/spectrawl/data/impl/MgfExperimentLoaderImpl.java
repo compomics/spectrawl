@@ -8,6 +8,7 @@ import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.data.MgfExperimentLoader;
 import com.compomics.spectrawl.data.MgfSpectrumLoader;
 import com.compomics.spectrawl.logic.filter.mzratio.Filter;
+import com.compomics.spectrawl.logic.filter.mzratio.FilterChain;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Spectrum;
@@ -16,34 +17,30 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author niels
  */
+@Repository("mgfExperimentLoader")
 public class MgfExperimentLoaderImpl implements MgfExperimentLoader {
 
     private static final Logger LOGGER = Logger.getLogger(MgfExperimentLoaderImpl.class);
+    @Autowired
+    @Qualifier("filterChain")
     private Filter<SpectrumImpl> spectrumFilter;
+    @Autowired
     private MgfSpectrumLoader mgfSpectrumLoader;
-    private SpectrumBinner spectrumBinner;
-
-    public void setSpectrumFilter(Filter<SpectrumImpl> spectrumFilter) {
-        this.spectrumFilter = spectrumFilter;
-    }
-
-    public void setSpectrumBinner(SpectrumBinner spectrumBinner) {
-        this.spectrumBinner = spectrumBinner;
-    }
+    @Autowired
+    private SpectrumBinner spectrumBinner;    
 
     @Override
     public MgfSpectrumLoader getMgfSpectrumLoader() {
         return mgfSpectrumLoader;
-    }
-
-    public void setMgfSpectrumLoader(MgfSpectrumLoader mgfSpectrumLoader) {
-        this.mgfSpectrumLoader = mgfSpectrumLoader;
-    }
+    }    
 
     @Override
     public Experiment loadExperiment(Map<String, File> mgfFiles) {
@@ -80,7 +77,7 @@ public class MgfExperimentLoaderImpl implements MgfExperimentLoader {
         //set number of filtered spectra
         experiment.setNumberOfFilteredSpectra(spectra.size());
         
-        LOGGER.info("dibe loading experiment with " + spectra.size() + " spectra after filtering");
+        LOGGER.info("done loading experiment with " + spectra.size() + " spectra after filtering");
         
         //set experiment spectra
         experiment.setSpectra(spectra);
