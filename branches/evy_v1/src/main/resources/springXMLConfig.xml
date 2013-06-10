@@ -21,6 +21,16 @@
         </property>       
     </bean> 
     
+    <!-- transaction beans -->
+    <bean id="msLimsDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+        <property name="initialSize" value="${db.initial_pool_size}"/>
+        <property name="maxActive" value="${db.max_pool_size}"/>
+    </bean>
+    
     <!-- repository beans -->
     <context:component-scan base-package="com.compomics.spectrawl.data">
         <context:include-filter type="annotation"
@@ -43,7 +53,7 @@
     <bean id="taskExecutor" class="java.util.concurrent.Executors" 
           factory-method="newFixedThreadPool"
           destroy-method="shutdown">
-        <constructor-arg type="int" value="${}"/>
+        <constructor-arg type="int" value="${size}"/>
     </bean>
                                                                                                                                                                                  
     <!-- guava event bus bean -->

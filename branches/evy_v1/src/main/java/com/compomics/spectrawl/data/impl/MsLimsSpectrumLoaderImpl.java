@@ -4,7 +4,6 @@ import com.compomics.mslims.db.accessors.Spectrum;
 import com.compomics.mslims.db.accessors.Spectrum_file;
 import com.compomics.mslims.util.fileio.MascotGenericFile;
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
-import com.compomics.spectrawl.data.ConnectionLoader;
 import com.compomics.spectrawl.data.MsLimsSpectrumLoader;
 import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
 import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
@@ -16,6 +15,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,12 +28,13 @@ import org.springframework.stereotype.Repository;
 public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
 
     private static final Logger LOGGER = Logger.getLogger(MsLimsSpectrumLoaderImpl.class);
+    
     private Map<Long, Spectrum> mSLimsSpectra;
     private boolean doNoiseFiltering;
     @Autowired
-    private ConnectionLoader connectionLoader;
-    @Autowired
     private NoiseThresholdFinder noiseThresholdFinder;
+    @Autowired
+    private BasicDataSource mslimsDataSource;
     @Autowired
     private NoiseFilter noiseFilter;
 
@@ -52,7 +53,7 @@ public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
 
         try {
             //retrieve spectrum file
-            Spectrum_file spectrum_file = Spectrum_file.findFromID(spectrumId, connectionLoader.getConnection());
+            Spectrum_file spectrum_file = Spectrum_file.findFromID(spectrumId, mslimsDataSource.getConnection());
 
             //retrieve MSLims spectrum from map
             com.compomics.mslims.db.accessors.Spectrum msLimsSpectrum = (com.compomics.mslims.db.accessors.Spectrum) mSLimsSpectra.get(spectrumId);
@@ -104,7 +105,7 @@ public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
         mSLimsSpectra = new HashMap<Long, Spectrum>();
 
         try {
-            com.compomics.mslims.db.accessors.Spectrum[] mSLimsSpectraArray = com.compomics.mslims.db.accessors.Spectrum.getAllSpectraForProject(experimentId, connectionLoader.getConnection());
+            com.compomics.mslims.db.accessors.Spectrum[] mSLimsSpectraArray = com.compomics.mslims.db.accessors.Spectrum.getAllSpectraForProject(experimentId, mslimsDataSource.getConnection());
 
             if (numberOfSpectra == -1 || numberOfSpectra > mSLimsSpectraArray.length) {
                 numberOfSpectra = mSLimsSpectraArray.length;

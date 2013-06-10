@@ -226,6 +226,18 @@
             <artifactId>spring-context</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.18</version>
+        </dependency>
                         
         <dependency>
             <groupId>com.compomics</groupId>
@@ -250,7 +262,7 @@
         <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
-            <version>3.11.10</version>
+            <version>3.13.37</version>
             <exclusions>
                 <exclusion>
                     <artifactId>derby</artifactId>
@@ -259,7 +271,15 @@
                 <exclusion>
                     <artifactId>ols-dialog</artifactId>
                     <groupId>no.uib</groupId>
-                </exclusion>               
+                </exclusion>
+<!--                <exclusion>
+                    <artifactId>braf</artifactId>
+                    <groupId>uk.ac.ebi.pride.tools</groupId>
+                </exclusion>-->
+                <exclusion>
+                    <artifactId>batik-all</artifactId>
+                    <groupId>batik</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
