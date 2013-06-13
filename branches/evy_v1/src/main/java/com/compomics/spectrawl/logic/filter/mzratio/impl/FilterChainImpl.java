@@ -33,7 +33,7 @@ public class FilterChainImpl<T> implements FilterChain<T> {
      */
     public FilterChainImpl(FilterChainType filterChainType) {
         this();
-        this.filterChainType = filterChainType;        
+        this.filterChainType = filterChainType;
     }
 
     public FilterChainType getFilterChainType() {
@@ -69,6 +69,21 @@ public class FilterChainImpl<T> implements FilterChain<T> {
     @Override
     public void addFilter(Filter<T> filter) {
         filters.add(filter);
+    }
+
+    @Override
+    public void reset() {
+        filters.clear();
+    }
+
+    @Override
+    public List<Filter<T>> getFilters() {
+        return filters;
+    }
+
+    @Override
+    public void setFilters(List<Filter<T>> filters) {
+        this.filters = filters;
     }
 
     /**
@@ -141,5 +156,4 @@ public class FilterChainImpl<T> implements FilterChain<T> {
         ptms.add(ptm);
         return getFilterChain(peptideFragment, accountedCharges, ptms);
     }
-    
 }

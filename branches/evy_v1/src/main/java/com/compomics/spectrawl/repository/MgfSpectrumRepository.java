@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.compomics.spectrawl.data;
+package com.compomics.spectrawl.repository;
 
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.io.File;
@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * @author niels
  */
-public interface MgfSpectrumLoader extends SpectrumLoader {
+public interface MgfSpectrumRepository extends SpectrumRepository {
 
     /**
      * Gets the spectrum titles for the given mgf files

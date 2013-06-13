@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.compomics.spectrawl.data;
+package com.compomics.spectrawl.repository;
 
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.Set;
@@ -11,7 +11,7 @@ import java.util.Set;
  *
  * @author niels
  */
-public interface MsLimsSpectrumLoader extends SpectrumLoader {
+public interface MsLimsSpectrumRepository extends SpectrumRepository {
 
     /**
      * Get the spectrum by spectrum ID.

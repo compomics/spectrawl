@@ -1,14 +1,21 @@
-package com.compomics.spectrawl.data.impl;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.compomics.spectrawl.service.impl;
 
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.data.MsLimsExperimentLoader;
-import com.compomics.spectrawl.data.MsLimsSpectrumLoader;
+import com.compomics.spectrawl.service.MgfExperimentService;
+import com.compomics.spectrawl.repository.MgfSpectrumRepository;
 import com.compomics.spectrawl.logic.filter.mzratio.Filter;
+import com.compomics.spectrawl.logic.filter.mzratio.FilterChain;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
+import com.compomics.util.experiment.massspectrometry.Spectrum;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -16,78 +23,74 @@ import java.util.concurrent.Future;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.annotation.AsyncResult;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 /**
- * Created by IntelliJ IDEA. User: niels Date: 1/03/12 Time: 9:48 To change this
- * template use File | Settings | File Templates.
+ *
+ * @author niels
  */
-@Repository("msLimsExperimentLoader")
-public class MsLimsExperimentLoaderImpl implements MsLimsExperimentLoader {
+@Service("mgfExperimentService")
+public class MgfExperimentServiceImpl implements MgfExperimentService {
 
-    private static final Logger LOGGER = Logger.getLogger(MsLimsExperimentLoaderImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(MgfExperimentServiceImpl.class);
     @Autowired
     @Qualifier("filterChain")
     private Filter<SpectrumImpl> spectrumFilter;
     @Autowired
-    private MsLimsSpectrumLoader msLimsSpectrumLoader;
+    private MgfSpectrumRepository mgfSpectrumLoader;
     @Autowired
     private SpectrumBinner spectrumBinner;
     @Autowired
-    private ExecutorService taskExecutor;   
+    private ExecutorService taskExecutor;
 
     @Override
-    public MsLimsSpectrumLoader getMsLimsSpectrumLoader() {
-        return msLimsSpectrumLoader;
-    }    
-
-    @Override
-    public Experiment loadExperiment(String experimentId) {
-        return loadExperiment(experimentId, -1);
+    public MgfSpectrumRepository getMgfSpectrumLoader() {
+        return mgfSpectrumLoader;
     }
 
     @Override
-    public Experiment loadExperiment(String experimentId, int numberOfSpectra) {
-        Experiment experiment = new Experiment(experimentId);
+    public Experiment loadExperiment(Map<String, File> mgfFiles) {
+        Experiment experiment = new Experiment("");
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
 
-        //retrieve set of spectrum IDs from spectrum loader
-        Set<Long> spectraIds = null;
-        if (numberOfSpectra == -1) {
-            spectraIds = msLimsSpectrumLoader.getSpectraIdsByExperimentId(Long.parseLong(experimentId));
-        } else {
-            spectraIds = msLimsSpectrumLoader.getSpectraIdsByExperimentId(Long.parseLong(experimentId), numberOfSpectra);
-        }
-
-        //set number of initial spectra
-        experiment.setNumberOfSpectra(spectraIds.size());
-
-        LOGGER.info("start loading experiment with " + spectraIds.size() + " spectra before filtering");
+        //retrieve map of spectrum titles from the spectrum loader
+        Map<String, List<String>> spectrumTitlesMap = mgfSpectrumLoader.getSpectrumTitles(mgfFiles);        
 
         //submit a job for each spectrum
         List<Future<SpectrumImpl>> futureList = new ArrayList<Future<SpectrumImpl>>();
-        for (Long spectrumId : spectraIds) {
-            Future<SpectrumImpl> future = taskExecutor.submit(new SpectrumLoader(spectrumId));
-            futureList.add(future);
+
+        //iterate over spectrum titles
+        for (String mgfFileName : spectrumTitlesMap.keySet()) {
+            List<String> spectrumTitles = spectrumTitlesMap.get(mgfFileName);
+
+            LOGGER.info("start loading mgf file with " + spectrumTitles.size() + " spectra before filtering");
+
+            //set number of initial spectra
+            experiment.setNumberOfSpectra(experiment.getNumberOfSpectra() + spectrumTitles.size());
+
+            //iterate over spectra
+            for (String spectrumTitle : spectrumTitles) {
+                Future<SpectrumImpl> future = taskExecutor.submit(new SpectrumLoader(Spectrum.getSpectrumKey(mgfFileName, spectrumTitle)));
+                futureList.add(future);
+            }
         }
-        
+
         //run over the list of Futures and
         for (Future<SpectrumImpl> future : futureList) {
             try {
                 SpectrumImpl spectrum = future.get();
-                if(spectra != null){
+                if (spectrum != null) {
                     spectra.add(spectrum);
                 }
             } catch (InterruptedException e) {
                 LOGGER.error(e.getMessage(), e);
             } catch (ExecutionException e) {
-                LOGGER.error(e.getMessage(), e);                
+                LOGGER.error(e.getMessage(), e);
             }
         }
 
-        //set number of spectra after filtering
+        //set number of filtered spectra
         experiment.setNumberOfFilteredSpectra(spectra.size());
 
         LOGGER.info("done loading experiment with " + spectra.size() + " spectra after filtering");
@@ -96,19 +99,19 @@ public class MsLimsExperimentLoaderImpl implements MsLimsExperimentLoader {
         experiment.setSpectra(spectra);
 
         return experiment;
-    }   
+    }
 
     private class SpectrumLoader implements Callable<SpectrumImpl> {
 
-        private Long spectrumId;
+        private String spectrumKey;
 
-        public SpectrumLoader(Long spectrumId) {
-            this.spectrumId = spectrumId;
+        public SpectrumLoader(String spectrumKey) {
+            this.spectrumKey = spectrumKey;
         }
 
         @Override
         public SpectrumImpl call() throws Exception {
-            SpectrumImpl spectrum = msLimsSpectrumLoader.getSpectrumBySpectrumId(spectrumId);
+            SpectrumImpl spectrum = mgfSpectrumLoader.getSpectrumByKey(spectrumKey);
 
             //bin the spectrum
             spectrumBinner.binSpectrum(spectrum);

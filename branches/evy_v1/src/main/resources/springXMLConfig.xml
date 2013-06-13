@@ -31,8 +31,14 @@
         <property name="maxActive" value="${db.max_pool_size}"/>
     </bean>
     
+    <!-- service beans -->
+    <context:component-scan base-package="com.compomics.spectrawl.service">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan> 
+    
     <!-- repository beans -->
-    <context:component-scan base-package="com.compomics.spectrawl.data">
+    <context:component-scan base-package="com.compomics.spectrawl.repository">
         <context:include-filter type="annotation"
                                 expression="org.springframework.stereotype.Repository"/>
     </context:component-scan> 
@@ -41,14 +47,7 @@
     <context:component-scan base-package="com.compomics.spectrawl">
         <context:include-filter type="annotation"
                                 expression="org.springframework.stereotype.Component"/>
-    </context:component-scan>             
-                        
-    <!-- concurrency beans -->
-    <!--    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-     <property name="corePoolSize" value="5" />
-     <property name="maxPoolSize" value="10" />
-     <property name="queueCapacity" value="25" />
-    </bean>-->
+    </context:component-scan>                                       
 
     <bean id="taskExecutor" class="java.util.concurrent.Executors" 
           factory-method="newFixedThreadPool"

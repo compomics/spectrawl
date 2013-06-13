@@ -12,6 +12,9 @@ public class BasicMzDeltaFilter implements Filter<SpectrumImpl> {
     private double intensityThreshold;
     private List<Double> intensitySumFilterValues;
 
+    public BasicMzDeltaFilter() {
+    }        
+    
     public BasicMzDeltaFilter(double intensityThreshold, List<Double> intensitySumFilterValues) {
         this.intensityThreshold = intensityThreshold;
         this.intensitySumFilterValues = intensitySumFilterValues;

@@ -1,4 +1,4 @@
-package com.compomics.spectrawl.logic.bin.impl;
+    package com.compomics.spectrawl.logic.bin.impl;
 
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.model.BinParams;

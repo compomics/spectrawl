@@ -1,5 +1,7 @@
 package com.compomics.spectrawl.logic.filter.mzratio;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: niels
@@ -24,7 +26,7 @@ public interface FilterChain<T> extends Filter<T> {
     }
 
     /**
-     * Adds a filter to the chain
+     * Add a filter to the chain.
      *
      * @param filter
      */
@@ -36,4 +38,21 @@ public interface FilterChain<T> extends Filter<T> {
      * @param filter
      */
     void setFilterChainType(FilterChainType filterChainType);
+    
+    /**
+     * Get the filters of the chain
+     *  
+     * @return the list of filters
+     */
+    List<Filter<T>> getFilters();
+    
+    /**
+     * Set the filters of the chain
+     */
+    void setFilters(List<Filter<T>> filters);
+    
+    /**
+     * Reset the filter chain. This removes all filters.
+     */
+    void reset();
 }
