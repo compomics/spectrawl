@@ -87,7 +87,6 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
         varCombIntThresholdTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(500, 350));
 
         fixedCombMzDeltaFilterPanel.setMinimumSize(new java.awt.Dimension(4, 4));
         fixedCombMzDeltaFilterPanel.setOpaque(false);
@@ -100,11 +99,11 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
 
         fixedCombIntThresholdTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 
-        minConsecMzDeltasLabel.setText("min consecutive M/Z deltas");
+        minConsecMzDeltasLabel.setText("Min consecutive M/Z deltas");
 
         minConsecMzDeltasTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 
-        maxConsecMzDeltasLabel.setText("max consecutive M/Z deltas");
+        maxConsecMzDeltasLabel.setText("Max consecutive M/Z deltas");
 
         maxConsecMzDeltasTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 

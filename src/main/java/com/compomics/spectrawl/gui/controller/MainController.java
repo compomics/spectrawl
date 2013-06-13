@@ -7,6 +7,9 @@ package com.compomics.spectrawl.gui.controller;
 import com.compomics.spectrawl.gui.event.MessageEvent;
 import com.compomics.spectrawl.gui.event.UnexpectedErrorMessageEvent;
 import com.compomics.spectrawl.gui.view.MainFrame;
+import com.compomics.spectrawl.model.Experiment;
+import com.compomics.spectrawl.service.MgfExperimentService;
+import com.compomics.spectrawl.service.MsLimsExperimentService;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Dimension;
@@ -48,18 +51,6 @@ public class MainController implements ActionListener {
 
     public MainFrame getMainFrame() {
         return mainFrame;
-    }
-
-    public ExperimentLoaderController getExperimentLoaderController() {
-        return experimentLoaderController;
-    }
-
-    public FilterConfigController getFilterConfigController() {
-        return filterConfigController;
-    }
-
-    public ResultController getResultController() {
-        return resultController;
     }        
 
     /**
@@ -94,7 +85,7 @@ public class MainController implements ActionListener {
 
         mainFrame.getExperimentLoaderParentPanel().add(experimentLoaderController.getExperimentLoaderPanel(), gridBagConstraints);
         mainFrame.getExperimentBinsParentPanel().add(resultController.getResultPanel(), gridBagConstraints);
-        
+
         //add action listeners
         mainFrame.getExitMenuItem().addActionListener(this);
         mainFrame.getAdvancedMzDeltaFilterSettingsMenuItem().addActionListener(this);
@@ -103,13 +94,24 @@ public class MainController implements ActionListener {
     }
 
     /**
-     * This method is called when an experiment is loaded. The user input is
-     * loaded and all result panels are resetted.
+     * This method is called when an user wants the load an experiment. The user
+     * input is validated, filter configuration is updated and all result panels
+     * are resetted.
      */
     public void onLoadExperiment() {
         List<String> validationMessages = validateUserInput();
         if (validationMessages.isEmpty()) {
             resultController.clear();
+
+            //update bin constants
+            experimentLoaderController.updateBinConstants();
+
+            //update filters if winsorization checkbox is selected
+            if (doWinsorization()) {
+                filterConfigController.updateWinsorizationParameters();
+            }
+            filterConfigController.updateFilterChain();
+
             experimentLoaderController.loadExperiment();
         } else {
             validationMessages.add(0, "Validation errors found:");
@@ -118,10 +120,30 @@ public class MainController implements ActionListener {
     }
 
     /**
+     * This method is called when the experiment has been loaded.
+     *
+     * @param experiment the loaded experiment
+     */
+    public void onExperimentLoaded(Experiment experiment) {
+        //show experiment bins
+        resultController.showExperimentInfo("initial number of spectra:" + experiment.getNumberOfSpectra() + ", number of spectra after filtering: " + experiment.getNumberOfFilteredSpectra());
+        resultController.updateResultPanel(experiment);
+    }
+
+    /**
      * On canceled method, clears the resources.
      */
     public void onCanceled() {
         resultController.clear();
+    }
+    
+    /**
+     * Check if winsorization needs to be performed.
+     *
+     * @return 
+     */
+    public boolean doWinsorization() {
+        return filterConfigController.isWinsorCheckBoxSelected();
     }
 
     /**
@@ -145,7 +167,7 @@ public class MainController implements ActionListener {
             filterConfigController.getMzDeltaFilterDialog().setVisible(true);
         } else if (((JMenuItem) actionEvent.getSource()).getText().equalsIgnoreCase("Advanced")) {
             filterConfigController.getAdvancedMzDeltaFilterDialog().setVisible(true);
-        } 
+        }
     }
 
     /**

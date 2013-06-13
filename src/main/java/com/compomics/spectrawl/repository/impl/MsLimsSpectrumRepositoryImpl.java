@@ -1,10 +1,10 @@
-package com.compomics.spectrawl.data.impl;
+package com.compomics.spectrawl.repository.impl;
 
 import com.compomics.mslims.db.accessors.Spectrum;
 import com.compomics.mslims.db.accessors.Spectrum_file;
 import com.compomics.mslims.util.fileio.MascotGenericFile;
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
-import com.compomics.spectrawl.data.MsLimsSpectrumLoader;
+import com.compomics.spectrawl.repository.MsLimsSpectrumRepository;
 import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
 import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
@@ -24,10 +24,10 @@ import org.springframework.stereotype.Repository;
  * Created by IntelliJ IDEA. User: niels Date: 3/02/12 Time: 10:53 To change
  * this template use File | Settings | File Templates.
  */
-@Repository("msLimsSpectrumLoader")
-public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
+@Repository("msLimsSpectrumRepository")
+public class MsLimsSpectrumRepositoryImpl implements MsLimsSpectrumRepository {
 
-    private static final Logger LOGGER = Logger.getLogger(MsLimsSpectrumLoaderImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(MsLimsSpectrumRepositoryImpl.class);
     
     private Map<Long, Spectrum> mSLimsSpectra;
     private boolean doNoiseFiltering;
@@ -38,7 +38,7 @@ public class MsLimsSpectrumLoaderImpl implements MsLimsSpectrumLoader {
     @Autowired
     private NoiseFilter noiseFilter;
 
-    public MsLimsSpectrumLoaderImpl() {
+    public MsLimsSpectrumRepositoryImpl() {
         doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
     }
 

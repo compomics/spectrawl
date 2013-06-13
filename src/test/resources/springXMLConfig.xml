@@ -31,8 +31,14 @@
         <property name="maxActive" value="${db.max_pool_size}"/>
     </bean>
     
+    <!-- service beans -->
+    <context:component-scan base-package="com.compomics.spectrawl.service">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Repository"/>
+    </context:component-scan> 
+    
     <!-- repository beans -->
-    <context:component-scan base-package="com.compomics.spectrawl.data">
+    <context:component-scan base-package="com.compomics.spectrawl.repository">
         <context:include-filter type="annotation"
                                 expression="org.springframework.stereotype.Repository"/>
     </context:component-scan> 
@@ -41,15 +47,15 @@
     <context:component-scan base-package="com.compomics.spectrawl">
         <context:include-filter type="annotation"
                                 expression="org.springframework.stereotype.Component"/>
-    </context:component-scan>             
-                        
+    </context:component-scan>                                       
+
     <bean id="taskExecutor" class="java.util.concurrent.Executors" 
           factory-method="newFixedThreadPool"
           destroy-method="shutdown">
         <constructor-arg type="int" value="${size}"/>
     </bean>
-                                                           
+                                                                                                                                                                                 
     <!-- guava event bus bean -->
-    <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>                     
+    <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>                         
                            
 </beans>

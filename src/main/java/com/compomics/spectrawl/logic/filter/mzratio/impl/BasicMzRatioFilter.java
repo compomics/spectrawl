@@ -15,6 +15,9 @@ public class BasicMzRatioFilter implements Filter<SpectrumImpl> {
     private double mzRatioTolerance;
     private List<Double> mzRatioFilterValues;
 
+    public BasicMzRatioFilter() {
+    }    
+    
     public BasicMzRatioFilter(double mzRatioTolerance, List<Double> mzRatioFilterValues) {
         this.mzRatioTolerance = mzRatioTolerance;
         this.mzRatioFilterValues = mzRatioFilterValues;        

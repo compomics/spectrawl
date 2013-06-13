@@ -34,8 +34,6 @@ public class FilterConfigController {
     private DefaultListModel mzRatioFilterListModel;
     private DefaultListModel mzDeltaFilterListModel;
     private DefaultListModel varCombMzDeltaFilterListModel;
-    private BasicMzDeltaFilter basicMzDeltaFilter;
-    private BasicMzRatioFilter basicMzRatioFilter;
     //view
     private MzRatioFilterDialog mzRatioFilterDialog;
     private MzDeltaFilterDialog mzDeltaFilterDialog;
@@ -58,7 +56,7 @@ public class FilterConfigController {
     public AdvancedMzDeltaFilterDialog getAdvancedMzDeltaFilterDialog() {
         return advancedMzDeltaFilterDialog;
     }
-    
+
     /**
      * Init the controller.
      */
@@ -68,26 +66,12 @@ public class FilterConfigController {
         mzDeltaFilterDialog = new MzDeltaFilterDialog(mainController.getMainFrame(), true);
         advancedMzDeltaFilterDialog = new AdvancedMzDeltaFilterDialog(mainController.getMainFrame(), true);
 
-        //init filters
-        basicMzDeltaFilter = new BasicMzDeltaFilter(0.0, new ArrayList<Double>());
-        basicMzRatioFilter = new BasicMzRatioFilter(0.0, new ArrayList<Double>());
+        //init filter chain        
         spectrumFilterChain.setFilterChainType(FilterChain.FilterChainType.AND);
-        //add filters to chain
-        spectrumFilterChain.addFilter(basicMzDeltaFilter);
-        spectrumFilterChain.addFilter(basicMzRatioFilter);
 
         initMzRatioFilterDialog();
         initMzDeltaFilterDialog();
         initAdvancedMzDeltaFilterDialog();
-    }
-
-    /**
-     * Update the filter chain; the combined spectrumBinFilter and
-     * spectrumMzRatioFilter.
-     *
-     */
-    public void updateFilterChain() {
-        updateFilters();
     }
 
     /**
@@ -100,9 +84,18 @@ public class FilterConfigController {
     }
 
     /**
-     * Update the winsorisation parameters.
+     * Update the filter chain; the combined spectrumBinFilter and
+     * spectrumMzRatioFilter.
+     *
      */
-    public void updateWinsorisationParameters() {
+    public void updateFilterChain() {
+        updateFilters();
+    }
+
+    /**
+     * Update the winsorization parameters.
+     */
+    public void updateWinsorizationParameters() {
         FilterParams.WINSOR_CONSTANT.setValue(Double.parseDouble(mzRatioFilterDialog.getWinsorConstantTextField().getText()));
         FilterParams.WINSOR_CONVERGENCE_CRITERION.setValue(Double.parseDouble(mzRatioFilterDialog.getWinsorConvergenceCriterionTextField().getText()));
         FilterParams.WINSOR_OUTLIER_LIMIT.setValue(Double.parseDouble(mzRatioFilterDialog.getWinsorOutlierLimitTextField().getText()));
@@ -121,11 +114,19 @@ public class FilterConfigController {
                 validationMessages.add("M/Z tolerance is empty");
             }
         }
+        
         if (!mzDeltaFilterListModel.isEmpty()) {
             if (mzDeltaFilterDialog.getIntensityThresholdTextField().getText().equals("")) {
-                validationMessages.add("Intensity threshold is empty");
+                validationMessages.add("Basic M/Z delta intensity threshold is empty");
+            }
+        }                
+        
+        if(!varCombMzDeltaFilterListModel.isEmpty()){
+            if(advancedMzDeltaFilterDialog.getVarCombIntThresholdTextField().getText().equals("")){
+                validationMessages.add("Variable comb M/Z delta intensity threshold is empty");
             }
         }
+        
         return validationMessages;
     }
 
@@ -134,22 +135,32 @@ public class FilterConfigController {
      *
      */
     private void updateFilters() {
-        //update basicMzRatioFilter
-        basicMzRatioFilter.getMzRatioFilterValues().clear();
+        //update BasicMzRatioFilter        
         if (!mzRatioFilterListModel.isEmpty()) {
+            BasicMzRatioFilter basicMzRatioFilter = new BasicMzRatioFilter();
             basicMzRatioFilter.setMzRatioTolerance(Double.parseDouble(mzRatioFilterDialog.getMzToleranceTextField().getText()));
+            spectrumFilterChain.addFilter(basicMzRatioFilter);
+            for (Object value : mzRatioFilterListModel.toArray()) {
+                basicMzRatioFilter.getMzRatioFilterValues().add((Double) value);
+            }
         }
-        for (Object value : mzRatioFilterListModel.toArray()) {
-            basicMzRatioFilter.getMzRatioFilterValues().add((Double) value);
-        }
-        //update spectrumBinFilter
-        basicMzDeltaFilter.getIntensitySumFilterValues().clear();
+
+        //update BasicMzDeltaFilter
         if (!mzDeltaFilterListModel.isEmpty()) {
+            BasicMzDeltaFilter basicMzDeltaFilter = new BasicMzDeltaFilter();
             basicMzDeltaFilter.setIntensityThreshold(Double.parseDouble(mzDeltaFilterDialog.getIntensityThresholdTextField().getText()));
+            spectrumFilterChain.addFilter(basicMzDeltaFilter);
+            for (Object value : mzDeltaFilterListModel.toArray()) {
+                basicMzDeltaFilter.getIntensitySumFilterValues().add((Double) value);
+            }
         }
-        for (Object value : mzDeltaFilterListModel.toArray()) {
-            basicMzDeltaFilter.getIntensitySumFilterValues().add((Double) value);
-        }
+
+        //update FixedCombMzDeltaFilter
+        
+        
+        
+        //update VariableCombMzDeltaFilter
+        
     }
 
     /**
@@ -237,7 +248,7 @@ public class FilterConfigController {
             }
         });
     }
-    
+
     /**
      * Init the advanced M/Z delta filter dialog.
      *

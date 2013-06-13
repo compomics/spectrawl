@@ -5,8 +5,8 @@
 package com.compomics.spectrawl.gui.controller;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
-import com.compomics.spectrawl.data.MgfExperimentLoader;
-import com.compomics.spectrawl.data.MsLimsExperimentLoader;
+import com.compomics.spectrawl.service.MgfExperimentService;
+import com.compomics.spectrawl.service.MsLimsExperimentService;
 import com.compomics.spectrawl.gui.event.UnexpectedErrorMessageEvent;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
@@ -54,23 +54,19 @@ public class ExperimentLoaderController {
     @Autowired
     private EventBus eventBus;
     @Autowired
-    private MsLimsExperimentLoader msLimsExperimentLoader;
+    private MsLimsExperimentService msLimsExperimentService;
     @Autowired
-    private MgfExperimentLoader mgfExperimentLoader;
+    private MgfExperimentService mgfExperimentService;
     @Autowired
-    private ExperimentBinner experimentBinner;    
+    private ExperimentBinner experimentBinner;
 
-    public DefaultListModel getMgfFilesListModel() {
-        return mgfFilesListModel;
-    }
-    
     public ExperimentLoaderPanel getExperimentLoaderPanel() {
         return experimentLoaderPanel;
     }
 
     public MainController getMainController() {
         return mainController;
-    }        
+    }
 
     /**
      * Init the controller.
@@ -190,7 +186,7 @@ public class ExperimentLoaderController {
      * Update the bin constants with user input.
      *
      */
-    private void updateBinConstants() {
+    public void updateBinConstants() {
         BinParams.BINS_FLOOR.setValue(Double.parseDouble(experimentLoaderPanel.getBinFloorTextField().getText()));
         BinParams.BINS_CEILING.setValue(Double.parseDouble(experimentLoaderPanel.getBinCeilingTextField().getText()));
         BinParams.BIN_SIZE.setValue(Double.parseDouble(experimentLoaderPanel.getBinSizeTextField().getText()));
@@ -223,15 +219,6 @@ public class ExperimentLoaderController {
             //show progress bar
             progressController.showProgressBar(6, "Processing.");
 
-            //update bin constants
-            updateBinConstants();
-
-            //update filters if winsorization checkbox is selected
-            if (mainController.getFilterConfigController().isWinsorCheckBoxSelected()) {
-                mainController.getFilterConfigController().updateWinsorisationParameters();
-            }
-            mainController.getFilterConfigController().updateFilterChain();
-
             Experiment experiment = null;
             if (experimentType.equals(Experiment.ExperimentType.MSLIMS)) {
 
@@ -240,8 +227,8 @@ public class ExperimentLoaderController {
                 LOGGER.info("start loading MsLims experiment " + msLimsExperimentId);
 
                 //load experiment
-                msLimsExperimentLoader.getMsLimsSpectrumLoader().setDoNoiseFiltering(mainController.getFilterConfigController().isWinsorCheckBoxSelected());
-                experiment = msLimsExperimentLoader.loadExperiment(msLimsExperimentId);
+                msLimsExperimentService.getMsLimsSpectrumLoader().setDoNoiseFiltering(mainController.doWinsorization());
+                experiment = msLimsExperimentService.loadExperiment(msLimsExperimentId);
 
                 LOGGER.info("done loading MsLims experiment " + msLimsExperimentId);
 
@@ -250,8 +237,8 @@ public class ExperimentLoaderController {
                 LOGGER.info("start loading MGF file(s)");
 
                 //load experiment with selected mgf files
-                mgfExperimentLoader.getMgfSpectrumLoader().setDoNoiseFiltering(mainController.getFilterConfigController().isWinsorCheckBoxSelected());
-                experiment = mgfExperimentLoader.loadExperiment(getMgfFiles());
+                mgfExperimentService.getMgfSpectrumLoader().setDoNoiseFiltering(mainController.doWinsorization());
+                experiment = mgfExperimentService.loadExperiment(getMgfFiles());
 
                 LOGGER.info("done loading MGF file(s)");
             }
@@ -271,9 +258,7 @@ public class ExperimentLoaderController {
         public void done() {
             try {
                 Experiment experiment = this.get();
-                //show experiment bins
-                mainController.getResultController().showExperimentInfo("initial number of spectra:" + experiment.getNumberOfSpectra() + ", number of spectra after filtering: " + experiment.getNumberOfFilteredSpectra());
-                mainController.getResultController().updateResultPanel(experiment);
+                mainController.onExperimentLoaded(experiment);
             } catch (InterruptedException ex) {
                 LOGGER.error(ex.getMessage(), ex);
                 eventBus.post(new UnexpectedErrorMessageEvent(ex.getMessage()));
