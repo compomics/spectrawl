@@ -1,45 +1,51 @@
 package com.compomics.spectrawl.repository.impl;
 
-import com.compomics.mslims.db.accessors.Spectrum;
 import com.compomics.mslims.db.accessors.Spectrum_file;
 import com.compomics.mslims.util.fileio.MascotGenericFile;
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
-import com.compomics.spectrawl.repository.MsLimsSpectrumRepository;
+import com.compomics.spectrawl.repository.MsLimsExperimentRepository;
 import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
 import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
+import com.compomics.spectrawl.model.mapper.SpectrumFileExctractor;
 import com.compomics.spectrawl.util.PeakUtils;
 import com.compomics.util.experiment.massspectrometry.Peak;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import org.apache.commons.dbcp.BasicDataSource;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 3/02/12 Time: 10:53 To change
  * this template use File | Settings | File Templates.
  */
-@Repository("msLimsSpectrumRepository")
-public class MsLimsSpectrumRepositoryImpl implements MsLimsSpectrumRepository {
+@Repository("msLimsExperimentRepository")
+public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements MsLimsExperimentRepository {
 
-    private static final Logger LOGGER = Logger.getLogger(MsLimsSpectrumRepositoryImpl.class);
-    
-    private Map<Long, Spectrum> mSLimsSpectra;
+    private static final Logger LOGGER = Logger.getLogger(JdbcMsLimsExperimentRepository.class);
+    private static final String SELECT_EXPERIMENT_SPECTRUM_FILES = new StringBuilder()
+            .append("select sf.l_spectrumid as l_spectrumid, sf.file as file from spectrum s, spectrum_file sf ")            
+            .append("where s.spectrumid = sf.l_spectrumid ")            
+            .append("and s.l_projectid = ?").toString();
+    private ConcurrentLinkedQueue<Spectrum_file> spectrumFileQueue;
     private boolean doNoiseFiltering;
     @Autowired
     private NoiseThresholdFinder noiseThresholdFinder;
     @Autowired
-    private BasicDataSource mslimsDataSource;
-    @Autowired
     private NoiseFilter noiseFilter;
 
-    public MsLimsSpectrumRepositoryImpl() {
+    public JdbcMsLimsExperimentRepository() {
         doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
+    }
+
+    @Autowired
+    public void setDs(DataSource dataSource) {
+        setDataSource(dataSource);
     }
 
     @Override
@@ -48,23 +54,29 @@ public class MsLimsSpectrumRepositoryImpl implements MsLimsSpectrumRepository {
     }
 
     @Override
-    public SpectrumImpl getSpectrumBySpectrumId(long spectrumId) {
+    public int loadSpectraByExperimentId(long experimentId) {
+        LOGGER.debug("Start loading spectra for experiment " + experimentId);
+        spectrumFileQueue = getJdbcTemplate().query(SELECT_EXPERIMENT_SPECTRUM_FILES, new SpectrumFileExctractor(), new Object[]{experimentId});
+        LOGGER.debug("Finished loading spectra for experiment " + experimentId);
+        return spectrumFileQueue.size();
+    }
+
+    @Override
+    public SpectrumImpl getSpectrum() {
         SpectrumImpl spectrum = null;
 
         try {
-            //retrieve spectrum file
-            Spectrum_file spectrum_file = Spectrum_file.findFromID(spectrumId, mslimsDataSource.getConnection());
-
-            //retrieve MSLims spectrum from map
-            com.compomics.mslims.db.accessors.Spectrum msLimsSpectrum = (com.compomics.mslims.db.accessors.Spectrum) mSLimsSpectra.get(spectrumId);
+            //poll spectrum_file from queue
+            Spectrum_file spectrum_file = spectrumFileQueue.poll();
+            String spectumIdString = Long.toString(spectrum_file.getL_spectrumid());
 
             //generate mascotgenericfile to retrieve peaks
-            MascotGenericFile mascotGenericFile = new MascotGenericFile(msLimsSpectrum.getFilename(), new String(spectrum_file.getUnzippedFile()));
+            MascotGenericFile mascotGenericFile = new MascotGenericFile("", new String(spectrum_file.getUnzippedFile()));
             //retrieve peaks
             Map<Double, Double> mSLimsPeaks = mascotGenericFile.getPeaks();
 
             //create new spectrum
-            spectrum = new SpectrumImpl(Long.toString(spectrumId), msLimsSpectrum.getFilename(), mascotGenericFile.getCharge(), mascotGenericFile.getPrecursorMZ());
+            spectrum = new SpectrumImpl(spectumIdString, "", mascotGenericFile.getCharge(), mascotGenericFile.getPrecursorMZ());
 
             //filter the spectrum if necessary
             if (doNoiseFiltering) {
@@ -86,38 +98,10 @@ public class MsLimsSpectrumRepositoryImpl implements MsLimsSpectrumRepository {
             }
 
             spectrum.setPeakList(peaks);
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
 
         return spectrum;
-    }
-
-    @Override
-    public Set<Long> getSpectraIdsByExperimentId(long experimentId) {
-        return getSpectraIdsByExperimentId(experimentId, -1);
-    }
-
-    @Override
-    public Set<Long> getSpectraIdsByExperimentId(long experimentId, int numberOfSpectra) {
-        mSLimsSpectra = new HashMap<Long, Spectrum>();
-
-        try {
-            com.compomics.mslims.db.accessors.Spectrum[] mSLimsSpectraArray = com.compomics.mslims.db.accessors.Spectrum.getAllSpectraForProject(experimentId, mslimsDataSource.getConnection());
-
-            if (numberOfSpectra == -1 || numberOfSpectra > mSLimsSpectraArray.length) {
-                numberOfSpectra = mSLimsSpectraArray.length;
-            }
-
-            for (int i = 0; i < numberOfSpectra; i++) {
-                mSLimsSpectra.put(mSLimsSpectraArray[i].getSpectrumid(), mSLimsSpectraArray[i]);
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-
-        return mSLimsSpectra.keySet();
     }
 }

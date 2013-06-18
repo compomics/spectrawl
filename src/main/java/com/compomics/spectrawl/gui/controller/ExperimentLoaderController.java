@@ -227,7 +227,7 @@ public class ExperimentLoaderController {
                 LOGGER.info("start loading MsLims experiment " + msLimsExperimentId);
 
                 //load experiment
-                msLimsExperimentService.getMsLimsSpectrumLoader().setDoNoiseFiltering(mainController.doWinsorization());
+                msLimsExperimentService.getMsLimsSpectrumRepository().setDoNoiseFiltering(mainController.doWinsorization());
                 experiment = msLimsExperimentService.loadExperiment(msLimsExperimentId);
 
                 LOGGER.info("done loading MsLims experiment " + msLimsExperimentId);

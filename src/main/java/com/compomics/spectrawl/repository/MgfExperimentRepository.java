@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * @author niels
  */
-public interface MgfSpectrumRepository extends SpectrumRepository {
+public interface MgfExperimentRepository extends ExperimentRepository {
 
     /**
      * Gets the spectrum titles for the given mgf files

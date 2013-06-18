@@ -8,8 +8,6 @@ import com.compomics.spectrawl.gui.event.MessageEvent;
 import com.compomics.spectrawl.gui.event.UnexpectedErrorMessageEvent;
 import com.compomics.spectrawl.gui.view.MainFrame;
 import com.compomics.spectrawl.model.Experiment;
-import com.compomics.spectrawl.service.MgfExperimentService;
-import com.compomics.spectrawl.service.MsLimsExperimentService;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import java.awt.Dimension;

@@ -6,7 +6,7 @@ package com.compomics.spectrawl.service.impl;
 
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.service.MgfExperimentService;
-import com.compomics.spectrawl.repository.MgfSpectrumRepository;
+import com.compomics.spectrawl.repository.MgfExperimentRepository;
 import com.compomics.spectrawl.logic.filter.mzratio.Filter;
 import com.compomics.spectrawl.logic.filter.mzratio.FilterChain;
 import com.compomics.spectrawl.model.Experiment;
@@ -38,14 +38,14 @@ public class MgfExperimentServiceImpl implements MgfExperimentService {
     @Qualifier("filterChain")
     private Filter<SpectrumImpl> spectrumFilter;
     @Autowired
-    private MgfSpectrumRepository mgfSpectrumLoader;
+    private MgfExperimentRepository mgfSpectrumLoader;
     @Autowired
     private SpectrumBinner spectrumBinner;
     @Autowired
     private ExecutorService taskExecutor;
 
     @Override
-    public MgfSpectrumRepository getMgfSpectrumLoader() {
+    public MgfExperimentRepository getMgfSpectrumLoader() {
         return mgfSpectrumLoader;
     }
 
