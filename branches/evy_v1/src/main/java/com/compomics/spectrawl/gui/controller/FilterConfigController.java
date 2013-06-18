@@ -140,6 +140,7 @@ public class FilterConfigController {
             BasicMzRatioFilter basicMzRatioFilter = new BasicMzRatioFilter();
             basicMzRatioFilter.setMzRatioTolerance(Double.parseDouble(mzRatioFilterDialog.getMzToleranceTextField().getText()));
             spectrumFilterChain.addFilter(basicMzRatioFilter);
+            basicMzRatioFilter.setMzRatioFilterValues(new ArrayList<Double>());
             for (Object value : mzRatioFilterListModel.toArray()) {
                 basicMzRatioFilter.getMzRatioFilterValues().add((Double) value);
             }
@@ -150,6 +151,7 @@ public class FilterConfigController {
             BasicMzDeltaFilter basicMzDeltaFilter = new BasicMzDeltaFilter();
             basicMzDeltaFilter.setIntensityThreshold(Double.parseDouble(mzDeltaFilterDialog.getIntensityThresholdTextField().getText()));
             spectrumFilterChain.addFilter(basicMzDeltaFilter);
+            basicMzDeltaFilter.setIntensitySumFilterValues(new ArrayList<Double>());
             for (Object value : mzDeltaFilterListModel.toArray()) {
                 basicMzDeltaFilter.getIntensitySumFilterValues().add((Double) value);
             }

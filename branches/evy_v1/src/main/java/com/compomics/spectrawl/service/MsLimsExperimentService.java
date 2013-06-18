@@ -5,7 +5,7 @@
 package com.compomics.spectrawl.service;
 
 import com.compomics.spectrawl.model.Experiment;
-import com.compomics.spectrawl.repository.MsLimsSpectrumRepository;
+import com.compomics.spectrawl.repository.MsLimsExperimentRepository;
 
 /**
  *
@@ -20,21 +20,12 @@ public interface MsLimsExperimentService {
      * @return the experiment
      */
     Experiment loadExperiment(String experimentId);
-
-    /**
-     * Load the experiment by experiment ID, restricting the loaded number of spectra.
-     *
-     * @param experimentId    the experiment ID
-     * @param numberOfSpectra the number of spectra to retrieve
-     * @return the experiment
-     */
-    Experiment loadExperiment(String experimentId, int numberOfSpectra);
     
     /**
      * Get the MsLimsSpectrumLoader
      * 
      * @return MsLimsSpectrumLoader
      */
-    MsLimsSpectrumRepository getMsLimsSpectrumLoader();
+    MsLimsExperimentRepository getMsLimsSpectrumRepository();
     
 }

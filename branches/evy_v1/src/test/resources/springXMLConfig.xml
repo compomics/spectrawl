@@ -21,14 +21,12 @@
         </property>       
     </bean> 
     
-    <!-- transaction beans -->
-    <bean id="msLimsDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+     <!-- transaction beans -->
+    <bean id="msLimsDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${db.driver}"/>
         <property name="url" value="${db.url}"/>
         <property name="username" value="${db.username}"/>
         <property name="password" value="${db.password}"/>
-        <property name="initialSize" value="${db.initial_pool_size}"/>
-        <property name="maxActive" value="${db.max_pool_size}"/>
     </bean>
     
     <!-- service beans -->
@@ -56,6 +54,6 @@
     </bean>
                                                                                                                                                                                  
     <!-- guava event bus bean -->
-    <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>                         
+    <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>                     
                            
 </beans>

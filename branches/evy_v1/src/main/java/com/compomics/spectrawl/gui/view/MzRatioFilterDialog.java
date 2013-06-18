@@ -1,9 +1,11 @@
 package com.compomics.spectrawl.gui.view;
 
 import java.awt.Color;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 /**
@@ -56,6 +58,18 @@ public class MzRatioFilterDialog extends javax.swing.JDialog {
 
     public JTextField getWinsorOutlierLimitTextField() {
         return winsorOutlierLimitTextField;
+    }  
+
+    public JRadioButton getAndCheckBox() {
+        return andCheckBox;
+    }
+
+    public ButtonGroup getFilterTypeRadioButtonGroup() {
+        return filterTypeRadioButtonGroup;
+    }
+
+    public JRadioButton getOrCheckBox() {
+        return orCheckBox;
     }        
 
     /**
@@ -67,7 +81,16 @@ public class MzRatioFilterDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        filterTypeRadioButtonGroup = new javax.swing.ButtonGroup();
         FilteSettingsTabbedPane = new javax.swing.JTabbedPane();
+        noiseFilterPanel = new javax.swing.JPanel();
+        winsorFilterCheckBox = new javax.swing.JCheckBox();
+        winsorConstantLabel = new javax.swing.JLabel();
+        winsorConstantTextField = new javax.swing.JTextField();
+        winsorConvergenceCriterionLabel = new javax.swing.JLabel();
+        winsorConvergenceCriterionTextField = new javax.swing.JTextField();
+        winsorOutlierLimitLabel = new javax.swing.JLabel();
+        winsorOutlierLimitTextField = new javax.swing.JTextField();
         mzRatioFilterPanel = new javax.swing.JPanel();
         mzRatioFilterScrollPane = new javax.swing.JScrollPane();
         mzRatioFilterList = new javax.swing.JList();
@@ -77,83 +100,11 @@ public class MzRatioFilterDialog extends javax.swing.JDialog {
         removeMzRatioButton = new javax.swing.JButton();
         mzToleranceLabel = new javax.swing.JLabel();
         mzToleranceTextField = new javax.swing.JTextField();
-        noiseFilterPanel = new javax.swing.JPanel();
-        winsorFilterCheckBox = new javax.swing.JCheckBox();
-        winsorConstantLabel = new javax.swing.JLabel();
-        winsorConstantTextField = new javax.swing.JTextField();
-        winsorConvergenceCriterionLabel = new javax.swing.JLabel();
-        winsorConvergenceCriterionTextField = new javax.swing.JTextField();
-        winsorOutlierLimitLabel = new javax.swing.JLabel();
-        winsorOutlierLimitTextField = new javax.swing.JTextField();
+        filterTypeLabel = new javax.swing.JLabel();
+        andCheckBox = new javax.swing.JRadioButton();
+        orCheckBox = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        mzRatioFilterPanel.setOpaque(false);
-
-        mzRatioFilterScrollPane.setViewportView(mzRatioFilterList);
-
-        addMzRatioLabel.setText("M/Z ratio");
-
-        addMzRatioTextField.setPreferredSize(new java.awt.Dimension(6, 25));
-
-        addMzRatioButton.setText("add");
-        addMzRatioButton.setMaximumSize(new java.awt.Dimension(97, 23));
-        addMzRatioButton.setMinimumSize(new java.awt.Dimension(97, 23));
-        addMzRatioButton.setPreferredSize(new java.awt.Dimension(97, 23));
-
-        removeMzRatioButton.setText("remove");
-        removeMzRatioButton.setMaximumSize(new java.awt.Dimension(97, 23));
-        removeMzRatioButton.setMinimumSize(new java.awt.Dimension(97, 23));
-        removeMzRatioButton.setPreferredSize(new java.awt.Dimension(97, 23));
-
-        mzToleranceLabel.setText("M/Z tolerance");
-
-        mzToleranceTextField.setPreferredSize(new java.awt.Dimension(6, 25));
-
-        javax.swing.GroupLayout mzRatioFilterPanelLayout = new javax.swing.GroupLayout(mzRatioFilterPanel);
-        mzRatioFilterPanel.setLayout(mzRatioFilterPanelLayout);
-        mzRatioFilterPanelLayout.setHorizontalGroup(
-            mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
-                            .addComponent(mzToleranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(mzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(mzRatioFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
-                            .addComponent(addMzRatioLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(addMzRatioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
-                        .addComponent(addMzRatioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(removeMzRatioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(65, Short.MAX_VALUE))
-        );
-        mzRatioFilterPanelLayout.setVerticalGroup(
-            mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(mzToleranceLabel)
-                    .addComponent(mzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(mzRatioFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addMzRatioLabel)
-                    .addComponent(addMzRatioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addMzRatioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(removeMzRatioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
-        );
-
-        FilteSettingsTabbedPane.addTab("M/Z ratio filter settings", mzRatioFilterPanel);
 
         noiseFilterPanel.setOpaque(false);
 
@@ -222,6 +173,92 @@ public class MzRatioFilterDialog extends javax.swing.JDialog {
 
         FilteSettingsTabbedPane.addTab("Noise filter settings", noiseFilterPanel);
 
+        mzRatioFilterPanel.setOpaque(false);
+
+        mzRatioFilterScrollPane.setViewportView(mzRatioFilterList);
+
+        addMzRatioLabel.setText("M/Z ratio");
+
+        addMzRatioTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+
+        addMzRatioButton.setText("add");
+        addMzRatioButton.setMaximumSize(new java.awt.Dimension(97, 23));
+        addMzRatioButton.setMinimumSize(new java.awt.Dimension(97, 23));
+        addMzRatioButton.setPreferredSize(new java.awt.Dimension(97, 23));
+
+        removeMzRatioButton.setText("remove");
+        removeMzRatioButton.setMaximumSize(new java.awt.Dimension(97, 23));
+        removeMzRatioButton.setMinimumSize(new java.awt.Dimension(97, 23));
+        removeMzRatioButton.setPreferredSize(new java.awt.Dimension(97, 23));
+
+        mzToleranceLabel.setText("M/Z tolerance");
+
+        mzToleranceTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+
+        filterTypeLabel.setText("Filter type");
+
+        filterTypeRadioButtonGroup.add(andCheckBox);
+        andCheckBox.setText("and");
+
+        filterTypeRadioButtonGroup.add(orCheckBox);
+        orCheckBox.setText("or");
+
+        javax.swing.GroupLayout mzRatioFilterPanelLayout = new javax.swing.GroupLayout(mzRatioFilterPanel);
+        mzRatioFilterPanel.setLayout(mzRatioFilterPanelLayout);
+        mzRatioFilterPanelLayout.setHorizontalGroup(
+            mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
+                            .addComponent(mzToleranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(mzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mzRatioFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
+                            .addComponent(addMzRatioLabel)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addMzRatioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
+                        .addComponent(addMzRatioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(removeMzRatioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
+                        .addComponent(filterTypeLabel)
+                        .addGap(18, 18, 18)
+                        .addComponent(andCheckBox)
+                        .addGap(10, 10, 10)
+                        .addComponent(orCheckBox)))
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
+        mzRatioFilterPanelLayout.setVerticalGroup(
+            mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mzRatioFilterPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mzToleranceLabel)
+                    .addComponent(mzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(mzRatioFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addMzRatioLabel)
+                    .addComponent(addMzRatioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addMzRatioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeMzRatioButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(mzRatioFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterTypeLabel)
+                    .addComponent(andCheckBox)
+                    .addComponent(orCheckBox))
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        FilteSettingsTabbedPane.addTab("M/Z ratio filter settings", mzRatioFilterPanel);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -245,12 +282,16 @@ public class MzRatioFilterDialog extends javax.swing.JDialog {
     private javax.swing.JButton addMzRatioButton;
     private javax.swing.JLabel addMzRatioLabel;
     private javax.swing.JTextField addMzRatioTextField;
+    private javax.swing.JRadioButton andCheckBox;
+    private javax.swing.JLabel filterTypeLabel;
+    private javax.swing.ButtonGroup filterTypeRadioButtonGroup;
     private javax.swing.JList mzRatioFilterList;
     private javax.swing.JPanel mzRatioFilterPanel;
     private javax.swing.JScrollPane mzRatioFilterScrollPane;
     private javax.swing.JLabel mzToleranceLabel;
     private javax.swing.JTextField mzToleranceTextField;
     private javax.swing.JPanel noiseFilterPanel;
+    private javax.swing.JRadioButton orCheckBox;
     private javax.swing.JButton removeMzRatioButton;
     private javax.swing.JLabel winsorConstantLabel;
     private javax.swing.JTextField winsorConstantTextField;

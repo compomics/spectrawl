@@ -5,7 +5,7 @@
 package com.compomics.spectrawl.service;
 
 import com.compomics.spectrawl.model.Experiment;
-import com.compomics.spectrawl.repository.MgfSpectrumRepository;
+import com.compomics.spectrawl.repository.MgfExperimentRepository;
 import java.io.File;
 import java.util.Map;
 
@@ -28,6 +28,6 @@ public interface MgfExperimentService {
      * 
      * @return MgfSpectrumLoader
      */
-    MgfSpectrumRepository getMgfSpectrumLoader();
+    MgfExperimentRepository getMgfSpectrumLoader();
     
 }

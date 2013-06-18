@@ -5,7 +5,7 @@
 package com.compomics.spectrawl.repository.impl;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
-import com.compomics.spectrawl.repository.MgfSpectrumRepository;
+import com.compomics.spectrawl.repository.MgfExperimentRepository;
 import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
 import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
@@ -25,17 +25,17 @@ import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
  *
  * @author niels
  */
-@Repository("mgfSpectrumRepository")
-public class MgfSpectrumRepositoryImpl implements MgfSpectrumRepository {
+@Repository("mgfExperimentRepository")
+public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
 
-    private static final Logger LOGGER = Logger.getLogger(MgfSpectrumRepositoryImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(MgfExperimentRepositoryImpl.class);
     private boolean doNoiseFiltering;
     @Autowired
     private NoiseThresholdFinder noiseThresholdFinder;
     @Autowired
     private NoiseFilter noiseFilter;
 
-    public MgfSpectrumRepositoryImpl() {
+    public MgfExperimentRepositoryImpl() {
         doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
     }
 
