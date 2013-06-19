@@ -3,7 +3,7 @@ package com.compomics.spectrawl.filter.mzratio;
 import com.compomics.spectrawl.logic.filter.mzratio.Filter;
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.BasicMzRatioFilter;
+import com.compomics.spectrawl.logic.filter.mzratio.impl.BasicMassFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Peak;
@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springXMLConfig.xml")
-public class DefaultMzRatioFilterTest {
+public class BasicMzRatioFilterTest {
 
     @Autowired
     SpectrumBinner spectrumBinner;
@@ -74,7 +74,7 @@ public class DefaultMzRatioFilterTest {
         List<Double> mzRatioFilterValues = new ArrayList<Double>();
         mzRatioFilterValues.add(220.3);
         mzRatioFilterValues.add(230D);
-        Filter<SpectrumImpl> filter = new BasicMzRatioFilter(0.5, mzRatioFilterValues);
+        Filter<SpectrumImpl> filter = new BasicMassFilter(0.5, mzRatioFilterValues);
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
         assertTrue(filter.passesFilter(spectrum, false));

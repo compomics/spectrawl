@@ -43,7 +43,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="fixedCombMzDeltaFilterPanel">
+        <Container class="javax.swing.JPanel" name="fixedCombMassDeltaFilterPanel">
           <Properties>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[4, 4]"/>
@@ -52,8 +52,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Fixed comb M/Z delta filter settings">
-                <Property name="tabTitle" type="java.lang.String" value="Fixed comb M/Z delta filter settings"/>
+              <JTabbedPaneConstraints tabName="Fixed comb mass delta filter settings">
+                <Property name="tabTitle" type="java.lang.String" value="Fixed comb mass delta filter settings"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -70,22 +70,22 @@
                               <Component id="fixedCombIntThresholdTextField" min="-2" pref="99" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="mzDeltaLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="massDeltaLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="mzDeltaTextField" min="-2" pref="99" max="-2" attributes="0"/>
+                              <Component id="massDeltaTextField" min="-2" pref="99" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Component id="maxConsecMzDeltasLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="maxConsecMassDeltasLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="maxConsecMzDeltasTextField" min="-2" pref="99" max="-2" attributes="0"/>
+                              <Component id="maxConsecMassDeltasTextField" min="-2" pref="99" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="minConsecMzDeltasLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="minConsecMassDeltasLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="minConsecMzDeltasTextField" min="-2" pref="99" max="-2" attributes="0"/>
+                              <Component id="minConsecMassDeltasTextField" min="-2" pref="99" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="235" max="32767" attributes="0"/>
+                      <EmptySpace pref="229" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -99,18 +99,18 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="mzDeltaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="mzDeltaTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="massDeltaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="massDeltaTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="minConsecMzDeltasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="minConsecMzDeltasTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="minConsecMassDeltasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="minConsecMassDeltasTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="maxConsecMzDeltasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="maxConsecMzDeltasTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="maxConsecMassDeltasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="maxConsecMassDeltasTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="157" max="32767" attributes="0"/>
                   </Group>
@@ -118,12 +118,12 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JLabel" name="mzDeltaLabel">
+            <Component class="javax.swing.JLabel" name="massDeltaLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/Z delta"/>
+                <Property name="text" type="java.lang.String" value="Mass delta"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="mzDeltaTextField">
+            <Component class="javax.swing.JTextField" name="massDeltaTextField">
               <Properties>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[6, 25]"/>
@@ -142,24 +142,24 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="minConsecMzDeltasLabel">
+            <Component class="javax.swing.JLabel" name="minConsecMassDeltasLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Min consecutive M/Z deltas"/>
+                <Property name="text" type="java.lang.String" value="Min consecutive mass deltas"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="minConsecMzDeltasTextField">
+            <Component class="javax.swing.JTextField" name="minConsecMassDeltasTextField">
               <Properties>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[6, 25]"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="maxConsecMzDeltasLabel">
+            <Component class="javax.swing.JLabel" name="maxConsecMassDeltasLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Max consecutive M/Z deltas"/>
+                <Property name="text" type="java.lang.String" value="Max consecutive mass deltas"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="maxConsecMzDeltasTextField">
+            <Component class="javax.swing.JTextField" name="maxConsecMassDeltasTextField">
               <Properties>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[6, 25]"/>
@@ -168,7 +168,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="variableCombMzDeltaFilterPanel">
+        <Container class="javax.swing.JPanel" name="variableCombMassDeltaFilterPanel">
           <Properties>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[4, 4]"/>
@@ -177,8 +177,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Variable comb M/Z delta filter settings">
-                <Property name="tabTitle" type="java.lang.String" value="Variable comb M/Z delta filter settings"/>
+              <JTabbedPaneConstraints tabName="Variable comb mass delta filter settings">
+                <Property name="tabTitle" type="java.lang.String" value="Variable comb mass delta filter settings"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -195,15 +195,15 @@
                               <Component id="varCombIntThresholdTextField" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="addMzDeltaLabel" min="-2" max="-2" attributes="0"/>
+                              <Component id="addMassDeltaLabel" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="addMzDeltaTextField" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="addMassDeltaTextField" min="-2" pref="110" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="varCombMzDeltaFilterScrollPane" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Component id="varCombMassDeltaFilterScrollPane" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="addMzDeltaButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="addMassDeltaButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="removeMzDeltaButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="removeMassDeltaButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="285" max="32767" attributes="0"/>
@@ -219,16 +219,16 @@
                           <Component id="varCombIntThresholdTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="varCombMzDeltaFilterScrollPane" min="-2" max="-2" attributes="0"/>
+                      <Component id="varCombMassDeltaFilterScrollPane" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="addMzDeltaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="addMzDeltaTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="addMassDeltaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="addMassDeltaTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="removeMzDeltaButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="addMzDeltaButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="removeMassDeltaButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="addMassDeltaButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="54" max="32767" attributes="0"/>
                   </Group>
@@ -236,11 +236,11 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="varCombMzDeltaFilterScrollPane">
+            <Container class="javax.swing.JScrollPane" name="varCombMassDeltaFilterScrollPane">
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="mzDeltaFilterList">
+                <Component class="javax.swing.JList" name="massDeltaFilterList">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="0"/>
@@ -249,19 +249,19 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="addMzDeltaLabel">
+            <Component class="javax.swing.JLabel" name="addMassDeltaLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/Z delta"/>
+                <Property name="text" type="java.lang.String" value="Mass delta"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="addMzDeltaTextField">
+            <Component class="javax.swing.JTextField" name="addMassDeltaTextField">
               <Properties>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[6, 25]"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="addMzDeltaButton">
+            <Component class="javax.swing.JButton" name="addMassDeltaButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="add"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -275,7 +275,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="removeMzDeltaButton">
+            <Component class="javax.swing.JButton" name="removeMassDeltaButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="remove"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">

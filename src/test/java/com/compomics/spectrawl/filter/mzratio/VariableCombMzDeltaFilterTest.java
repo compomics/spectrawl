@@ -2,7 +2,7 @@ package com.compomics.spectrawl.filter.mzratio;
 
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.VariableCombMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.mzratio.impl.VariableCombMassDeltaFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Peak;
@@ -30,7 +30,7 @@ public class VariableCombMzDeltaFilterTest {
     @Autowired
     ExperimentBinner experimentBinner;
     @Autowired
-    VariableCombMzDeltaFilter variableCombMzDeltaFilter;
+    VariableCombMassDeltaFilter variableCombMzDeltaFilter;
     private Experiment experiment;
 
     @Before

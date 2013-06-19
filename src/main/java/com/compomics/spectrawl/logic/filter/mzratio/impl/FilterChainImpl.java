@@ -94,10 +94,10 @@ public class FilterChainImpl<T> implements FilterChain<T> {
     public static FilterChainImpl getFilterChain(PTM ptm) {
         FilterChainImpl result = new FilterChainImpl(FilterChainType.OR);
         for (NeutralLoss neutralLoss : ptm.getNeutralLosses()) {
-            result.addFilter(new BasicMzDeltaFilter(neutralLoss.mass, null)); // Not sure whether I got that right
+            result.addFilter(new BasicMassDeltaFilter(neutralLoss.mass, null)); // Not sure whether I got that right
         }
         for (ReporterIon reporterIon : ptm.getReporterIons()) {
-            result.addFilter(new BasicMzRatioFilter(reporterIon.getTheoreticMass(), new ArrayList<Double>())); //@TODO: add mzRatioFilterValues
+            result.addFilter(new BasicMassFilter(reporterIon.getTheoreticMass(), new ArrayList<Double>())); //@TODO: add mzRatioFilterValues
         }
         return result;
     }

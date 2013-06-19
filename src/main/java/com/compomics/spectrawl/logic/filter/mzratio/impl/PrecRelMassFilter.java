@@ -8,28 +8,28 @@ import java.util.List;
 /**
  * This filter looks for the presence of given M/Z ratio values relative to the precursor mass in a spectrum.
  */
-public class PrecursorMzRatioFilter implements Filter<SpectrumImpl> {
+public class PrecRelMassFilter implements Filter<SpectrumImpl> {
 
     //@TODO: add a name to the filter?
     
     private double mzRatioTolerance;
-    private List<Double> mzRatioFilterValues;
+    private List<Double> precRelMzRatioFilterValues;
 
-    public PrecursorMzRatioFilter() {
+    public PrecRelMassFilter() {
     }    
     
-    public PrecursorMzRatioFilter(double mzRatioTolerance, List<Double> mzRatioFilterValues) {
+    public PrecRelMassFilter(double mzRatioTolerance, List<Double> precRelMzRatioFilterValues) {
         this.mzRatioTolerance = mzRatioTolerance;
-        this.mzRatioFilterValues = mzRatioFilterValues;        
+        this.precRelMzRatioFilterValues = precRelMzRatioFilterValues;        
     }
 
-    public List<Double> getMzRatioFilterValues() {
-        return mzRatioFilterValues;
+    public List<Double> getPrecRelMzRatioFilterValues() {
+        return precRelMzRatioFilterValues;
     }
 
-    public void setMzRatioFilterValues(List<Double> mzRatioFilterValues) {
-        this.mzRatioFilterValues = mzRatioFilterValues;
-    }
+    public void setPrecRelMzRatioFilterValues(List<Double> precRelMzRatioFilterValues) {
+        this.precRelMzRatioFilterValues = precRelMzRatioFilterValues;
+    }    
 
     public double getMzRatioTolerance() {
         return mzRatioTolerance;
@@ -42,8 +42,8 @@ public class PrecursorMzRatioFilter implements Filter<SpectrumImpl> {
     @Override
     public boolean passesFilter(SpectrumImpl spectrum, boolean doInvert) {
         boolean passesFilter = true;
-        for (double mzRatioFilterValue : mzRatioFilterValues) {
-            if (!passesMzRatioFilterValue(spectrum, mzRatioFilterValue)) {
+        for (double precRelMzRatioFilterValue : precRelMzRatioFilterValues) {
+            if (!passesPrecRelMzRatioFilterValue(spectrum, precRelMzRatioFilterValue)) {
                 passesFilter = false;
                 break;
             }
@@ -56,18 +56,18 @@ public class PrecursorMzRatioFilter implements Filter<SpectrumImpl> {
         return passesFilter;
     }
 
-    private boolean passesMzRatioFilterValue(SpectrumImpl spectrum, double mzRatioFilterValue) {
-        boolean passesMzRatioFilterValue = Boolean.FALSE;
+    private boolean passesPrecRelMzRatioFilterValue(SpectrumImpl spectrum, double precRelMzRatioFilterValue) {
+        boolean passesPrecRelMzRatioFilterValue = Boolean.FALSE;
         for (Peak peak : spectrum.getPeakList()) {
             double mzRatio = peak.mz;
             //@todo consider twice the tolerance or not?
-            if (Math.abs(mzRatio - mzRatioFilterValue) < mzRatioTolerance) {
-                passesMzRatioFilterValue = Boolean.TRUE;
+            if (Math.abs(mzRatio - (spectrum.getPrecursorMzRatio() - precRelMzRatioFilterValue)) < mzRatioTolerance) {
+                passesPrecRelMzRatioFilterValue = Boolean.TRUE;
                 break;
             }
         }
 
-        return passesMzRatioFilterValue;
+        return passesPrecRelMzRatioFilterValue;
     }
 
 

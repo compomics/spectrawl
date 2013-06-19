@@ -1,21 +1,23 @@
 package com.compomics.spectrawl.gui.view;
 
 import java.awt.Color;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 /**
  *
  * @author niels
  */
-public class MzDeltaFilterDialog extends javax.swing.JDialog {
+public class MassDeltaFilterDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form FilterConfigDialog
      */
-    public MzDeltaFilterDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);        
+    public MassDeltaFilterDialog(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
         this.getContentPane().setBackground(Color.WHITE);
         setLocationRelativeTo(parent);
@@ -29,13 +31,25 @@ public class MzDeltaFilterDialog extends javax.swing.JDialog {
         return addMzDeltaTextField;
     }
 
+    public JRadioButton getAndRadioButton() {
+        return andRadioButton;
+    }
+
+    public ButtonGroup getFilterTypeRadioButtonGroup() {
+        return filterTypeRadioButtonGroup;
+    }
+
     public JTextField getIntensityThresholdTextField() {
         return intensityThresholdTextField;
     }
 
     public JList getMzDeltaFilterList() {
         return mzDeltaFilterList;
-    }   
+    }
+
+    public JRadioButton getOrRadioButton() {
+        return orRadioButton;
+    }
 
     public JButton getRemoveMzDeltaButton() {
         return removeMzDeltaButton;
@@ -50,6 +64,7 @@ public class MzDeltaFilterDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        filterTypeRadioButtonGroup = new javax.swing.ButtonGroup();
         filterSettingsTabbedPane = new javax.swing.JTabbedPane();
         mzDeltaFilterPanel = new javax.swing.JPanel();
         mzDeltaFilterScrollPane = new javax.swing.JScrollPane();
@@ -60,9 +75,11 @@ public class MzDeltaFilterDialog extends javax.swing.JDialog {
         removeMzDeltaButton = new javax.swing.JButton();
         intensityThresholdLabel = new javax.swing.JLabel();
         intensityThresholdTextField = new javax.swing.JTextField();
+        filterTypeLabel = new javax.swing.JLabel();
+        andRadioButton = new javax.swing.JRadioButton();
+        orRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(280, 350));
 
         mzDeltaFilterPanel.setMinimumSize(new java.awt.Dimension(4, 4));
         mzDeltaFilterPanel.setOpaque(false);
@@ -88,6 +105,12 @@ public class MzDeltaFilterDialog extends javax.swing.JDialog {
 
         intensityThresholdTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 
+        filterTypeLabel.setText("Filter type");
+
+        andRadioButton.setText("and");
+
+        orRadioButton.setText("or");
+
         javax.swing.GroupLayout mzDeltaFilterPanelLayout = new javax.swing.GroupLayout(mzDeltaFilterPanel);
         mzDeltaFilterPanel.setLayout(mzDeltaFilterPanelLayout);
         mzDeltaFilterPanelLayout.setHorizontalGroup(
@@ -103,11 +126,17 @@ public class MzDeltaFilterDialog extends javax.swing.JDialog {
                         .addComponent(addMzDeltaLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addMzDeltaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mzDeltaFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mzDeltaFilterPanelLayout.createSequentialGroup()
+                        .addComponent(filterTypeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(andRadioButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(orRadioButton))
                     .addGroup(mzDeltaFilterPanelLayout.createSequentialGroup()
                         .addComponent(addMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(removeMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(mzDeltaFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(removeMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(60, Short.MAX_VALUE))
         );
         mzDeltaFilterPanelLayout.setVerticalGroup(
@@ -127,7 +156,12 @@ public class MzDeltaFilterDialog extends javax.swing.JDialog {
                 .addGroup(mzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(removeMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(mzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(filterTypeLabel)
+                    .addComponent(andRadioButton)
+                    .addComponent(orRadioButton))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         filterSettingsTabbedPane.addTab("M/Z delta filter settings", mzDeltaFilterPanel);
@@ -149,17 +183,20 @@ public class MzDeltaFilterDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addMzDeltaButton;
     private javax.swing.JLabel addMzDeltaLabel;
     private javax.swing.JTextField addMzDeltaTextField;
+    private javax.swing.JRadioButton andRadioButton;
     private javax.swing.JTabbedPane filterSettingsTabbedPane;
+    private javax.swing.JLabel filterTypeLabel;
+    private javax.swing.ButtonGroup filterTypeRadioButtonGroup;
     private javax.swing.JLabel intensityThresholdLabel;
     private javax.swing.JTextField intensityThresholdTextField;
     private javax.swing.JList mzDeltaFilterList;
     private javax.swing.JPanel mzDeltaFilterPanel;
     private javax.swing.JScrollPane mzDeltaFilterScrollPane;
+    private javax.swing.JRadioButton orRadioButton;
     private javax.swing.JButton removeMzDeltaButton;
     // End of variables declaration//GEN-END:variables
 }

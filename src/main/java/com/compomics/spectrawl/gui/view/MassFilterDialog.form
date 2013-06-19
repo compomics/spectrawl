@@ -4,6 +4,8 @@
   <NonVisualComponents>
     <Component class="javax.swing.ButtonGroup" name="filterTypeRadioButtonGroup">
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="precRelFilterTypeRadioButtonGroup">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
@@ -27,7 +29,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="280" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="369" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Component id="FilteSettingsTabbedPane" alignment="0" max="32767" attributes="0"/>
           </Group>
@@ -35,7 +37,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="350" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="360" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Component id="FilteSettingsTabbedPane" alignment="0" max="32767" attributes="0"/>
           </Group>
@@ -67,7 +69,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="winsorConvergenceCriterionLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="26" max="32767" attributes="0"/>
+                              <EmptySpace pref="115" max="32767" attributes="0"/>
                               <Component id="winsorConvergenceCriterionTextField" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -109,7 +111,7 @@
                           <Component id="winsorOutlierLimitLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="winsorOutlierLimitTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="163" max="32767" attributes="0"/>
+                      <EmptySpace pref="157" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -167,14 +169,14 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="mzRatioFilterPanel">
+        <Container class="javax.swing.JPanel" name="massFilterPanel">
           <Properties>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="M/Z ratio filter settings">
-                <Property name="tabTitle" type="java.lang.String" value="M/Z ratio filter settings"/>
+              <JTabbedPaneConstraints tabName="Mass ratio filter settings">
+                <Property name="tabTitle" type="java.lang.String" value="Mass ratio filter settings"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -184,34 +186,32 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="mzToleranceLabel" min="-2" pref="67" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="mzToleranceTextField" min="-2" pref="110" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="mzRatioFilterScrollPane" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Component id="addMzRatioLabel" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="addMzRatioTextField" min="-2" pref="110" max="-2" attributes="0"/>
-                              </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="massToleranceLabel" min="-2" pref="67" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="massToleranceTextField" min="-2" pref="110" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="massFilterScrollPane" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="addMassLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="addMassTextField" min="-2" pref="110" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="addMzRatioButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="addMassButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="removeMzRatioButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="removeMassButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="filterTypeLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="andRadioButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="andCheckBox" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              <Component id="orCheckBox" min="-2" max="-2" attributes="0"/>
+                              <Component id="orRadioButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="65" max="32767" attributes="0"/>
+                      <EmptySpace pref="154" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -220,38 +220,38 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="mzToleranceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="mzToleranceTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="massToleranceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="massToleranceTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="mzRatioFilterScrollPane" min="-2" max="-2" attributes="0"/>
+                      <Component id="massFilterScrollPane" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="addMzRatioLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="addMzRatioTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="addMassLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="addMassTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="addMzRatioButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="removeMzRatioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="addMassButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="removeMassButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="filterTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="andCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="orCheckBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="andRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="orRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="mzRatioFilterScrollPane">
+            <Container class="javax.swing.JScrollPane" name="massFilterScrollPane">
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="mzRatioFilterList">
+                <Component class="javax.swing.JList" name="massFilterList">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                       <StringArray count="0"/>
@@ -260,19 +260,19 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="addMzRatioLabel">
+            <Component class="javax.swing.JLabel" name="addMassLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/Z ratio"/>
+                <Property name="text" type="java.lang.String" value="Mass"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="addMzRatioTextField">
+            <Component class="javax.swing.JTextField" name="addMassTextField">
               <Properties>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[6, 25]"/>
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="addMzRatioButton">
+            <Component class="javax.swing.JButton" name="addMassButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="add"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -286,7 +286,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="removeMzRatioButton">
+            <Component class="javax.swing.JButton" name="removeMassButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="remove"/>
                 <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -300,12 +300,12 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="mzToleranceLabel">
+            <Component class="javax.swing.JLabel" name="massToleranceLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/Z tolerance"/>
+                <Property name="text" type="java.lang.String" value="Mass tolerance"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="mzToleranceTextField">
+            <Component class="javax.swing.JTextField" name="massToleranceTextField">
               <Properties>
                 <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[6, 25]"/>
@@ -317,7 +317,7 @@
                 <Property name="text" type="java.lang.String" value="Filter type"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="andCheckBox">
+            <Component class="javax.swing.JRadioButton" name="andRadioButton">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="filterTypeRadioButtonGroup"/>
@@ -325,7 +325,173 @@
                 <Property name="text" type="java.lang.String" value="and"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="orCheckBox">
+            <Component class="javax.swing.JRadioButton" name="orRadioButton">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="filterTypeRadioButtonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="or"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="precRelMassFilterPanel">
+          <Properties>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Precursor relative mass ratio filter settings">
+                <Property name="tabTitle" type="java.lang.String" value="Precursor relative mass ratio filter settings"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="precRelMassToleranceLabel" min="-2" pref="67" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="precRelMassToleranceTextField" min="-2" pref="110" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="precRelMassFilterScrollPane" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="addPrecRelMassLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="addPrecRelMassTextField" min="-2" pref="110" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="addPrecRelMassButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="removePrecRelMassButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="precRelFilterTypeLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="precRelAndRadioButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="precRelOrRadioButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="154" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="precRelMassToleranceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="precRelMassToleranceTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="precRelMassFilterScrollPane" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="addPrecRelMassLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="addPrecRelMassTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="addPrecRelMassButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="removePrecRelMassButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="precRelFilterTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="precRelAndRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="precRelOrRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="precRelMassFilterScrollPane">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JList" name="precRelMassFilterList">
+                  <Properties>
+                    <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+                      <StringArray count="0"/>
+                    </Property>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Component class="javax.swing.JLabel" name="addPrecRelMassLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mass"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="addPrecRelMassTextField">
+              <Properties>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[6, 25]"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="addPrecRelMassButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="add"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[97, 23]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[97, 23]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[97, 23]"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="removePrecRelMassButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="remove"/>
+                <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[97, 23]"/>
+                </Property>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[97, 23]"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[97, 23]"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="precRelMassToleranceLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Mass tolerance"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="precRelMassToleranceTextField">
+              <Properties>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[6, 25]"/>
+                </Property>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="precRelFilterTypeLabel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Filter type"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="precRelAndRadioButton">
+              <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="filterTypeRadioButtonGroup"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="and"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JRadioButton" name="precRelOrRadioButton">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="filterTypeRadioButtonGroup"/>
