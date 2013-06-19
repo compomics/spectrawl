@@ -8,42 +8,42 @@ import java.util.List;
 /**
  * This filter looks for the presence of given M/Z ratio values in a spectrum.
  */
-public class BasicMzRatioFilter implements Filter<SpectrumImpl> {
+public class BasicMassFilter implements Filter<SpectrumImpl> {
 
     //@TODO: add a name to the filter?
     
-    private double mzRatioTolerance;
-    private List<Double> mzRatioFilterValues;
+    private double massTolerance;
+    private List<Double> massFilterValues;
 
-    public BasicMzRatioFilter() {
+    public BasicMassFilter() {
     }    
     
-    public BasicMzRatioFilter(double mzRatioTolerance, List<Double> mzRatioFilterValues) {
-        this.mzRatioTolerance = mzRatioTolerance;
-        this.mzRatioFilterValues = mzRatioFilterValues;        
+    public BasicMassFilter(double massTolerance, List<Double> massFilterValues) {
+        this.massTolerance = massTolerance;
+        this.massFilterValues = massFilterValues;        
+    }    
+
+    public double getMassTolerance() {
+        return massTolerance;
     }
 
-    public List<Double> getMzRatioFilterValues() {
-        return mzRatioFilterValues;
+    public void setMassTolerance(double massTolerance) {
+        this.massTolerance = massTolerance;
     }
 
-    public void setMzRatioFilterValues(List<Double> mzRatioFilterValues) {
-        this.mzRatioFilterValues = mzRatioFilterValues;
+    public List<Double> getMassFilterValues() {
+        return massFilterValues;
     }
 
-    public double getMzRatioTolerance() {
-        return mzRatioTolerance;
-    }
-
-    public void setMzRatioTolerance(double mzRatioTolerance) {
-        this.mzRatioTolerance = mzRatioTolerance;
+    public void setMassFilterValues(List<Double> massFilterValues) {
+        this.massFilterValues = massFilterValues;
     }
         
     @Override
     public boolean passesFilter(SpectrumImpl spectrum, boolean doInvert) {
         boolean passesFilter = true;
-        for (double mzRatioFilterValue : mzRatioFilterValues) {
-            if (!passesMzRatioFilterValue(spectrum, mzRatioFilterValue)) {
+        for (double massFilterValue : massFilterValues) {
+            if (!passesMzRatioFilterValue(spectrum, massFilterValue)) {
                 passesFilter = false;
                 break;
             }
@@ -61,7 +61,7 @@ public class BasicMzRatioFilter implements Filter<SpectrumImpl> {
         for (Peak peak : spectrum.getPeakList()) {
             double mzRatio = peak.mz;
             //@todo consider twice the tolerance or not?
-            if (Math.abs(mzRatio - mzRatioFilterValue) < mzRatioTolerance) {
+            if (Math.abs(mzRatio - mzRatioFilterValue) < massTolerance) {
                 passesMzRatioFilterValue = Boolean.TRUE;
                 break;
             }
