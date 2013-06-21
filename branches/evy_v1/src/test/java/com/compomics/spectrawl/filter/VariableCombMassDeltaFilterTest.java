@@ -1,8 +1,8 @@
-package com.compomics.spectrawl.filter.mzratio;
+package com.compomics.spectrawl.filter;
 
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.VariableCombMassDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.VariableCombMassDeltaFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Peak;
@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springXMLConfig.xml")
-public class VariableCombMzDeltaFilterTest {
+public class VariableCombMassDeltaFilterTest {
 
     @Autowired
     SpectrumBinner spectrumBinner;
@@ -62,14 +62,45 @@ public class VariableCombMzDeltaFilterTest {
         peaks.put(333.6, peak);
 
         SpectrumImpl spectrum_1 = new SpectrumImpl("1");
+        spectrum_1.setCharge(1);
         spectrum_1.setPeakList(peaks);
+
+        peaks = new HashMap<Double, Peak>();
+        peak = new Peak(100D / 3, 100D);
+        peaks.put(100D / 3, peak);
+        peak = new Peak(150.5 / 3, 100D);
+        peaks.put(150.5 / 3, peak);
+        peak = new Peak(180D / 3, 40D);
+        peaks.put(180D / 3, peak);
+        peak = new Peak(211.5 / 3, 100D);
+        peaks.put(211.5 / 3, peak);
+        peak = new Peak(302D / 3, 100D);
+        peaks.put(302D / 3, peak);
+        peak = new Peak(322.5 / 3, 100D);
+        peaks.put(322.5 / 3, peak);
+
+        //add some random peaks
+        peak = new Peak(160.5 / 3, 100D);
+        peaks.put(160.5 / 3, peak);
+        peak = new Peak(235.6 / 3, 40D);
+        peaks.put(235.6 / 3, peak);
+        peak = new Peak(297.1 / 3, 100D);
+        peaks.put(297.1 / 3, peak);
+        peak = new Peak(333.6 / 3, 100D);
+        peaks.put(333.6 / 3, peak);
+
+        SpectrumImpl spectrum_2 = new SpectrumImpl("2");
+        spectrum_2.setCharge(3);
+        spectrum_2.setPeakList(peaks);
 
         //bin the spectra        
         spectrumBinner.binSpectrum(spectrum_1);
+        spectrumBinner.binSpectrum(spectrum_2);
 
         //add to experiment
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
         spectra.add(spectrum_1);
+        spectra.add(spectrum_2);
 
         experiment = new Experiment("1");
         experiment.setSpectra(spectra);
@@ -79,51 +110,44 @@ public class VariableCombMzDeltaFilterTest {
     }
 
     /**
-     * Test the scenario where the filter M/Z deltas are found in the
-     * spectrum. In this case, the spectrum should pass the filter.
+     * Test the scenario where the filter mass deltas are found in the spectrum.
+     * In this case, the spectrum should pass the filter.
      */
     @Test
     public void testPassesFilter_1() {
-        //get the spectrum
-        SpectrumImpl spectrum = experiment.getSpectra().get(0);
-
         //init filter        
         double[] mzDeltaValues = {50.5, 29.5, 31.5, 90.5, 20.5};
         variableCombMzDeltaFilter.init(0.01, mzDeltaValues);
-        boolean filterOutcome = variableCombMzDeltaFilter.passesFilter(spectrum, false);
-        Assert.assertTrue(filterOutcome);
+
+        Assert.assertTrue(variableCombMzDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
+        Assert.assertTrue(variableCombMzDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
-    
+
     /**
-     * Test the scenario where the filter M/Z deltas are found in the
-     * spectrum. In this case, the spectrum should pass the filter.
+     * Test the scenario where the filter mass deltas are found in the spectrum.
+     * In this case, the spectrum should pass the filter.
      */
     @Test
     public void testPassesFilter_2() {
-        //get the spectrum
-        SpectrumImpl spectrum = experiment.getSpectra().get(0);
-
         //init filter        
         double[] mzDeltaValues = {50.5, 29.5, 31.5};
         variableCombMzDeltaFilter.init(0.01, mzDeltaValues);
-        boolean filterOutcome = variableCombMzDeltaFilter.passesFilter(spectrum, false);
-        Assert.assertTrue(filterOutcome);
+
+        Assert.assertTrue(variableCombMzDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
+        Assert.assertTrue(variableCombMzDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
-    
+
     /**
-     * Test the scenario where the filter M/Z deltas are not found in the
+     * Test the scenario where the filter mass deltas are not found in the
      * spectrum. In this case, the spectrum shouldn't pass the filter.
      */
     @Test
     public void testPassesFilter_3() {
-        //get the spectrum
-        SpectrumImpl spectrum = experiment.getSpectra().get(0);
-
         //init filter        
         double[] mzDeltaValues = {10.3, 79.5, 37.5, 102.5, 10.5};
         variableCombMzDeltaFilter.init(0.01, mzDeltaValues);
-        boolean filterOutcome = variableCombMzDeltaFilter.passesFilter(spectrum, false);
-        Assert.assertFalse(filterOutcome);
+
+        Assert.assertFalse(variableCombMzDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
+        Assert.assertFalse(variableCombMzDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
-    
 }

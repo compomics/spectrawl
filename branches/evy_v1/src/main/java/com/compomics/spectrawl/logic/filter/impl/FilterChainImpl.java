@@ -1,7 +1,7 @@
-package com.compomics.spectrawl.logic.filter.mzratio.impl;
+package com.compomics.spectrawl.logic.filter.impl;
 
-import com.compomics.spectrawl.logic.filter.mzratio.Filter;
-import com.compomics.spectrawl.logic.filter.mzratio.FilterChain;
+import com.compomics.spectrawl.logic.filter.Filter;
+import com.compomics.spectrawl.logic.filter.FilterChain;
 import com.compomics.util.experiment.biology.AminoAcid;
 import com.compomics.util.experiment.biology.NeutralLoss;
 import com.compomics.util.experiment.biology.PTM;

@@ -1,6 +1,6 @@
-package com.compomics.spectrawl.logic.filter.mzratio.impl;
+package com.compomics.spectrawl.logic.filter.impl;
 
-import com.compomics.spectrawl.logic.filter.mzratio.Filter;
+import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Peak;
 import java.util.List;
@@ -11,17 +11,16 @@ import java.util.List;
 public class BasicMassFilter implements Filter<SpectrumImpl> {
 
     //@TODO: add a name to the filter?
-    
     private double massTolerance;
     private List<Double> massFilterValues;
 
     public BasicMassFilter() {
-    }    
-    
+    }
+
     public BasicMassFilter(double massTolerance, List<Double> massFilterValues) {
         this.massTolerance = massTolerance;
-        this.massFilterValues = massFilterValues;        
-    }    
+        this.massFilterValues = massFilterValues;
+    }
 
     public double getMassTolerance() {
         return massTolerance;
@@ -38,12 +37,12 @@ public class BasicMassFilter implements Filter<SpectrumImpl> {
     public void setMassFilterValues(List<Double> massFilterValues) {
         this.massFilterValues = massFilterValues;
     }
-        
+
     @Override
     public boolean passesFilter(SpectrumImpl spectrum, boolean doInvert) {
         boolean passesFilter = true;
         for (double massFilterValue : massFilterValues) {
-            if (!passesMzRatioFilterValue(spectrum, massFilterValue)) {
+            if (!passesMassFilterValue(spectrum, massFilterValue)) {
                 passesFilter = false;
                 break;
             }
@@ -56,19 +55,24 @@ public class BasicMassFilter implements Filter<SpectrumImpl> {
         return passesFilter;
     }
 
-    private boolean passesMzRatioFilterValue(SpectrumImpl spectrum, double mzRatioFilterValue) {
-        boolean passesMzRatioFilterValue = Boolean.FALSE;
+    /**
+     * Check if a given mass filter value is found in a spectrum
+     * 
+     * @param spectrum the spectrum to filter
+     * @param massFilterValue the peak mass filter value
+     * @return 
+     */
+    private boolean passesMassFilterValue(SpectrumImpl spectrum, double massFilterValue) {
+        boolean passesMassFilterValue = false;
         for (Peak peak : spectrum.getPeakList()) {
             double mzRatio = peak.mz;
             //@todo consider twice the tolerance or not?
-            if (Math.abs(mzRatio - mzRatioFilterValue) < massTolerance) {
-                passesMzRatioFilterValue = Boolean.TRUE;
+            //adjust peak M/Z value with the precursor charge
+            if (Math.abs((mzRatio * spectrum.getCharge()) - massFilterValue) < massTolerance) {
+                passesMassFilterValue = true;
                 break;
             }
         }
-
-        return passesMzRatioFilterValue;
+        return passesMassFilterValue;
     }
-
-
 }

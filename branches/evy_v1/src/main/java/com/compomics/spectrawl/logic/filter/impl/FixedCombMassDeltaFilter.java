@@ -1,7 +1,7 @@
-package com.compomics.spectrawl.logic.filter.mzratio.impl;
+package com.compomics.spectrawl.logic.filter.impl;
 
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.mzratio.Filter;
+import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.model.PeakBin;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.Map;
@@ -13,21 +13,21 @@ import org.springframework.stereotype.Component;
  * This filter looks for a number of consecutive fixed M/Z delta values between
  * peaks, between a minimum and a maximum value.
  */
-@Component("fixedCombMzDeltaFilter")
+@Component("fixedCombMassDeltaFilter")
 public class FixedCombMassDeltaFilter implements Filter<SpectrumImpl> {
 
     private double intensityThreshold;
     /**
-     * The mininum number of consecutive M/Z delta values considered in order to
-     * pass the filter
+     * The mininum number of consecutive mass delta values considered in order
+     * to pass the filter
      */
-    private int minConsecMzDeltas;
+    private int minConsecMassDeltas;
     /**
-     * The maximum number of consecutive M/Z delta values considered in order to
-     * pass the filter
+     * The maximum number of consecutive mass delta values considered in order
+     * to pass the filter
      */
-    private int maxConsecMzDeltas;
-    private double mzDeltaFilterValue;
+    private int maxConsecMassDeltas;
+    private double massDeltaFilterValue;
     @Autowired
     private SpectrumBinner spectrumBinner;
 
@@ -39,14 +39,14 @@ public class FixedCombMassDeltaFilter implements Filter<SpectrumImpl> {
         this.spectrumBinner = spectrumBinner;
     }
 
-    public void init(double intensityThreshold, int minConsecBins, int maxConsecBins, double mzDeltaFilterValue) {
+    public void init(double intensityThreshold, int minConsecBins, int maxConsecBins, double massDeltaFilterValue) {
         if (minConsecBins > maxConsecBins) {
             throw new IllegalArgumentException("The minimum number of consecutive bins is larger than the maximum number of consecutive bins,");
         }
         this.intensityThreshold = intensityThreshold;
-        this.minConsecMzDeltas = minConsecBins;
-        this.maxConsecMzDeltas = maxConsecBins;
-        this.mzDeltaFilterValue = mzDeltaFilterValue;
+        this.minConsecMassDeltas = minConsecBins;
+        this.maxConsecMassDeltas = maxConsecBins;
+        this.massDeltaFilterValue = massDeltaFilterValue;
     }
 
     @Override
@@ -60,27 +60,31 @@ public class FixedCombMassDeltaFilter implements Filter<SpectrumImpl> {
         for (TreeMap<Double, PeakBin> peakBins : peakBinsMap.values()) {
 
             /**
-             * look for one peak at the relevant M/Z delta values with the other
-             * peaks, contained in the peakBins map. Start counting the given
-             * range of consecutive M/Z delta values; break if the a certain M/Z
-             * delta value is not present (below the intensitythreshold).
+             * look for one peak at the relevant mass delta values with the
+             * other peaks, contained in the peakBins map. Start counting the
+             * given range of consecutive mass delta values; break if the a
+             * certain mass delta value is not present (below the
+             * intensitythreshold).
              */
-            int consecMzDeltas = 1;
-            for (int i = 1; i <= maxConsecMzDeltas + 1; i++) {
-                //get the key based on the current M/Z delta value
-                double currentMzDeltaValue = mzDeltaFilterValue * consecMzDeltas;
-                Double key = peakBins.floorKey(currentMzDeltaValue);
+            int consecMassDeltas = 1;
+            for (int i = 1; i <= maxConsecMassDeltas + 1; i++) {
+                //get the key based on the current mass delta value
+                double currentMassDeltaValue = massDeltaFilterValue * consecMassDeltas;
+                Double key = peakBins.floorKey(currentMassDeltaValue);
                 if (key != null && peakBins.get(key).getIntensitySum() < intensityThreshold) {
                     //no need to go on
                     break;
-                } else {
-                    consecMzDeltas++;
+                } else {                    
+                    consecMassDeltas++;
+                    if(consecMassDeltas == 5){
+                        System.out.println("spectrum " + spectrum.getSpectrumId() + ", ");
+                    }
                 }
             }
-            if (consecMzDeltas < minConsecMzDeltas) {
+            if (consecMassDeltas < minConsecMassDeltas) {
                 //do nothing
-                System.out.println("do nothing");
-            } else if (minConsecMzDeltas <= consecMzDeltas && consecMzDeltas <= maxConsecMzDeltas) {
+                //System.out.println("do nothing");
+            } else if (minConsecMassDeltas <= consecMassDeltas && consecMassDeltas <= maxConsecMassDeltas) {
                 //we still need to look at other peaks because the maximum number might be exceeded there, so just break the innner loop. 
                 passesFilter = true;
             } else {
