@@ -1,9 +1,12 @@
-package com.compomics.spectrawl.filter.mzratio;
+package com.compomics.spectrawl.filter;
 
-import com.compomics.spectrawl.logic.filter.mzratio.Filter;
+import com.compomics.spectrawl.logic.filter.Filter;
+import com.compomics.spectrawl.logic.filter.FilterChain;
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.BasicMassFilter;
+import com.compomics.spectrawl.logic.filter.impl.FilterChainImpl;
+import com.compomics.spectrawl.logic.filter.impl.BasicMassDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.BasicMassFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Peak;
@@ -26,7 +29,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springXMLConfig.xml")
-public class BasicMzRatioFilterTest {
+public class FilterChainTest {
 
     @Autowired
     SpectrumBinner spectrumBinner;
@@ -70,14 +73,35 @@ public class BasicMzRatioFilterTest {
     }
 
     @Test
-    public void testPassesFilter() {
+    public void testFilterChain() {
+        FilterChain<SpectrumImpl> andFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.AND);
+        FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.OR);
+        FilterChain<SpectrumImpl> combinedFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.OR);
+
+        //add 2 filters to the first two filter chains
         List<Double> mzRatioFilterValues = new ArrayList<Double>();
-        mzRatioFilterValues.add(220.3);
         mzRatioFilterValues.add(230D);
-        Filter<SpectrumImpl> filter = new BasicMassFilter(0.5, mzRatioFilterValues);
+        Filter<SpectrumImpl> mzRatioFilter = new BasicMassFilter(0.5, mzRatioFilterValues);
+        List<Double> filterValues = new ArrayList<Double>();
+        filterValues.add(120D);
+        filterValues.add(200D);
+        Filter<SpectrumImpl> binFilter = new BasicMassDeltaFilter(0.8, filterValues);
+
+        andFilterChain.addFilter(mzRatioFilter);
+        orFilterChain.addFilter(mzRatioFilter);
+        andFilterChain.addFilter(binFilter);
+        orFilterChain.addFilter(binFilter);
+
+        //add the first two filter chains to the last one
+        combinedFilterChain.addFilter(andFilterChain);
+        combinedFilterChain.addFilter(orFilterChain);
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);
-        assertTrue(filter.passesFilter(spectrum, false));
-        assertFalse(filter.passesFilter(spectrum, true));
+
+        assertFalse(andFilterChain.passesFilter(spectrum, false));
+        assertTrue(orFilterChain.passesFilter(spectrum, false));
+
+        assertTrue(combinedFilterChain.passesFilter(spectrum, false));
+        assertFalse(combinedFilterChain.passesFilter(spectrum, true));
     }
 }

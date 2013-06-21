@@ -3,9 +3,9 @@
  * and open the template in the editor.
  */
 
-package com.compomics.spectrawl.logic.filter.mzratio.impl;
+package com.compomics.spectrawl.logic.filter.impl;
 
-import com.compomics.spectrawl.logic.filter.mzratio.Filter;
+import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.ArrayList;
 

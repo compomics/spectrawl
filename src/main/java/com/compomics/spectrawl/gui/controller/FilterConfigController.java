@@ -8,10 +8,10 @@ import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 import com.compomics.spectrawl.gui.view.AdvancedMassDeltaFilterDialog;
 import com.compomics.spectrawl.gui.view.MassDeltaFilterDialog;
 import com.compomics.spectrawl.gui.view.MassFilterDialog;
-import com.compomics.spectrawl.logic.filter.mzratio.FilterChain;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.BasicMassDeltaFilter;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.BasicMassFilter;
-import com.compomics.spectrawl.logic.filter.mzratio.impl.FilterChainImpl;
+import com.compomics.spectrawl.logic.filter.FilterChain;
+import com.compomics.spectrawl.logic.filter.impl.BasicMassDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.BasicMassFilter;
+import com.compomics.spectrawl.logic.filter.impl.FilterChainImpl;
 import com.compomics.spectrawl.model.FilterParams;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.awt.event.ActionEvent;
@@ -201,11 +201,11 @@ public class FilterConfigController {
                 BasicMassDeltaFilter basicMzDeltaFilter = new BasicMassDeltaFilter();
                 basicMzDeltaFilter.setIntensityThreshold(Double.parseDouble(massDeltaFilterDialog.getIntensityThresholdTextField().getText()));
                 spectrumFilterChain.addFilter(basicMzDeltaFilter);
-                List<Double> intensitySumFilterValues = new ArrayList<Double>();
+                List<Double> massDeltaFilterValues = new ArrayList<Double>();
                 for (Object value : massFilterListModel.toArray()) {
-                    intensitySumFilterValues.add((Double) value);
+                    massDeltaFilterValues.add((Double) value);
                 }
-                basicMzDeltaFilter.setIntensitySumFilterValues(intensitySumFilterValues);
+                basicMzDeltaFilter.setMassDeltaFilterValues(massDeltaFilterValues);
             } else {
                 //if the filtertype is "or", add all the values to the different filters in the same filterchain            
                 FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<SpectrumImpl>();

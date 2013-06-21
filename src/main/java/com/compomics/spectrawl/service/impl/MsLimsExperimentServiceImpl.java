@@ -3,7 +3,7 @@ package com.compomics.spectrawl.service.impl;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.service.MsLimsExperimentService;
 import com.compomics.spectrawl.repository.MsLimsExperimentRepository;
-import com.compomics.spectrawl.logic.filter.mzratio.Filter;
+import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.ArrayList;

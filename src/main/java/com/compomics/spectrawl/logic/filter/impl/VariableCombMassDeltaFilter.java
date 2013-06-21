@@ -1,7 +1,7 @@
-package com.compomics.spectrawl.logic.filter.mzratio.impl;
+package com.compomics.spectrawl.logic.filter.impl;
 
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.mzratio.Filter;
+import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.model.PeakBin;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.Map;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * This filter looks for a number of consecutive variable M/Z delta values
  * between peaks.
  */
-@Component("variableCombMzDeltaFilter")
+@Component("variableCombMassDeltaFilter")
 public class VariableCombMassDeltaFilter implements Filter<SpectrumImpl> {
 
     private double intensityThreshold;
@@ -48,7 +48,7 @@ public class VariableCombMassDeltaFilter implements Filter<SpectrumImpl> {
             int consecMassDeltas = 0;
             double currentMassDeltaValue = 0.0;
             for (int i = 0; i < massDeltaFilterValues.length; i++) {
-                //get the key based on the current M/Z delta value
+                //get the key based on the current mass delta value
                 currentMassDeltaValue += massDeltaFilterValues[i];
                 Double key = peakBins.floorKey(currentMassDeltaValue);
                 if (key != null && peakBins.get(key).getIntensitySum() < intensityThreshold) {

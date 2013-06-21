@@ -1,4 +1,6 @@
-package com.compomics.spectrawl.logic.filter.mzratio;
+package com.compomics.spectrawl.logic.filter;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Created by IntelliJ IDEA.

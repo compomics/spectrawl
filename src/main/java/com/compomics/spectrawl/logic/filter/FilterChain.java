@@ -1,4 +1,4 @@
-package com.compomics.spectrawl.logic.filter.mzratio;
+package com.compomics.spectrawl.logic.filter;
 
 import java.util.List;
 
