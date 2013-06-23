@@ -17,10 +17,11 @@ public class SpectrumPanelFactory {
      */
     public static SpectrumPanel getSpectrumPanel(SpectrumImpl spectrum) {
         //initialize new SpectrumPanel
+        int charge = spectrum.getPrecursor().getPossibleCharges().get(0).value;
         SpectrumPanel spectrumPanel = new SpectrumPanel(spectrum.getMzValuesAsArray(),
                 spectrum.getIntensityValuesAsArray(),
-                spectrum.getPrecursorMzRatio(),
-                Integer.toString(spectrum.getCharge()), "", 40, false, false, false);
+                spectrum.getPrecursor().getMz(),
+                Integer.toString(charge), "", 40, false, false, false);
 
         // remove the border
         spectrumPanel.setBorder(null);

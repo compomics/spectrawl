@@ -6,7 +6,9 @@ import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.ExperimentBin;
 import com.compomics.spectrawl.model.SpectrumBin;
 import com.compomics.spectrawl.model.SpectrumImpl;
+import com.compomics.util.experiment.massspectrometry.Charge;
 import com.compomics.util.experiment.massspectrometry.Peak;
+import com.compomics.util.experiment.massspectrometry.Precursor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +53,10 @@ public class BinnerTest {
         peaks.put(420.6, peak);
 
         SpectrumImpl spectrum_1 = new SpectrumImpl("1");
-        spectrum_1.setCharge(1);
+        ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 1));
+        Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
+        spectrum_1.setPrecursor(precursor);
         spectrum_1.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -75,7 +80,10 @@ public class BinnerTest {
         peaks.put(260.54, peak);
 
         SpectrumImpl spectrum_2 = new SpectrumImpl("2");
-        spectrum_2.setCharge(1);
+        possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 1));
+        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
+        spectrum_2.setPrecursor(precursor);
         spectrum_2.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -93,7 +101,10 @@ public class BinnerTest {
         peaks.put(260.54, peak);
 
         SpectrumImpl spectrum_3 = new SpectrumImpl("3");
-        spectrum_3.setCharge(2);
+        possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 2));
+        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
+        spectrum_3.setPrecursor(precursor);
         spectrum_3.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -111,7 +122,10 @@ public class BinnerTest {
         peaks.put(260.54, peak);
 
         SpectrumImpl spectrum_4 = new SpectrumImpl("4");
-        spectrum_4.setCharge(2);
+        possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 2));
+        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
+        spectrum_4.setPrecursor(precursor);
         spectrum_4.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -129,7 +143,10 @@ public class BinnerTest {
         peaks.put(260.54, peak);
 
         SpectrumImpl spectrum_5 = new SpectrumImpl("5");
-        spectrum_5.setCharge(3);
+        possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 3));
+        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
+        spectrum_5.setPrecursor(precursor);
         spectrum_5.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -139,7 +156,10 @@ public class BinnerTest {
         peaks.put(220.54, peak);
 
         SpectrumImpl spectrum_6 = new SpectrumImpl("6");
-        spectrum_6.setCharge(3);
+        possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 3));
+        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
+        spectrum_6.setPrecursor(precursor);
         spectrum_6.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -157,7 +177,10 @@ public class BinnerTest {
         peaks.put(420.6 / 3, peak);
 
         SpectrumImpl spectrum_7 = new SpectrumImpl("7");
-        spectrum_7.setCharge(3);
+        possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 3));
+        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
+        spectrum_7.setPrecursor(precursor);
         spectrum_7.setPeakList(peaks);
 
         //bin the spectra
@@ -205,13 +228,11 @@ public class BinnerTest {
     }
 
     /**
-     * Test the binning of a spectrum 
-     * bin 70; count: 1, summed: 0.2272, highest: 0.2272 
-     * bin 79; count: 2, summed: 0.2682, highest: 0.2682 
-     * bin 120; count: 2, summed: 0.4517, highest: 0.3475 
-     * bin 130; count: 1, summed: 0.1902, highest: 0.1902 
-     * bin 190; count: 1, summed: 0.2272, highest: 0.2272 
-     * bin 200; count: 2, summed: 0.4584, highest: 0.4584
+     * Test the binning of a spectrum bin 70; count: 1, summed: 0.2272, highest:
+     * 0.2272 bin 79; count: 2, summed: 0.2682, highest: 0.2682 bin 120; count:
+     * 2, summed: 0.4517, highest: 0.3475 bin 130; count: 1, summed: 0.1902,
+     * highest: 0.1902 bin 190; count: 1, summed: 0.2272, highest: 0.2272 bin
+     * 200; count: 2, summed: 0.4584, highest: 0.4584
      */
     @Test
     public void testSpectrumBins() {
@@ -256,11 +277,10 @@ public class BinnerTest {
     }
 
     /**
-     * Test the binning of one experiment 
-     * bin 40: 
-     * peakCountQuantile: min:0, 25: 0, 50: 0, 75: 4, max: 4 
-     * intensitySumQuantile: min:0, 25: 0, 50: 0, 75: 0.667, max: 0.667 
-     * highestIntensityQuantile: min:0, 25: 0, 50: 0, 75: 0.667, max: 0.667
+     * Test the binning of one experiment bin 40: peakCountQuantile: min:0, 25:
+     * 0, 50: 0, 75: 4, max: 4 intensitySumQuantile: min:0, 25: 0, 50: 0, 75:
+     * 0.667, max: 0.667 highestIntensityQuantile: min:0, 25: 0, 50: 0, 75:
+     * 0.667, max: 0.667
      */
     @Test
     public void testExperimentBins() {

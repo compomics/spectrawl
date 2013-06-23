@@ -9,6 +9,9 @@ import com.compomics.spectrawl.repository.MgfExperimentRepository;
 import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
 import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
+import com.compomics.spectrawl.util.PeakUtils;
+import com.compomics.util.experiment.massspectrometry.MSnSpectrum;
+import com.compomics.util.experiment.massspectrometry.Peak;
 import com.compomics.util.experiment.massspectrometry.SpectrumFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,7 +71,22 @@ public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
     public SpectrumImpl getSpectrumByKey(String spectrumKey) {
         SpectrumImpl spectrum = null;
         try {
-            spectrum = new SpectrumImpl(SpectrumFactory.getInstance().getSpectrum(spectrumKey));
+            spectrum = new SpectrumImpl((MSnSpectrum) SpectrumFactory.getInstance().getSpectrum(spectrumKey));            
+            
+            //filter the spectrum if necessary
+            if (doNoiseFiltering) {
+                //check if noise threshold finder and noise filter are set
+                if (noiseFilter != null && noiseThresholdFinder != null) {
+                    HashMap<Double, Peak> peaks = spectrum.getPeakMap();
+                    double noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArrayFromPeakList(peaks));
+                    peaks = noiseFilter.filter(peaks, noiseThreshold);
+                    spectrum.setPeakList(peaks);
+                } else {
+                    throw new IllegalArgumentException("NoiseFilter and/or ThresholdFinder not set");
+                }
+            }
+                        
+            spectrum = new SpectrumImpl((MSnSpectrum) SpectrumFactory.getInstance().getSpectrum(spectrumKey));
         } catch (IOException ex) {
             LOGGER.error(ex.getMessage(), ex);
         } catch (IllegalArgumentException ex) {

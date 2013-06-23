@@ -9,7 +9,9 @@ import com.compomics.spectrawl.logic.filter.impl.BasicMassDeltaFilter;
 import com.compomics.spectrawl.logic.filter.impl.BasicMassFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
+import com.compomics.util.experiment.massspectrometry.Charge;
 import com.compomics.util.experiment.massspectrometry.Peak;
+import com.compomics.util.experiment.massspectrometry.Precursor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,6 +58,10 @@ public class FilterChainTest {
         peaks.put(420.6, peak);
 
         SpectrumImpl spectrum_1 = new SpectrumImpl("1");
+        ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 1));
+        Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
+        spectrum_1.setPrecursor(precursor);
         spectrum_1.setPeakList(peaks);
 
         //bin the spectra        

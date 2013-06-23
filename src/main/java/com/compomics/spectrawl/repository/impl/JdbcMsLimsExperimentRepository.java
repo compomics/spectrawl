@@ -9,8 +9,11 @@ import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.spectrawl.model.mapper.SpectrumFileExctractor;
 import com.compomics.spectrawl.util.PeakUtils;
+import com.compomics.util.experiment.massspectrometry.Charge;
 import com.compomics.util.experiment.massspectrometry.Peak;
+import com.compomics.util.experiment.massspectrometry.Precursor;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -29,8 +32,8 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
 
     private static final Logger LOGGER = Logger.getLogger(JdbcMsLimsExperimentRepository.class);
     private static final String SELECT_EXPERIMENT_SPECTRUM_FILES = new StringBuilder()
-            .append("select sf.l_spectrumid as l_spectrumid, sf.file as file from spectrum s, spectrum_file sf ")            
-            .append("where s.spectrumid = sf.l_spectrumid ")            
+            .append("select sf.l_spectrumid as l_spectrumid, sf.file as file from spectrum s, spectrum_file sf ")
+            .append("where s.spectrumid = sf.l_spectrumid ")
             .append("and s.l_projectid = ?").toString();
     private ConcurrentLinkedQueue<Spectrum_file> spectrumFileQueue;
     private boolean doNoiseFiltering;
@@ -76,18 +79,9 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
             Map<Double, Double> mSLimsPeaks = mascotGenericFile.getPeaks();
 
             //create new spectrum
-            spectrum = new SpectrumImpl(spectumIdString, "", mascotGenericFile.getCharge(), mascotGenericFile.getPrecursorMZ());
-
-            //filter the spectrum if necessary
-            if (doNoiseFiltering) {
-                //check if noise threshold finder and noise filter are set
-                if (noiseFilter != null && noiseThresholdFinder != null) {
-                    double noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArray(mSLimsPeaks));
-                    mSLimsPeaks = noiseFilter.filter(mSLimsPeaks, noiseThreshold);
-                } else {
-                    throw new IllegalArgumentException("NoiseFilter and/or ThresholdFinder not set");
-                }
-            }
+            ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
+            possibleCharges.add(new Charge(Charge.PLUS, mascotGenericFile.getCharge()));
+            Precursor precursor = new Precursor(0.0, mascotGenericFile.getPrecursorMZ(), mascotGenericFile.getIntensity(), possibleCharges);            
 
             //convert Map<Double, Double> to HashMap<Double, Peak>
             HashMap<Double, Peak> peaks = new HashMap<Double, Peak>();
@@ -96,8 +90,19 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
                 peak = new Peak(mzRatio, mSLimsPeaks.get(mzRatio));
                 peaks.put(mzRatio, peak);
             }
-
-            spectrum.setPeakList(peaks);
+            
+            //filter the spectrum if necessary
+            if (doNoiseFiltering) {
+                //check if noise threshold finder and noise filter are set
+                if (noiseFilter != null && noiseThresholdFinder != null) {
+                    double noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArray(mSLimsPeaks));
+                    peaks = noiseFilter.filter(peaks, noiseThreshold);
+                } else {
+                    throw new IllegalArgumentException("NoiseFilter and/or ThresholdFinder not set");
+                }
+            }            
+            
+            spectrum = new SpectrumImpl(spectumIdString, mascotGenericFile.getTitle(), mascotGenericFile.getFilename(), precursor, peaks);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }

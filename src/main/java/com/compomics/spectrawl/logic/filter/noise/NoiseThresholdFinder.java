@@ -1,8 +1,5 @@
 package com.compomics.spectrawl.logic.filter.noise;
 
-import com.compomics.spectrawl.model.FilterParams;
-import java.util.Map;
-
 /**
  * Created by IntelliJ IDEA.
  * User: niels

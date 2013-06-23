@@ -39,7 +39,8 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
             initPeakBins(peakBins);
             //inner loop            
             for (Double innerMass : sortedKeys) {
-                double massDelta = (innerMass * spectrum.getCharge()) - (outerMass * spectrum.getCharge());                
+                int charge = spectrum.getPrecursor().getPossibleCharges().get(0).value;
+                double massDelta = (innerMass * charge) - (outerMass * charge);                
                 //check if mass delta value lies within the bins floor and ceiling
                 if ((BinParams.BINS_FLOOR.getValue() <= massDelta) && (massDelta < BinParams.BINS_CEILING.getValue())) {
                     //add to peak bins
