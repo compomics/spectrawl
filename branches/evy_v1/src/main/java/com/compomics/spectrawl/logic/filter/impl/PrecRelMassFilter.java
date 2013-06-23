@@ -59,9 +59,11 @@ public class PrecRelMassFilter implements Filter<SpectrumImpl> {
     private boolean passesPrecRelMassFilterValue(SpectrumImpl spectrum, double precRelMassFilterValue) {
         boolean passesPrecRelMassFilterValue = Boolean.FALSE;
         for (Peak peak : spectrum.getPeakList()) {
-            double peakMass = peak.mz * spectrum.getCharge();
+            int charge = spectrum.getPrecursor().getPossibleCharges().get(0).value;
+            double peakMass = peak.mz * charge;
+            double precursorMass = spectrum.getPrecursor().getMz() * charge;
             //@todo consider twice the tolerance or not?
-            if (Math.abs(peakMass - (spectrum.getPrecursorMzRatio() - precRelMassFilterValue)) < massTolerance) {
+            if (Math.abs(peakMass - (precursorMass + precRelMassFilterValue)) < massTolerance) {
                 passesPrecRelMassFilterValue = Boolean.TRUE;
                 break;
             }

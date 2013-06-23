@@ -6,7 +6,9 @@ import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.logic.filter.impl.FixedCombMassDeltaFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
+import com.compomics.util.experiment.massspectrometry.Charge;
 import com.compomics.util.experiment.massspectrometry.Peak;
+import com.compomics.util.experiment.massspectrometry.Precursor;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
@@ -63,7 +65,10 @@ public class FixedCombMassDeltaFilterTest {
         peaks.put(333.6, peak);
 
         SpectrumImpl spectrum_1 = new SpectrumImpl("1");
-        spectrum_1.setCharge(1);
+        ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 1));
+        Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
+        spectrum_1.setPrecursor(precursor);
         spectrum_1.setPeakList(peaks);
 
         peaks = new HashMap<Double, Peak>();
@@ -91,7 +96,10 @@ public class FixedCombMassDeltaFilterTest {
         peaks.put(333.6 / 2, peak);
 
         SpectrumImpl spectrum_2 = new SpectrumImpl("2");
-        spectrum_2.setCharge(2);
+        possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 2));
+        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
+        spectrum_2.setPrecursor(precursor);
         spectrum_2.setPeakList(peaks);
 
         //bin the spectra        

@@ -1,6 +1,12 @@
 package com.compomics.spectrawl.model;
 
+import com.compomics.util.experiment.massspectrometry.Charge;
+import com.compomics.util.experiment.massspectrometry.MSnSpectrum;
+import com.compomics.util.experiment.massspectrometry.Peak;
+import com.compomics.util.experiment.massspectrometry.Precursor;
 import com.compomics.util.experiment.massspectrometry.Spectrum;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
@@ -10,20 +16,12 @@ import java.util.TreeMap;
  * Time: 13:47
  * To change this template use File | Settings | File Templates.
  */
-public class SpectrumImpl extends Spectrum implements Binnable<SpectrumBin> {
+public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
 
     /**
      * The spectrum ID
      */
     private String spectrumId;
-    /**
-     * The precursor charge
-     */
-    private int charge;
-    /**
-     * The precursor M/Z ratio
-     */
-    private double precursorMzRatio;
     /**
      * The spectrum bins (key: bin floor, value: spectrum bin)
      */
@@ -42,21 +40,14 @@ public class SpectrumImpl extends Spectrum implements Binnable<SpectrumBin> {
         this.spectrumId = spectrumId;        
     }
     
-    public SpectrumImpl(String spectrumId, String fileName, int charge, double precursorMzRatio){
-        super();
+    public SpectrumImpl(String spectrumId, String title, String fileName, Precursor precursor, HashMap<Double, Peak> peaks){
+        super(1, precursor, title, peaks, fileName);
         this.spectrumId = spectrumId;
-        this.fileName = fileName;
-        this.charge = charge;
-        this.precursorMzRatio = precursorMzRatio;
     }
     
-    public SpectrumImpl(Spectrum spectrum){        
-        this.level = spectrum.getLevel();
-        this.spectrumTitle = spectrum.getSpectrumTitle();
-        this.peakList = spectrum.getPeakMap();
-        this.fileName = spectrum.getFileName();
-        this.scanStartTime = spectrum.getScanStartTime();
-        this.spectrumId = spectrumTitle;
+    public SpectrumImpl(MSnSpectrum spectrum){        
+        super(spectrum.getLevel(), spectrum.getPrecursor(), spectrum.getSpectrumTitle(), spectrum.getPeakMap(), spectrum.getFileName());
+        this.spectrumId = spectrum.getSpectrumKey();
     }
 
     public String getSpectrumId() {
@@ -65,23 +56,7 @@ public class SpectrumImpl extends Spectrum implements Binnable<SpectrumBin> {
 
     public void setSpectrumId(String spectrumId) {
         this.spectrumId = spectrumId;
-    }
-
-    public int getCharge() {
-        return charge;
-    }
-
-    public void setCharge(int charge) {
-        this.charge = charge;
-    }
-
-    public double getPrecursorMzRatio() {
-        return precursorMzRatio;
-    }
-
-    public void setPrecursorMzRatio(double precursorMzRatio) {
-        this.precursorMzRatio = precursorMzRatio;
-    }        
+    }    
     
     /**
      * Add the peak bins to the corresponding spectrum bins

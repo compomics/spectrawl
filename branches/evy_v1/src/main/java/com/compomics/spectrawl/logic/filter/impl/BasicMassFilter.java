@@ -68,7 +68,8 @@ public class BasicMassFilter implements Filter<SpectrumImpl> {
             double mzRatio = peak.mz;
             //@todo consider twice the tolerance or not?
             //adjust peak M/Z value with the precursor charge
-            if (Math.abs((mzRatio * spectrum.getCharge()) - massFilterValue) < massTolerance) {
+            int charge = spectrum.getPrecursor().getPossibleCharges().get(0).value;
+            if (Math.abs((mzRatio * charge) - massFilterValue) < massTolerance) {
                 passesMassFilterValue = true;
                 break;
             }
