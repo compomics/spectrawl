@@ -91,18 +91,20 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
                 peaks.put(mzRatio, peak);
             }
             
+            double noiseThreshold = 0.0;            
             //filter the spectrum if necessary
             if (doNoiseFiltering) {
                 //check if noise threshold finder and noise filter are set
                 if (noiseFilter != null && noiseThresholdFinder != null) {
-                    double noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArray(mSLimsPeaks));
+                    noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArray(mSLimsPeaks));
+//                    noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArrayFromPeakList(peaks));
                     peaks = noiseFilter.filter(peaks, noiseThreshold);
                 } else {
                     throw new IllegalArgumentException("NoiseFilter and/or ThresholdFinder not set");
                 }
             }            
             
-            spectrum = new SpectrumImpl(spectumIdString, mascotGenericFile.getTitle(), mascotGenericFile.getFilename(), precursor, peaks);
+            spectrum = new SpectrumImpl(spectumIdString, mascotGenericFile.getTitle(), mascotGenericFile.getFilename(), precursor, peaks, noiseThreshold);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }

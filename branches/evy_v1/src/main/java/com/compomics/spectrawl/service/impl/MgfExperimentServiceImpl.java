@@ -9,6 +9,7 @@ import com.compomics.spectrawl.service.MgfExperimentService;
 import com.compomics.spectrawl.repository.MgfExperimentRepository;
 import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.logic.filter.FilterChain;
+import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Spectrum;
@@ -114,7 +115,7 @@ public class MgfExperimentServiceImpl implements MgfExperimentService {
             SpectrumImpl spectrum = mgfSpectrumLoader.getSpectrumByKey(spectrumKey);
 
             //bin the spectrum
-            spectrumBinner.binSpectrum(spectrum);
+            spectrumBinner.binSpectrum(spectrum, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
 
             //add the spectrum to the spectra
             //if the spectrum passes the filter

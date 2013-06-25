@@ -71,22 +71,23 @@ public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
     public SpectrumImpl getSpectrumByKey(String spectrumKey) {
         SpectrumImpl spectrum = null;
         try {
-            spectrum = new SpectrumImpl((MSnSpectrum) SpectrumFactory.getInstance().getSpectrum(spectrumKey));            
+            MSnSpectrum mSnSpectrum = (MSnSpectrum) SpectrumFactory.getInstance().getSpectrum(spectrumKey);            
             
+            double noiseThreshold = 0.0;            
             //filter the spectrum if necessary
             if (doNoiseFiltering) {
                 //check if noise threshold finder and noise filter are set
                 if (noiseFilter != null && noiseThresholdFinder != null) {
-                    HashMap<Double, Peak> peaks = spectrum.getPeakMap();
-                    double noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArrayFromPeakList(peaks));
+                    HashMap<Double, Peak> peaks = mSnSpectrum.getPeakMap();
+                    noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArrayFromPeakList(peaks));
                     peaks = noiseFilter.filter(peaks, noiseThreshold);
-                    spectrum.setPeakList(peaks);
+                    mSnSpectrum.setPeakList(peaks);
                 } else {
                     throw new IllegalArgumentException("NoiseFilter and/or ThresholdFinder not set");
                 }
             }
                         
-            spectrum = new SpectrumImpl((MSnSpectrum) SpectrumFactory.getInstance().getSpectrum(spectrumKey));
+            spectrum = new SpectrumImpl(mSnSpectrum, noiseThreshold);            
         } catch (IOException ex) {
             LOGGER.error(ex.getMessage(), ex);
         } catch (IllegalArgumentException ex) {

@@ -1,20 +1,14 @@
 package com.compomics.spectrawl.model;
 
-import com.compomics.util.experiment.massspectrometry.Charge;
 import com.compomics.util.experiment.massspectrometry.MSnSpectrum;
 import com.compomics.util.experiment.massspectrometry.Peak;
 import com.compomics.util.experiment.massspectrometry.Precursor;
-import com.compomics.util.experiment.massspectrometry.Spectrum;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 
 /**
- * Created by IntelliJ IDEA.
- * User: niels
- * Date: 12/03/12
- * Time: 13:47
- * To change this template use File | Settings | File Templates.
+ * Created by IntelliJ IDEA. User: niels Date: 12/03/12 Time: 13:47 To change
+ * this template use File | Settings | File Templates.
  */
 public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
 
@@ -31,23 +25,25 @@ public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
      */
     private double noiseTreshold;
 
-    public SpectrumImpl(){
+    public SpectrumImpl() {
         super();
     }
-    
-    public SpectrumImpl(String spectrumId) {        
+
+    public SpectrumImpl(String spectrumId) {
         super();
-        this.spectrumId = spectrumId;        
-    }
-    
-    public SpectrumImpl(String spectrumId, String title, String fileName, Precursor precursor, HashMap<Double, Peak> peaks){
-        super(1, precursor, title, peaks, fileName);
         this.spectrumId = spectrumId;
     }
-    
-    public SpectrumImpl(MSnSpectrum spectrum){        
+
+    public SpectrumImpl(String spectrumId, String title, String fileName, Precursor precursor, HashMap<Double, Peak> peaks, double noiseThreshold) {
+        super(1, precursor, title, peaks, fileName);
+        this.spectrumId = spectrumId;
+        this.noiseTreshold = noiseThreshold;
+    }
+
+    public SpectrumImpl(MSnSpectrum spectrum, double noiseThreshold) {
         super(spectrum.getLevel(), spectrum.getPrecursor(), spectrum.getSpectrumTitle(), spectrum.getPeakMap(), spectrum.getFileName());
         this.spectrumId = spectrum.getSpectrumKey();
+        this.noiseTreshold = noiseThreshold;
     }
 
     public String getSpectrumId() {
@@ -56,8 +52,8 @@ public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
 
     public void setSpectrumId(String spectrumId) {
         this.spectrumId = spectrumId;
-    }    
-    
+    }
+
     /**
      * Add the peak bins to the corresponding spectrum bins
      *
@@ -81,7 +77,7 @@ public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
     public void setNoiseTreshold(double noiseTreshold) {
         this.noiseTreshold = noiseTreshold;
     }
-        
+
     @Override
     public void initBins() {
         spectrumBins = new TreeMap<Double, SpectrumBin>();
@@ -108,4 +104,27 @@ public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
         }
         return spectrumBins.get(floorKey);
     }
+
+//    @Override
+//    public int hashCode() {
+//        int hash = 3;
+//        hash = 79 * hash + (this.spectrumId != null ? this.spectrumId.hashCode() : 0);
+//        return hash;
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (getClass() != obj.getClass()) {
+//            return false;
+//        }
+//        final SpectrumImpl other = (SpectrumImpl) obj;
+//        if ((this.spectrumId == null) ? (other.spectrumId != null) : !this.spectrumId.equals(other.spectrumId)) {
+//            return false;
+//        }
+//        return true;
+//    }
+        
 }

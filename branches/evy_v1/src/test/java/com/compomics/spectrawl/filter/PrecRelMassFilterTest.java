@@ -5,6 +5,7 @@ import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.logic.filter.impl.BasicMassFilter;
 import com.compomics.spectrawl.logic.filter.impl.PrecRelMassFilter;
+import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Charge;
@@ -54,6 +55,8 @@ public class PrecRelMassFilterTest {
         peaks.put(300D, peak);
         peak = new Peak(420.6, 100D);
         peaks.put(420.6, peak);
+        peak = new Peak(450.6, 100D);
+        peaks.put(450.6, peak);
 
         SpectrumImpl spectrum_1 = new SpectrumImpl("1");
         ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
@@ -75,6 +78,8 @@ public class PrecRelMassFilterTest {
         peaks.put(300D / 2, peak);
         peak = new Peak(420.6 / 2, 100D);
         peaks.put(420.6 / 2, peak);
+        peak = new Peak(450.6 / 2, 100D);
+        peaks.put(450.6 / 2, peak);
 
         SpectrumImpl spectrum_2 = new SpectrumImpl("2");
         possibleCharges = new ArrayList<Charge>();
@@ -96,6 +101,8 @@ public class PrecRelMassFilterTest {
         peaks.put(300D / 3, peak);
         peak = new Peak(420.6 / 3, 100D);
         peaks.put(420.6 / 3, peak);
+        peak = new Peak(450.6 / 3, 100D);
+        peaks.put(450.6 / 3, peak);
 
         SpectrumImpl spectrum_3 = new SpectrumImpl("3");
         possibleCharges = new ArrayList<Charge>();
@@ -105,9 +112,9 @@ public class PrecRelMassFilterTest {
         spectrum_3.setPeakList(peaks);
 
         //bin the spectra        
-        spectrumBinner.binSpectrum(spectrum_1);
-        spectrumBinner.binSpectrum(spectrum_2);
-        spectrumBinner.binSpectrum(spectrum_3);
+        spectrumBinner.binSpectrum(spectrum_1, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
+        spectrumBinner.binSpectrum(spectrum_2, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
+        spectrumBinner.binSpectrum(spectrum_3, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
 
         //add to experiment
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
@@ -131,7 +138,7 @@ public class PrecRelMassFilterTest {
     public void testPassesFilter() {
         List<Double> massFilterValues = new ArrayList<Double>();
         massFilterValues.add(-10D);
-        //massFilterValues.add(230D);
+        massFilterValues.add(20D);
         Filter<SpectrumImpl> filter = new PrecRelMassFilter(0.5, massFilterValues);
 
         SpectrumImpl spectrum = experiment.getSpectra().get(0);

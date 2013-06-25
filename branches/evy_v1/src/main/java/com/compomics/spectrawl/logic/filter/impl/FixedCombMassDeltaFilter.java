@@ -2,6 +2,7 @@ package com.compomics.spectrawl.logic.filter.impl;
 
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.logic.filter.Filter;
+import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.PeakBin;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.Map;
@@ -51,11 +52,12 @@ public class FixedCombMassDeltaFilter implements Filter<SpectrumImpl> {
 
     @Override
     public boolean passesFilter(SpectrumImpl spectrum, boolean doInvert) {
-        //@todo check if the max consecutive bins makes sense with the bin ceiling value
-        //else we might get in trouble with the range
         boolean passesFilter = false;
 
-        Map<Double, TreeMap<Double, PeakBin>> peakBinsMap = spectrumBinner.getPeakBinsMap(spectrum);
+        //get appropriate values for floor and ceiling
+        double floor = (minConsecMassDeltas * massDeltaFilterValue) - (BinParams.BIN_SIZE.getValue() * 2);
+        double ceiling = ((maxConsecMassDeltas + 1) * massDeltaFilterValue) + (BinParams.BIN_SIZE.getValue() * 2);
+        Map<Double, TreeMap<Double, PeakBin>> peakBinsMap = spectrumBinner.getPeakBinsMap(spectrum, floor, ceiling, BinParams.BIN_SIZE.getValue());
         //iterate over the peakBins map of each peak
         for (TreeMap<Double, PeakBin> peakBins : peakBinsMap.values()) {
 
@@ -66,19 +68,16 @@ public class FixedCombMassDeltaFilter implements Filter<SpectrumImpl> {
              * certain mass delta value is not present (below the
              * intensitythreshold).
              */
-            int consecMassDeltas = 1;
+            int consecMassDeltas = 0;
             for (int i = 1; i <= maxConsecMassDeltas + 1; i++) {
+                consecMassDeltas++;
                 //get the key based on the current mass delta value
                 double currentMassDeltaValue = massDeltaFilterValue * consecMassDeltas;
                 Double key = peakBins.floorKey(currentMassDeltaValue);
                 if (key != null && peakBins.get(key).getIntensitySum() < intensityThreshold) {
-                    //no need to go on
+                    //no need to go on                    
+                    consecMassDeltas--;
                     break;
-                } else {                    
-                    consecMassDeltas++;
-                    if(consecMassDeltas == 5){
-                        System.out.println("spectrum " + spectrum.getSpectrumId() + ", ");
-                    }
                 }
             }
             if (consecMassDeltas < minConsecMassDeltas) {
