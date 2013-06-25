@@ -44,5 +44,5 @@ public class PeakUtils {
         }
         
         return intensities;
-    }
+    }        
 }

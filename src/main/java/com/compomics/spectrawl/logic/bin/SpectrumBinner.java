@@ -12,19 +12,25 @@ import java.util.TreeMap;
 public interface SpectrumBinner {
 
     /**
-     * Fills the spectrum bins. If the mass difference between two peaks of the
+     * Fill the spectrum bins. If the mass difference between two peaks of the
      * spectrum lies between the bins floor and ceiling, it is added to the
      * corresponding bin.
      *
      * @param spectrum the spectrum
+     * @param floor
+     * @param ceiling
+     * @param binSize
      */
-    void binSpectrum(SpectrumImpl spectrum);
+    void binSpectrum(SpectrumImpl spectrum, double floor, double ceiling, double binSize);
 
     /**
-     * Gets the PeakBin map (key: M/Z ratio, value: the map of PeakBin objects).
+     * Get the PeakBin map (key: M/Z ratio, value: the map of PeakBin objects).
      *
      * @param spectrum the spectrum
+     * @param floor
+     * @param ceiling
+     * @param binSize
      * @return the PeakBin map
      */
-    Map<Double, TreeMap<Double, PeakBin>> getPeakBinsMap(SpectrumImpl spectrum);
+    Map<Double, TreeMap<Double, PeakBin>> getPeakBinsMap(SpectrumImpl spectrum, double floor, double ceiling, double binSize);
 }

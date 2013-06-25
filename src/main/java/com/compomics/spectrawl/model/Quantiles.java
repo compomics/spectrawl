@@ -63,6 +63,7 @@ public class Quantiles {
         this.maximum = maximum;
     }
 
+    @Override
      public String toString(){
         return "min: " + minimum + ", 25: " + percentile_25 + ", 50: " + percentile_50 + ", 75: " + percentile_75 + ", max: " + maximum;
     }

@@ -21,11 +21,11 @@ public class AdvancedMassDeltaFilterDialog extends javax.swing.JDialog {
         setLocationRelativeTo(parent);
     }   
 
-    public JButton getAddMzDeltaButton() {
+    public JButton getAddMassDeltaButton() {
         return addMassDeltaButton;
     }
 
-    public JTextField getAddMzDeltaTextField() {
+    public JTextField getAddMassDeltaTextField() {
         return addMassDeltaTextField;
     }
 
@@ -33,23 +33,23 @@ public class AdvancedMassDeltaFilterDialog extends javax.swing.JDialog {
         return fixedCombIntThresholdTextField;
     }
 
-    public JTextField getMaxConsecMzDeltasTextField() {
+    public JTextField getMaxConsecMassDeltasTextField() {
         return maxConsecMassDeltasTextField;
     }
 
-    public JTextField getMinConsecMzDeltasTextField() {
+    public JTextField getMinConsecMassDeltasTextField() {
         return minConsecMassDeltasTextField;
     }
 
-    public JList getMzDeltaFilterList() {
+    public JList getMassDeltaFilterList() {
         return massDeltaFilterList;
     }
 
-    public JTextField getMzDeltaTextField() {
+    public JTextField getMassDeltaTextField() {
         return massDeltaTextField;
     }
 
-    public JButton getRemoveMzDeltaButton() {
+    public JButton getRemoveMassDeltaButton() {
         return removeMassDeltaButton;
     }
 

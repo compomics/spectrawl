@@ -4,6 +4,7 @@ import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.service.MsLimsExperimentService;
 import com.compomics.spectrawl.repository.MsLimsExperimentRepository;
 import com.compomics.spectrawl.logic.filter.Filter;
+import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.ArrayList;
@@ -90,10 +91,10 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
         @Override
         public SpectrumImpl call() throws Exception {
             SpectrumImpl spectrum = msLimsSpectrumRepository.getSpectrum();
-            LOGGER.debug("spectrum " + spectrum.getSpectrumId() + " is processed by " + Thread.currentThread().getName());
+            //LOGGER.debug("spectrum " + spectrum.getSpectrumId() + " is processed by " + Thread.currentThread().getName());
 
             //bin the spectrum
-            spectrumBinner.binSpectrum(spectrum);
+            spectrumBinner.binSpectrum(spectrum, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
 
             //add the spectrum to the spectra
             //if the spectrum passes the filter

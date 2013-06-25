@@ -18,35 +18,35 @@ import org.springframework.stereotype.Component;
 public class SpectrumBinnerImpl implements SpectrumBinner {
 
     @Override
-    public void binSpectrum(SpectrumImpl spectrum) {
+    public void binSpectrum(SpectrumImpl spectrum, double floor, double ceiling, double binSize) {
         //init bins
         spectrum.initBins();
         
-        Map<Double, TreeMap<Double, PeakBin>> peakBinsMap = getPeakBinsMap(spectrum);
+        Map<Double, TreeMap<Double, PeakBin>> peakBinsMap = getPeakBinsMap(spectrum, floor, ceiling, binSize);
         for(TreeMap<Double, PeakBin> peakBins : peakBinsMap.values()){
             spectrum.addToBins(peakBins);
         }
     }
 
     @Override
-    public Map<Double, TreeMap<Double, PeakBin>> getPeakBinsMap(SpectrumImpl spectrum) {
+    public Map<Double, TreeMap<Double, PeakBin>> getPeakBinsMap(SpectrumImpl spectrum, double floor, double ceiling, double binSize) {
         Map<Double, TreeMap<Double, PeakBin>> peakBinsMap = new HashMap<Double, TreeMap<Double, PeakBin>>();
 
         TreeSet<Double> sortedKeys = new TreeSet<Double>(spectrum.getPeakMap().keySet());
         //outer loop
         for (Double outerMass : sortedKeys) {
             TreeMap<Double, PeakBin> peakBins = new TreeMap<Double, PeakBin>();
-            initPeakBins(peakBins);
+            initPeakBins(peakBins, floor, ceiling, binSize);
             //inner loop            
             for (Double innerMass : sortedKeys) {
                 int charge = spectrum.getPrecursor().getPossibleCharges().get(0).value;
                 double massDelta = (innerMass * charge) - (outerMass * charge);                
                 //check if mass delta value lies within the bins floor and ceiling
-                if ((BinParams.BINS_FLOOR.getValue() <= massDelta) && (massDelta < BinParams.BINS_CEILING.getValue())) {
+                if ((floor <= massDelta) && (massDelta < ceiling)) {
                     //add to peak bins
                     //addToPeakBins(peakBins, massDelta, spectrum.getPeakMap().get(innerMass).intensity / spectrum.getTotalIntensity());
                     addToPeakBins(peakBins, massDelta, Math.sqrt(spectrum.getPeakMap().get(innerMass).intensity * spectrum.getPeakMap().get(outerMass).intensity) / spectrum.getTotalIntensity());
-                } else if (massDelta >= BinParams.BINS_CEILING.getValue()) {
+                } else if (massDelta >= ceiling) {
                     break;
                 }
             }
@@ -76,10 +76,10 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
      *
      * @param peakBins the PeakBin map
      */
-    private void initPeakBins(TreeMap<Double, PeakBin> peakBins) {
-        int numberOfBins = (int) ((BinParams.BINS_CEILING.getValue() - BinParams.BINS_FLOOR.getValue()) / BinParams.BIN_SIZE.getValue());
+    private void initPeakBins(TreeMap<Double, PeakBin> peakBins, double floor, double ceiling, double binSize) {
+        int numberOfBins = (int) ((ceiling - floor) / binSize);
         for (int i = 0; i < numberOfBins; i++) {
-            peakBins.put(BinParams.BINS_FLOOR.getValue() + (i * BinParams.BIN_SIZE.getValue()), new PeakBin());
+            peakBins.put(floor + (i * binSize), new PeakBin());
         }
     }
 }
