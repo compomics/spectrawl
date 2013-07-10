@@ -8,7 +8,7 @@ package com.compomics.spectrawl;
 public class Playground {
 
     public static void main(String[] args) {
-        System.out.println(0.5 * 3);
+        System.out.println("----------------------- in spectrawl");
     }
     
 }

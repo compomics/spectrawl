@@ -8,7 +8,6 @@ import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.service.MgfExperimentService;
 import com.compomics.spectrawl.repository.MgfExperimentRepository;
 import com.compomics.spectrawl.logic.filter.Filter;
-import com.compomics.spectrawl.logic.filter.FilterChain;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
@@ -24,7 +23,6 @@ import java.util.concurrent.Future;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 /**

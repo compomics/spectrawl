@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 
@@ -36,7 +37,8 @@ public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
     @Autowired
     private NoiseThresholdFinder noiseThresholdFinder;
     @Autowired
-    private NoiseFilter noiseFilter;
+    //@Qualifier("spectrumNoiseFilter")
+    private NoiseFilter<HashMap<Double, Peak>> spectrumNoiseFilter;
 
     public MgfExperimentRepositoryImpl() {
         doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
@@ -50,6 +52,9 @@ public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
     @Override
     public Map<String, List<String>> getSpectrumTitles(Map<String, File> mgfFiles) {
         Map<String, List<String>> spectrumTitles = new HashMap<String, List<String>>();
+        
+        //first, clear factory
+        SpectrumFactory.getInstance().clearFactory();
 
         for (String mgfFileName : mgfFiles.keySet()) {
             try {
@@ -77,10 +82,10 @@ public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
             //filter the spectrum if necessary
             if (doNoiseFiltering) {
                 //check if noise threshold finder and noise filter are set
-                if (noiseFilter != null && noiseThresholdFinder != null) {
+                if (spectrumNoiseFilter != null && noiseThresholdFinder != null) {
                     HashMap<Double, Peak> peaks = mSnSpectrum.getPeakMap();
                     noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArrayFromPeakList(peaks));
-                    peaks = noiseFilter.filter(peaks, noiseThreshold);
+                    peaks = spectrumNoiseFilter.filter(peaks, noiseThreshold);
                     mSnSpectrum.setPeakList(peaks);
                 } else {
                     throw new IllegalArgumentException("NoiseFilter and/or ThresholdFinder not set");

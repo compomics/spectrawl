@@ -40,7 +40,7 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
     @Autowired
     private NoiseThresholdFinder noiseThresholdFinder;
     @Autowired
-    private NoiseFilter noiseFilter;
+    private NoiseFilter<HashMap<Double, Peak>> spectrumNoiseFilter;
 
     public JdbcMsLimsExperimentRepository() {
         doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
@@ -95,10 +95,9 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
             //filter the spectrum if necessary
             if (doNoiseFiltering) {
                 //check if noise threshold finder and noise filter are set
-                if (noiseFilter != null && noiseThresholdFinder != null) {
+                if (spectrumNoiseFilter != null && noiseThresholdFinder != null) {
                     noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArray(mSLimsPeaks));
-//                    noiseThreshold = noiseThresholdFinder.findNoiseThreshold(PeakUtils.getIntensitiesArrayFromPeakList(peaks));
-                    peaks = noiseFilter.filter(peaks, noiseThreshold);
+                    peaks = spectrumNoiseFilter.filter(peaks, noiseThreshold);
                 } else {
                     throw new IllegalArgumentException("NoiseFilter and/or ThresholdFinder not set");
                 }
