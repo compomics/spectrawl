@@ -4,7 +4,6 @@ import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
 import com.compomics.util.experiment.massspectrometry.Peak;
 
 import java.util.HashMap;
-import java.util.Map;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,11 +13,11 @@ import org.springframework.stereotype.Component;
  * Time: 12:05
  * To change this template use File | Settings | File Templates.
  */
-@Component("noiseFilter")
-public class NoiseFilterImpl implements NoiseFilter {
+@Component("spectrumNoiseFilter")
+public class SpectrumNoiseFilter implements NoiseFilter<HashMap<Double, Peak>> {
 
     private double filteredIntensitiesSum;
-
+        
     @Override
     public HashMap<Double, Peak> filter(HashMap<Double, Peak> peaks, double noiseThreshold) {
         HashMap<Double, Peak> filteredPeaks = new HashMap<Double, Peak>();
@@ -38,4 +37,5 @@ public class NoiseFilterImpl implements NoiseFilter {
     public double getFilteredIntensitiesSum() {
         return filteredIntensitiesSum;
     }
+
 }

@@ -1,8 +1,5 @@
 package com.compomics.spectrawl.logic.filter.noise;
 
-import com.compomics.util.experiment.massspectrometry.Peak;
-import java.util.HashMap;
-
 /**
  * Created by IntelliJ IDEA.
  * User: niels
@@ -10,7 +7,7 @@ import java.util.HashMap;
  * Time: 12:04
  * To change this template use File | Settings | File Templates.
  */
-public interface NoiseFilter {
+public interface NoiseFilter<T> {
 
     /**
      * Filter the spectrum by the given noise threshold.
@@ -19,7 +16,7 @@ public interface NoiseFilter {
      * @param noiseThreshold the noise threshold
      * @return the filtered peaks
      */
-    HashMap<Double, Peak> filter(HashMap<Double, Peak> peaks, double noiseThreshold);
+    T filter(T t, double noiseThreshold);
 
     /**
      * Get the sum of the filtered intensities.

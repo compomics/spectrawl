@@ -94,6 +94,8 @@ public class FilterConfigController {
      *
      */
     public void updateFilterChain() {
+        //clear the chain
+        spectrumFilterChain.reset();
         updateFilters();
     }
 

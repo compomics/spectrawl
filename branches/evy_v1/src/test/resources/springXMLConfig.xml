@@ -20,40 +20,16 @@
             <value>true</value>
         </property>       
     </bean> 
+                                                                                                                                                                                         
+    <!-- beans used in tests -->
+    <bean id="noiseThresholdFinder" class="com.compomics.spectrawl.logic.filter.noise.impl.WinsorNoiseThresholdFinder"/>                     
     
-     <!-- transaction beans -->
-    <bean id="msLimsDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="${db.driver}"/>
-        <property name="url" value="${db.url}"/>
-        <property name="username" value="${db.username}"/>
-        <property name="password" value="${db.password}"/>
-    </bean>
+    <bean id="spectrumBinner" class="com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerImpl"/>                     
     
-    <!-- service beans -->
-    <context:component-scan base-package="com.compomics.spectrawl.service">
-        <context:include-filter type="annotation"
-                                expression="org.springframework.stereotype.Repository"/>
-    </context:component-scan> 
+    <bean id="experimentBinner" class="com.compomics.spectrawl.logic.bin.impl.ExperimentBinnerImpl"/>                     
     
-    <!-- repository beans -->
-    <context:component-scan base-package="com.compomics.spectrawl.repository">
-        <context:include-filter type="annotation"
-                                expression="org.springframework.stereotype.Repository"/>
-    </context:component-scan> 
+    <bean id="fixedCombMassDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.FixedCombMassDeltaFilter"/>                     
     
-    <!-- component beans -->
-    <context:component-scan base-package="com.compomics.spectrawl">
-        <context:include-filter type="annotation"
-                                expression="org.springframework.stereotype.Component"/>
-    </context:component-scan>                                       
-
-    <bean id="taskExecutor" class="java.util.concurrent.Executors" 
-          factory-method="newFixedThreadPool"
-          destroy-method="shutdown">
-        <constructor-arg type="int" value="${size}"/>
-    </bean>
-                                                                                                                                                                                 
-    <!-- guava event bus bean -->
-    <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>                     
+    <bean id="variableCombMassDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.VariableCombMassDeltaFilter"/>                     
                            
 </beans>
