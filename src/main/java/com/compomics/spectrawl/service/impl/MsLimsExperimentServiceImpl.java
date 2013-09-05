@@ -37,11 +37,6 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
     private ExecutorService taskExecutor;
 
     @Override
-    public MsLimsExperimentRepository getMsLimsSpectrumRepository() {
-        return msLimsSpectrumRepository;
-    }
-
-    @Override
     public Experiment loadExperiment(String experimentId) {
         Experiment experiment = new Experiment(experimentId);
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
@@ -84,6 +79,11 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
         experiment.setSpectra(spectra);
 
         return experiment;
+    }
+
+    @Override
+    public void setDoNoiseFiltering(boolean doNoiseFiltering) {
+        msLimsSpectrumRepository.setDoNoiseFiltering(doNoiseFiltering);
     }
 
     private class SpectrumLoader implements Callable<SpectrumImpl> {

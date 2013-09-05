@@ -19,6 +19,15 @@ public interface MsLimsExperimentRepository extends ExperimentRepository {
      * @return the number of spectra loaded
      */
     int loadSpectraByExperimentId(long experimentId);
+    
+    /**
+     * Get a spectrum by experiment and spectrum ID
+     * 
+     * @param experimentId the experiment ID
+     * @param spectrumId the spectrum ID
+     * @return 
+     */
+    SpectrumImpl getSpectrum(long experimentId, long spectrumId);
 
     /**
      * Get the spectrum to process. This method is thread safe.

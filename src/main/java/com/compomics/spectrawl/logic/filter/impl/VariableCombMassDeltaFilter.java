@@ -55,7 +55,7 @@ public class VariableCombMassDeltaFilter implements Filter<SpectrumImpl> {
                 //get the key based on the current mass delta value
                 currentMassDeltaValue += massDeltaFilterValues[i];
                 Double key = peakBins.floorKey(currentMassDeltaValue);
-                if (key != null && peakBins.get(key).getIntensitySum() < intensityThreshold) {
+                if (key == null || peakBins.get(key).getHighestIntensity() < intensityThreshold) {
                     //no need to go on
                     break;
                 }
