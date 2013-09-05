@@ -185,4 +185,17 @@ public class FixedCombMassDeltaFilterTest {
         Assert.assertFalse(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
         Assert.assertFalse(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
+    
+    /**
+     * Test the scenario where the number of consecutive mass deltas lies within
+     * the specified interval but the intensities are below the intensity threshold. In this case, the test shoulddn't pass the filter.
+     */
+    @Test
+    public void testPassesFilter_6() {
+        //init filter        
+        fixedCombMassDeltaFilter.init(0.5, 4, 6, 50.5);
+
+        Assert.assertFalse(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
+        Assert.assertFalse(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
+    }
 }

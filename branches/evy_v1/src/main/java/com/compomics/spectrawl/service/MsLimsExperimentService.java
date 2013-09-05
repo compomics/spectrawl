@@ -11,7 +11,7 @@ import com.compomics.spectrawl.repository.MsLimsExperimentRepository;
  *
  * @author niels
  */
-public interface MsLimsExperimentService {
+public interface MsLimsExperimentService extends ExperimentService {
        
     /**
      * Load the experiment by experiment ID with all spectra.
@@ -19,13 +19,6 @@ public interface MsLimsExperimentService {
      * @param experimentId the experiment ID
      * @return the experiment
      */
-    Experiment loadExperiment(String experimentId);
-    
-    /**
-     * Get the MsLimsSpectrumLoader
-     * 
-     * @return MsLimsSpectrumLoader
-     */
-    MsLimsExperimentRepository getMsLimsSpectrumRepository();
+    Experiment loadExperiment(String experimentId);    
     
 }

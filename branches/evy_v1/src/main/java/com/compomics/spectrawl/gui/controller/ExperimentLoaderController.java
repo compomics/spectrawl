@@ -227,7 +227,7 @@ public class ExperimentLoaderController {
                 LOGGER.info("start loading MsLims experiment " + msLimsExperimentId);
 
                 //load experiment
-                msLimsExperimentService.getMsLimsSpectrumRepository().setDoNoiseFiltering(mainController.doWinsorization());
+                msLimsExperimentService.setDoNoiseFiltering(mainController.doWinsorization());
                 experiment = msLimsExperimentService.loadExperiment(msLimsExperimentId);
 
                 LOGGER.info("done loading MsLims experiment " + msLimsExperimentId);
@@ -237,7 +237,7 @@ public class ExperimentLoaderController {
                 LOGGER.info("start loading MGF file(s)");
 
                 //load experiment with selected mgf files
-                mgfExperimentService.getMgfSpectrumLoader().setDoNoiseFiltering(mainController.doWinsorization());
+                mgfExperimentService.setDoNoiseFiltering(mainController.doWinsorization());
                 experiment = mgfExperimentService.loadExperiment(getMgfFiles());
 
                 LOGGER.info("done loading MGF file(s)");

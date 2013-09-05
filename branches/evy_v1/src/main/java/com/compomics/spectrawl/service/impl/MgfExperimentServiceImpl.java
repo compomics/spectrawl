@@ -37,24 +37,19 @@ public class MgfExperimentServiceImpl implements MgfExperimentService {
     @Qualifier("filterChain")
     private Filter<SpectrumImpl> spectrumFilter;
     @Autowired
-    private MgfExperimentRepository mgfSpectrumLoader;
+    private MgfExperimentRepository mgfExperimentRepository;
     @Autowired
     private SpectrumBinner spectrumBinner;
     @Autowired
     private ExecutorService taskExecutor;
-
-    @Override
-    public MgfExperimentRepository getMgfSpectrumLoader() {
-        return mgfSpectrumLoader;
-    }
-
+    
     @Override
     public Experiment loadExperiment(Map<String, File> mgfFiles) {
         Experiment experiment = new Experiment("");
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
 
         //retrieve map of spectrum titles from the spectrum loader
-        Map<String, List<String>> spectrumTitlesMap = mgfSpectrumLoader.getSpectrumTitles(mgfFiles);        
+        Map<String, List<String>> spectrumTitlesMap = mgfExperimentRepository.getSpectrumTitles(mgfFiles);        
 
         //submit a job for each spectrum
         List<Future<SpectrumImpl>> futureList = new ArrayList<Future<SpectrumImpl>>();
@@ -100,6 +95,11 @@ public class MgfExperimentServiceImpl implements MgfExperimentService {
         return experiment;
     }
 
+    @Override
+    public void setDoNoiseFiltering(boolean doNoiseFiltering) {
+        mgfExperimentRepository.setDoNoiseFiltering(doNoiseFiltering);
+    }
+
     private class SpectrumLoader implements Callable<SpectrumImpl> {
 
         private String spectrumKey;
@@ -110,7 +110,7 @@ public class MgfExperimentServiceImpl implements MgfExperimentService {
 
         @Override
         public SpectrumImpl call() throws Exception {
-            SpectrumImpl spectrum = mgfSpectrumLoader.getSpectrumByKey(spectrumKey);
+            SpectrumImpl spectrum = mgfExperimentRepository.getSpectrumByKey(spectrumKey);
 
             //bin the spectrum
             spectrumBinner.binSpectrum(spectrum, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());

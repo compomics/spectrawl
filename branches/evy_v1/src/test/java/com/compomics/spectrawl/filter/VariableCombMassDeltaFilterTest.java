@@ -159,4 +159,18 @@ public class VariableCombMassDeltaFilterTest {
         Assert.assertFalse(variableCombMzDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
         Assert.assertFalse(variableCombMzDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
+    
+    /**
+     * Test the scenario where the filter mass deltas are found in the spectrum but the intensities are below the intensity threshold.
+     * In this case, the spectrum should pass the filter.
+     */
+    @Test
+    public void testPassesFilter_4() {
+        //init filter        
+        double[] mzDeltaValues = {50.5, 29.5, 31.5};
+        variableCombMzDeltaFilter.init(0.5, mzDeltaValues);
+
+        Assert.assertFalse(variableCombMzDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
+        Assert.assertFalse(variableCombMzDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
+    }
 }

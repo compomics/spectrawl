@@ -55,7 +55,8 @@ public class FixedCombMassDeltaFilter implements Filter<SpectrumImpl> {
         boolean passesFilter = false;
 
         //get appropriate values for floor and ceiling
-        double floor = (minConsecMassDeltas * massDeltaFilterValue) - (BinParams.BIN_SIZE.getValue() * 2);
+//        double floor = (minConsecMassDeltas * massDeltaFilterValue) - (BinParams.BIN_SIZE.getValue() * 2);
+        double floor = massDeltaFilterValue - (BinParams.BIN_SIZE.getValue() * 2);
         double ceiling = ((maxConsecMassDeltas + 1) * massDeltaFilterValue) + (BinParams.BIN_SIZE.getValue() * 2);
         Map<Double, TreeMap<Double, PeakBin>> peakBinsMap = spectrumBinner.getPeakBinsMap(spectrum, floor, ceiling, BinParams.BIN_SIZE.getValue());
         //iterate over the peakBins map of each peak
@@ -73,8 +74,8 @@ public class FixedCombMassDeltaFilter implements Filter<SpectrumImpl> {
                 consecMassDeltas++;
                 //get the key based on the current mass delta value
                 double currentMassDeltaValue = massDeltaFilterValue * consecMassDeltas;
-                Double key = peakBins.floorKey(currentMassDeltaValue);
-                if (key != null && peakBins.get(key).getIntensitySum() < intensityThreshold) {
+                Double key = peakBins.floorKey(currentMassDeltaValue);                
+                if (key == null || peakBins.get(key).getIntensitySum() < intensityThreshold) {
                     //no need to go on                    
                     consecMassDeltas--;
                     break;
