@@ -5,6 +5,7 @@
 package com.compomics.spectrawl.repository;
 
 import com.compomics.spectrawl.model.SpectrumImpl;
+import java.util.List;
 
 /**
  *
@@ -19,6 +20,14 @@ public interface MsLimsExperimentRepository extends ExperimentRepository {
      * @return the number of spectra loaded
      */
     int loadSpectraByExperimentId(long experimentId);
+    
+    /**
+     * Load all spectra by spectrum IDs
+     *
+     * @param spectrumIds the spectrum ID list
+     * @return the number of spectra loaded
+     */
+    int loadSpectraBySpectrumIds(List<Long> spectrumIds);
     
     /**
      * Get a spectrum by experiment and spectrum ID

@@ -151,7 +151,7 @@ public class FilterConfigController {
         //update BasicMassFilter        
         if (!massFilterListModel.isEmpty()) {
             //check filter type
-            if (massFilterDialog.getFilterTypeRadioButtonGroup().isSelected(massFilterDialog.getAndRadioButton().getModel())) {
+            if (massFilterDialog.getAndRadioButton().isSelected()) {
                 //if the filtertype is "and", add all the values to the same filter                
                 BasicMassFilter basicMassFilter = new BasicMassFilter();
                 basicMassFilter.setMassTolerance(Double.parseDouble(massFilterDialog.getMassToleranceTextField().getText()));                
@@ -180,7 +180,7 @@ public class FilterConfigController {
         //update PrecRelMassFilter        
         if (!precRelMassFilterListModel.isEmpty()) {
             //check filter type
-            if (massFilterDialog.getPrecRelFilterTypeRadioButtonGroup().isSelected(massFilterDialog.getPrecRelAndRadioButton().getModel())) {
+            if (massFilterDialog.getPrecRelAndRadioButton().isSelected()) {
                 //if the filtertype is "and", add all the values to the same filter                
                 BasicMassFilter basicMassFilter = new BasicMassFilter();
                 basicMassFilter.setMassTolerance(Double.parseDouble(massFilterDialog.getPrecRelMassToleranceTextField().getText()));                
@@ -209,12 +209,12 @@ public class FilterConfigController {
         //update BasicMassDeltaFilter
         if (!massDeltaFilterListModel.isEmpty()) {
             //check filter type
-            if (massDeltaFilterDialog.getFilterTypeRadioButtonGroup().isSelected(massDeltaFilterDialog.getAndRadioButton().getModel())) {
+            if (massDeltaFilterDialog.getAndRadioButton().isSelected()) {
                 //if the filtertype is "and", add all the values to the same filter                
                 BasicMassDeltaFilter basicMzDeltaFilter = new BasicMassDeltaFilter();
                 basicMzDeltaFilter.setIntensityThreshold(Double.parseDouble(massDeltaFilterDialog.getIntensityThresholdTextField().getText()));                
                 List<Double> massDeltaFilterValues = new ArrayList<Double>();
-                for (Object value : massFilterListModel.toArray()) {
+                for (Object value : massDeltaFilterListModel.toArray()) {
                     massDeltaFilterValues.add((Double) value);
                 }
                 basicMzDeltaFilter.setMassDeltaFilterValues(massDeltaFilterValues);
@@ -223,7 +223,7 @@ public class FilterConfigController {
                 //if the filtertype is "or", add all the values to the different filters in the same filterchain            
                 FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<SpectrumImpl>();
                 orFilterChain.setFilterChainType(FilterChain.FilterChainType.OR);
-                for (Object value : massFilterListModel.toArray()) {
+                for (Object value : massDeltaFilterListModel.toArray()) {
                     BasicMassDeltaFilter basicMassDeltaFilter = new BasicMassDeltaFilter();
                     basicMassDeltaFilter.setIntensityThreshold(Double.parseDouble(massDeltaFilterDialog.getIntensityThresholdTextField().getText()));
                     List<Double> massDeltaFilterValues = new ArrayList<Double>();
@@ -258,8 +258,12 @@ public class FilterConfigController {
         massFilterListModel = new DefaultListModel();
         massFilterDialog.getMassFilterList().setModel(massFilterListModel);
 
+        //add buttons to group        
+        massFilterDialog.getFilterTypeRadioButtonGroup().add(massFilterDialog.getAndRadioButton());
+        massFilterDialog.getFilterTypeRadioButtonGroup().add(massFilterDialog.getOrRadioButton());
+        
         //set filter type to and
-        massFilterDialog.getFilterTypeRadioButtonGroup().setSelected(massFilterDialog.getAndRadioButton().getModel(), true);
+        massFilterDialog.getAndRadioButton().setSelected(true);
 
         //add action listeners
         massFilterDialog.getAddMassButton().addActionListener(new ActionListener() {
@@ -344,8 +348,12 @@ public class FilterConfigController {
         massDeltaFilterListModel = new DefaultListModel();
         massDeltaFilterDialog.getMzDeltaFilterList().setModel(massDeltaFilterListModel);
 
+        //add buttons to group        
+        massDeltaFilterDialog.getFilterTypeRadioButtonGroup().add(massDeltaFilterDialog.getAndRadioButton());
+        massDeltaFilterDialog.getFilterTypeRadioButtonGroup().add(massDeltaFilterDialog.getOrRadioButton());
+        
         //set filter type to and
-        massDeltaFilterDialog.getFilterTypeRadioButtonGroup().setSelected(massFilterDialog.getAndRadioButton().getModel(), true);
+        massDeltaFilterDialog.getAndRadioButton().setSelected(true);
 
         //add action listeners       
         massDeltaFilterDialog.getAddMzDeltaButton().addActionListener(new ActionListener() {

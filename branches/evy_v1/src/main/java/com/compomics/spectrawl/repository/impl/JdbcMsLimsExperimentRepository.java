@@ -14,6 +14,7 @@ import com.compomics.util.experiment.massspectrometry.Charge;
 import com.compomics.util.experiment.massspectrometry.Peak;
 import com.compomics.util.experiment.massspectrometry.Precursor;
 import com.compomics.util.experiment.massspectrometry.Spectrum;
+import com.google.common.base.Joiner;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,6 +39,10 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
             .append("select sf.l_spectrumid as l_spectrumid, sf.file as file from spectrum s, spectrum_file sf ")
             .append("where s.spectrumid = sf.l_spectrumid ")
             .append("and s.l_projectid = ?").toString();
+    private static final String SELECT_SPECTRUM_FILES = new StringBuilder()
+            .append("select sf.l_spectrumid as l_spectrumid, sf.file as file from spectrum s, spectrum_file sf ")
+            .append("where s.spectrumid = sf.l_spectrumid ")
+            .append("and s.spectrumid in (%s)").toString();
     private static final String SELECT_SPECTRUM_FILE = new StringBuilder()
             .append("select sf.l_spectrumid as l_spectrumid, sf.file as file from spectrum s, spectrum_file sf ")
             .append("where s.spectrumid = sf.l_spectrumid ")
@@ -69,6 +74,16 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
         LOGGER.debug("Start loading spectra for experiment " + experimentId);
         spectrumFileQueue = getJdbcTemplate().query(SELECT_EXPERIMENT_SPECTRUM_FILES, new SpectrumFileExctractor(), new Object[]{experimentId});
         LOGGER.debug("Finished loading spectra for experiment " + experimentId);
+        return spectrumFileQueue.size();
+    }
+    
+    @Override
+    public int loadSpectraBySpectrumIds(List<Long> spectrumIds) {
+        String spectrumIdsString = Joiner.on(",").join(spectrumIds);
+        
+        LOGGER.debug("Start loading " + spectrumIds.size() + " spectra");
+        spectrumFileQueue = getJdbcTemplate().query(String.format(SELECT_SPECTRUM_FILES, spectrumIdsString), new SpectrumFileExctractor());
+        LOGGER.debug("Finished loading " + spectrumIds.size() + " spectra");
         return spectrumFileQueue.size();
     }
     
@@ -143,4 +158,5 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
         
         return spectrum;
     }
+
 }
