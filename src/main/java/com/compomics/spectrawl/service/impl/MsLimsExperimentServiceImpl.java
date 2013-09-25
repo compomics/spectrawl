@@ -80,11 +80,56 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
 
         return experiment;
     }
+    
+    @Override
+    public Experiment loadExperiment(List<Long> spectrumIds) {
+        Experiment experiment = new Experiment("stubExperiment");
+        List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
+
+        int numberOfSpectra = msLimsSpectrumRepository.loadSpectraBySpectrumIds(spectrumIds);
+
+        //set number of initial spectra
+        //@todo set this
+        experiment.setNumberOfSpectra(numberOfSpectra);
+
+        LOGGER.info("start loading experiment with " + numberOfSpectra + " spectra before filtering");
+
+        //submit a job for each spectrum
+        List<Future<SpectrumImpl>> futureList = new ArrayList<Future<SpectrumImpl>>();
+        for (int i = 0; i < numberOfSpectra ; i++) {
+            Future<SpectrumImpl> future = taskExecutor.submit(new SpectrumLoader());
+            futureList.add(future);
+        }
+
+        //run over the list of Futures and
+        for (Future<SpectrumImpl> future : futureList) {
+            try {
+                SpectrumImpl spectrum = future.get();
+                if (spectrum != null) {
+                    spectra.add(spectrum);
+                }
+            } catch (InterruptedException e) {
+                LOGGER.error(e.getMessage(), e);
+            } catch (ExecutionException e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+        }
+
+        //set number of spectra after filtering
+        experiment.setNumberOfFilteredSpectra(spectra.size());
+
+        LOGGER.info("done loading experiment with " + spectra.size() + " spectra after filtering");
+
+        //set experiment spectra
+        experiment.setSpectra(spectra);
+
+        return experiment;
+    }
 
     @Override
     public void setDoNoiseFiltering(boolean doNoiseFiltering) {
         msLimsSpectrumRepository.setDoNoiseFiltering(doNoiseFiltering);
-    }
+    }    
 
     private class SpectrumLoader implements Callable<SpectrumImpl> {
 
