@@ -11,12 +11,12 @@ import javax.swing.JTextField;
  *
  * @author niels
  */
-public class MassDeltaFilterDialog extends javax.swing.JDialog {
+public class MzDeltaFilterDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form FilterConfigDialog
      */
-    public MassDeltaFilterDialog(java.awt.Frame parent, boolean modal) {
+    public MzDeltaFilterDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.getContentPane().setBackground(Color.WHITE);

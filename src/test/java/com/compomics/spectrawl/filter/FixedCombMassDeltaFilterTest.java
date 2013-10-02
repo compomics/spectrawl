@@ -2,7 +2,7 @@ package com.compomics.spectrawl.filter;
 
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.impl.FixedCombMassDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.FixedCombMzDeltaFilter;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
@@ -33,7 +33,7 @@ public class FixedCombMassDeltaFilterTest {
     @Autowired
     private ExperimentBinner experimentBinner;
     @Autowired
-    private FixedCombMassDeltaFilter fixedCombMassDeltaFilter;
+    private FixedCombMzDeltaFilter fixedCombMassDeltaFilter;
     private Experiment experiment;
 
     @Before
@@ -69,47 +69,14 @@ public class FixedCombMassDeltaFilterTest {
         possibleCharges.add(new Charge(Charge.PLUS, 1));
         Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum_1.setPrecursor(precursor);
-        spectrum_1.setPeakList(peaks);
-
-        peaks = new HashMap<Double, Peak>();
-        peak = new Peak(100D / 2, 100D);
-        peaks.put(100D / 2, peak);
-        peak = new Peak(150.5 / 2, 100D);
-        peaks.put(150.5 / 2, peak);
-        peak = new Peak(201D / 2, 40D);
-        peaks.put(201D / 2, peak);
-        peak = new Peak(251.5 / 2, 100D);
-        peaks.put(251.5 / 2, peak);
-        peak = new Peak(302D / 2, 100D);
-        peaks.put(302D / 2, peak);
-        peak = new Peak(352.5 / 2, 100D);
-        peaks.put(352.5 / 2, peak);
-
-        //add some random peaks
-        peak = new Peak(160.5 / 2, 100D);
-        peaks.put(160.5 / 2, peak);
-        peak = new Peak(235.6 / 2, 40D);
-        peaks.put(235.6 / 2, peak);
-        peak = new Peak(297.1 / 2, 100D);
-        peaks.put(297.1 / 2, peak);
-        peak = new Peak(333.6 / 2, 100D);
-        peaks.put(333.6 / 2, peak);
-
-        SpectrumImpl spectrum_2 = new SpectrumImpl("2");
-        possibleCharges = new ArrayList<Charge>();
-        possibleCharges.add(new Charge(Charge.PLUS, 2));
-        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
-        spectrum_2.setPrecursor(precursor);
-        spectrum_2.setPeakList(peaks);
+        spectrum_1.setPeakList(peaks);       
 
         //bin the spectra        
         spectrumBinner.binSpectrum(spectrum_1, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
-        spectrumBinner.binSpectrum(spectrum_2, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
 
         //add to experiment
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
         spectra.add(spectrum_1);
-        spectra.add(spectrum_2);
 
         experiment = new Experiment("1");
         experiment.setSpectra(spectra);
@@ -128,7 +95,6 @@ public class FixedCombMassDeltaFilterTest {
         fixedCombMassDeltaFilter.init(0.01, 2, 4, 50.5);
 
         Assert.assertFalse(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
-        Assert.assertFalse(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
 
     /**
@@ -141,7 +107,6 @@ public class FixedCombMassDeltaFilterTest {
         fixedCombMassDeltaFilter.init(0.01, 4, 6, 50.5);
 
         Assert.assertTrue(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
-        Assert.assertTrue(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
 
     /**
@@ -155,7 +120,6 @@ public class FixedCombMassDeltaFilterTest {
         fixedCombMassDeltaFilter.init(0.01, 1, 6, 50.5);
 
         Assert.assertTrue(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
-        Assert.assertTrue(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
 
     /**
@@ -169,7 +133,6 @@ public class FixedCombMassDeltaFilterTest {
         fixedCombMassDeltaFilter.init(0.01, 5, 5, 50.5);
 
         Assert.assertTrue(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
-        Assert.assertTrue(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
 
     /**
@@ -183,7 +146,6 @@ public class FixedCombMassDeltaFilterTest {
         fixedCombMassDeltaFilter.init(0.01, 7, 10, 50.5);
 
         Assert.assertFalse(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
-        Assert.assertFalse(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
     
     /**
@@ -196,6 +158,5 @@ public class FixedCombMassDeltaFilterTest {
         fixedCombMassDeltaFilter.init(0.5, 4, 6, 50.5);
 
         Assert.assertFalse(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(0), false));
-        Assert.assertFalse(fixedCombMassDeltaFilter.passesFilter(experiment.getSpectra().get(1), false));
     }
 }

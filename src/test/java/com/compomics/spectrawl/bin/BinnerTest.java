@@ -161,28 +161,7 @@ public class BinnerTest {
         possibleCharges.add(new Charge(Charge.PLUS, 3));
         precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum_6.setPrecursor(precursor);
-        spectrum_6.setPeakList(peaks);
-
-        peaks = new HashMap<Double, Peak>();
-        peak = new Peak(100D / 3, 70D);
-        peaks.put(100D / 3, peak);
-        peak = new Peak(220.54 / 3, 30D);
-        peaks.put(220.54 / 3, peak);
-        peak = new Peak(220.5 / 3, 40D);
-        peaks.put(220.5 / 3, peak);
-        peak = new Peak(230D / 3, 100D);
-        peaks.put(230D / 3, peak);
-        peak = new Peak(300D / 3, 100D);
-        peaks.put(300D / 3, peak);
-        peak = new Peak(420.6 / 3, 100D);
-        peaks.put(420.6 / 3, peak);
-
-        SpectrumImpl spectrum_7 = new SpectrumImpl("7");
-        possibleCharges = new ArrayList<Charge>();
-        possibleCharges.add(new Charge(Charge.PLUS, 3));
-        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
-        spectrum_7.setPrecursor(precursor);
-        spectrum_7.setPeakList(peaks);
+        spectrum_6.setPeakList(peaks);        
 
         //bin the spectra
         spectrumBinner.binSpectrum(spectrum_1, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
@@ -191,7 +170,6 @@ public class BinnerTest {
         spectrumBinner.binSpectrum(spectrum_4, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
         spectrumBinner.binSpectrum(spectrum_5, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
         spectrumBinner.binSpectrum(spectrum_6, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
-        spectrumBinner.binSpectrum(spectrum_7, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
 
         //add to experiment
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
@@ -201,39 +179,16 @@ public class BinnerTest {
         spectra.add(spectrum_4);
         spectra.add(spectrum_5);
         spectra.add(spectrum_6);
-        spectra.add(spectrum_7);
 
         experiment = new Experiment("1");
         experiment.setSpectra(spectra);
 
         //bin the experiment
         experimentBinner.binExperiment(experiment);
-    }
+    }    
 
     /**
-     * Test if 2 spectra of the same precursor but with a different mass have
-     * identical spectrum bins.
-     */
-    @Test
-    public void testDifferentChargedPrecursor() {
-        //get the 1st and the 7th spectrum
-        SpectrumImpl spectrumWithCharge1 = experiment.getSpectra().get(0);
-        SpectrumImpl spectrumWithCharge3 = experiment.getSpectra().get(6);
-
-        for (Double key : spectrumWithCharge1.getBins().keySet()) {
-            Assert.assertEquals(spectrumWithCharge1.getBins().get(key).getHighestIntensity(), spectrumWithCharge3.getBins().get(key).getHighestIntensity(), 0.0001);
-            Assert.assertEquals(spectrumWithCharge1.getBins().get(key).getIntensitySum(), spectrumWithCharge3.getBins().get(key).getIntensitySum(), 0.0001);
-            Assert.assertEquals(spectrumWithCharge1.getBins().get(key).getPeakCount(), spectrumWithCharge3.getBins().get(key).getPeakCount(), 0.0001);
-        }
-
-    }
-
-    /**
-     * Test the binning of a spectrum bin 70; count: 1, summed: 0.2272, highest:
-     * 0.2272 bin 79; count: 2, summed: 0.2682, highest: 0.2682 bin 120; count:
-     * 2, summed: 0.4517, highest: 0.3475 bin 130; count: 1, summed: 0.1902,
-     * highest: 0.1902 bin 190; count: 1, summed: 0.2272, highest: 0.2272 bin
-     * 200; count: 2, summed: 0.4584, highest: 0.4584
+     * Test the binning of a spectrum
      */
     @Test
     public void testSpectrumBins() {
@@ -278,34 +233,32 @@ public class BinnerTest {
     }
 
     /**
-     * Test the binning of one experiment bin 40: peakCountQuantile: min:0, 25:
-     * 0, 50: 0, 75: 4, max: 4 intensitySumQuantile: min:0, 25: 0, 50: 0, 75:
-     * 0.667, max: 0.667 highestIntensityQuantile: min:0, 25: 0, 50: 0, 75:
-     * 0.667, max: 0.667
+     * Test the binning of one experiment      
      */
     @Test
     public void testExperimentBins() {
         //bin 40
-        ExperimentBin experimentBin = experiment.getExperimentBins().get(40D);
+        ExperimentBin experimentBin = experiment.getExperimentBins().get(40D);        
+        
         //peak count quantiles
         Assert.assertEquals(0.0, experimentBin.getPeakCountQuantiles().getMinimum(), 0.01);
         Assert.assertEquals(0.0, experimentBin.getPeakCountQuantiles().getPercentile_25(), 0.01);
-        Assert.assertEquals(0.0, experimentBin.getPeakCountQuantiles().getPercentile_50(), 0.01);
-        Assert.assertEquals(4.0, experimentBin.getPeakCountQuantiles().getPercentile_75(), 0.01);
-        Assert.assertEquals(4.0, experimentBin.getPeakCountQuantiles().getMaximum(), 0.01);
+        Assert.assertEquals(2.0, experimentBin.getPeakCountQuantiles().getPercentile_50(), 0.01);
+        Assert.assertEquals(2.25, experimentBin.getPeakCountQuantiles().getPercentile_75(), 0.01);
+        Assert.assertEquals(3.0, experimentBin.getPeakCountQuantiles().getMaximum(), 0.01);
 
         //intensity sum quantiles
         Assert.assertEquals(0.0, experimentBin.getIntensitySumQuantiles().getMinimum(), 0.01);
         Assert.assertEquals(0.0, experimentBin.getIntensitySumQuantiles().getPercentile_25(), 0.01);
-        Assert.assertEquals(0.0, experimentBin.getIntensitySumQuantiles().getPercentile_50(), 0.01);
-        Assert.assertEquals(0.667, experimentBin.getIntensitySumQuantiles().getPercentile_75(), 0.01);
-        Assert.assertEquals(0.667, experimentBin.getIntensitySumQuantiles().getMaximum(), 0.01);
+        Assert.assertEquals(0.3286, experimentBin.getIntensitySumQuantiles().getPercentile_50(), 0.01);
+        Assert.assertEquals(0.3333, experimentBin.getIntensitySumQuantiles().getPercentile_75(), 0.01);
+        Assert.assertEquals(0.3333, experimentBin.getIntensitySumQuantiles().getMaximum(), 0.01);
 
         //highest intensity quantiles
         Assert.assertEquals(0.0, experimentBin.getHighestIntensityQuantiles().getMinimum(), 0.01);
         Assert.assertEquals(0.0, experimentBin.getHighestIntensityQuantiles().getPercentile_25(), 0.01);
-        Assert.assertEquals(0.0, experimentBin.getHighestIntensityQuantiles().getPercentile_50(), 0.01);
-        Assert.assertEquals(0.667, experimentBin.getHighestIntensityQuantiles().getPercentile_75(), 0.01);
-        Assert.assertEquals(0.667, experimentBin.getHighestIntensityQuantiles().getMaximum(), 0.01);
+        Assert.assertEquals(0.3286, experimentBin.getHighestIntensityQuantiles().getPercentile_50(), 0.01);
+        Assert.assertEquals(0.3333, experimentBin.getHighestIntensityQuantiles().getPercentile_75(), 0.01);
+        Assert.assertEquals(0.3333, experimentBin.getHighestIntensityQuantiles().getMaximum(), 0.01);
     }
 }

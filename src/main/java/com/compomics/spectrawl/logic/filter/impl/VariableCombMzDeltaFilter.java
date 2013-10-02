@@ -14,20 +14,20 @@ import org.springframework.stereotype.Component;
  * This filter looks for a number of consecutive variable M/Z delta values
  * between peaks.
  */
-@Component("variableCombMassDeltaFilter")
-public class VariableCombMassDeltaFilter implements Filter<SpectrumImpl> {
+@Component("variableCombMzDeltaFilter")
+public class VariableCombMzDeltaFilter implements Filter<SpectrumImpl> {
 
     private double intensityThreshold;
     /**
-     * The consecutive mass delta values to filter for.
+     * The consecutive m/z delta values to filter for.
      */
-    private double[] massDeltaFilterValues;
+    private double[] mzDeltaFilterValues;
     @Autowired
     private SpectrumBinner spectrumBinner;
     
-    public void init(double intensityThreshold, double[] massDeltaFilterValues) {
+    public void init(double intensityThreshold, double[] mzDeltaFilterValues) {
         this.intensityThreshold = intensityThreshold;
-        this.massDeltaFilterValues = massDeltaFilterValues;
+        this.mzDeltaFilterValues = mzDeltaFilterValues;
     }
 
     @Override
@@ -37,33 +37,33 @@ public class VariableCombMassDeltaFilter implements Filter<SpectrumImpl> {
         boolean passesFilter = false;
         
         //get appropriate values for floor and ceiling
-        double floor = massDeltaFilterValues[0] - (BinParams.BIN_SIZE.getValue() * 2);
-        double ceiling = getArraySum(massDeltaFilterValues) + (BinParams.BIN_SIZE.getValue() * 2);
+        double floor = mzDeltaFilterValues[0] - (BinParams.BIN_SIZE.getValue() * 2);
+        double ceiling = getArraySum(mzDeltaFilterValues) + (BinParams.BIN_SIZE.getValue() * 2);
         Map<Double, TreeMap<Double, PeakBin>> peakBinsMap = spectrumBinner.getPeakBinsMap(spectrum, floor, ceiling, BinParams.BIN_SIZE.getValue());
         //iterate over the peakBins map of each peak
         for (TreeMap<Double, PeakBin> peakBins : peakBinsMap.values()) {
 
             /**
-             * look for one peak at the relevant M/Z delta values with the other
+             * look for one peak at the relevant m/z delta values with the other
              * peaks, contained in the peakBins map. Start counting the given
-             * range of consecutive M/Z delta values; break if the a certain M/Z
+             * range of consecutive m/z delta values; break if the a certain m/z
              * delta value is not present (below the intensitythreshold).
              */
-            int consecMassDeltas = 0;
+            int consecMzDeltas = 0;
             double currentMassDeltaValue = 0.0;
-            for (int i = 0; i < massDeltaFilterValues.length; i++) {
-                //get the key based on the current mass delta value
-                currentMassDeltaValue += massDeltaFilterValues[i];
+            for (int i = 0; i < mzDeltaFilterValues.length; i++) {
+                //get the key based on the current m/z delta value
+                currentMassDeltaValue += mzDeltaFilterValues[i];
                 Double key = peakBins.floorKey(currentMassDeltaValue);
                 if (key == null || peakBins.get(key).getHighestIntensity() < intensityThreshold) {
                     //no need to go on
                     break;
                 }
                 else{
-                    consecMassDeltas++;
+                    consecMzDeltas++;
                 }
             }
-            if(consecMassDeltas == massDeltaFilterValues.length){
+            if(consecMzDeltas == mzDeltaFilterValues.length){
                 passesFilter = true;
                 break;
             }

@@ -24,7 +24,7 @@ public interface SpectrumBinner {
     void binSpectrum(SpectrumImpl spectrum, double floor, double ceiling, double binSize);
 
     /**
-     * Get the PeakBin map (key: M/Z ratio, value: the map of PeakBin objects).
+     * Get the PeakBin map (key: m/z ratio, value: the map of PeakBin objects).
      *
      * @param spectrum the spectrum
      * @param floor

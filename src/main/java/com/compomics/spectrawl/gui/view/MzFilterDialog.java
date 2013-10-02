@@ -12,32 +12,32 @@ import javax.swing.JTextField;
  *
  * @author niels
  */
-public class MassFilterDialog extends javax.swing.JDialog {
+public class MzFilterDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form FilterConfigDialog
      */
-    public MassFilterDialog(java.awt.Frame parent, boolean modal) {
+    public MzFilterDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);        
         initComponents();
         this.getContentPane().setBackground(Color.WHITE);
         setLocationRelativeTo(parent);
     }
 
-    public JButton getAddMassButton() {
-        return addMassButton;
+    public JButton getAddMzButton() {
+        return addMzButton;
     }
 
-    public JTextField getAddMassTextField() {
-        return addMassTextField;
+    public JTextField getAddMzTextField() {
+        return addMzTextField;
     }
 
-    public JButton getAddPrecRelMassButton() {
-        return addPrecRelMassButton;
+    public JButton getAddPrecRelMzButton() {
+        return addPrecRelMzButton;
     }
 
-    public JTextField getAddPrecRelMassTextField() {
-        return addPrecRelMassTextField;
+    public JTextField getAddPrecRelMzTextField() {
+        return addPrecRelMzTextField;
     }
 
     public JRadioButton getAndRadioButton() {
@@ -48,12 +48,12 @@ public class MassFilterDialog extends javax.swing.JDialog {
         return filterTypeRadioButtonGroup;
     }
 
-    public JList getMassFilterList() {
-        return massFilterList;
+    public JList getMzFilterList() {
+        return mzFilterList;
     }
 
-    public JTextField getMassToleranceTextField() {
-        return massToleranceTextField;
+    public JTextField getMzToleranceTextField() {
+        return mzToleranceTextField;
     }
 
     public JRadioButton getOrRadioButton() {
@@ -68,24 +68,24 @@ public class MassFilterDialog extends javax.swing.JDialog {
         return precRelFilterTypeRadioButtonGroup;
     }
 
-    public JList getPrecRelMassFilterList() {
-        return precRelMassFilterList;
+    public JList getPrecRelMzFilterList() {
+        return precRelMzFilterList;
     }
 
-    public JTextField getPrecRelMassToleranceTextField() {
-        return precRelMassToleranceTextField;
+    public JTextField getPrecRelMzToleranceTextField() {
+        return precRelMzToleranceTextField;
     }
 
     public JRadioButton getPrecRelOrRadioButton() {
         return precRelOrRadioButton;
     }
 
-    public JButton getRemoveMassButton() {
-        return removeMassButton;
+    public JButton getRemoveMzButton() {
+        return removeMzButton;
     }
 
-    public JButton getRemovePrecRelMassButton() {
-        return removePrecRelMassButton;
+    public JButton getRemovePrecRelMzButton() {
+        return removePrecRelMzButton;
     }
 
     public JTextField getWinsorConstantTextField() {
@@ -124,27 +124,27 @@ public class MassFilterDialog extends javax.swing.JDialog {
         winsorConvergenceCriterionTextField = new javax.swing.JTextField();
         winsorOutlierLimitLabel = new javax.swing.JLabel();
         winsorOutlierLimitTextField = new javax.swing.JTextField();
-        massFilterPanel = new javax.swing.JPanel();
-        massFilterScrollPane = new javax.swing.JScrollPane();
-        massFilterList = new javax.swing.JList();
-        addMassLabel = new javax.swing.JLabel();
-        addMassTextField = new javax.swing.JTextField();
-        addMassButton = new javax.swing.JButton();
-        removeMassButton = new javax.swing.JButton();
-        massToleranceLabel = new javax.swing.JLabel();
-        massToleranceTextField = new javax.swing.JTextField();
+        mzFilterPanel = new javax.swing.JPanel();
+        mzFilterScrollPane = new javax.swing.JScrollPane();
+        mzFilterList = new javax.swing.JList();
+        addMzLabel = new javax.swing.JLabel();
+        addMzTextField = new javax.swing.JTextField();
+        addMzButton = new javax.swing.JButton();
+        removeMzButton = new javax.swing.JButton();
+        mzToleranceLabel = new javax.swing.JLabel();
+        mzToleranceTextField = new javax.swing.JTextField();
         filterTypeLabel = new javax.swing.JLabel();
         andRadioButton = new javax.swing.JRadioButton();
         orRadioButton = new javax.swing.JRadioButton();
-        precRelMassFilterPanel = new javax.swing.JPanel();
-        precRelMassFilterScrollPane = new javax.swing.JScrollPane();
-        precRelMassFilterList = new javax.swing.JList();
-        addPrecRelMassLabel = new javax.swing.JLabel();
-        addPrecRelMassTextField = new javax.swing.JTextField();
-        addPrecRelMassButton = new javax.swing.JButton();
-        removePrecRelMassButton = new javax.swing.JButton();
-        precRelMassToleranceLabel = new javax.swing.JLabel();
-        precRelMassToleranceTextField = new javax.swing.JTextField();
+        precRelMzFilterPanel = new javax.swing.JPanel();
+        precRelMzFilterScrollPane = new javax.swing.JScrollPane();
+        precRelMzFilterList = new javax.swing.JList();
+        addPrecRelMzLabel = new javax.swing.JLabel();
+        addPrecRelMzTextField = new javax.swing.JTextField();
+        addPrecRelMzButton = new javax.swing.JButton();
+        removePrecRelMzButton = new javax.swing.JButton();
+        precRelMzToleranceLabel = new javax.swing.JLabel();
+        precRelMzToleranceTextField = new javax.swing.JTextField();
         precRelFilterTypeLabel = new javax.swing.JLabel();
         precRelAndRadioButton = new javax.swing.JRadioButton();
         precRelOrRadioButton = new javax.swing.JRadioButton();
@@ -218,27 +218,27 @@ public class MassFilterDialog extends javax.swing.JDialog {
 
         FilteSettingsTabbedPane.addTab("Noise filter settings", noiseFilterPanel);
 
-        massFilterPanel.setOpaque(false);
+        mzFilterPanel.setOpaque(false);
 
-        massFilterScrollPane.setViewportView(massFilterList);
+        mzFilterScrollPane.setViewportView(mzFilterList);
 
-        addMassLabel.setText("Mass");
+        addMzLabel.setText("M/z");
 
-        addMassTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+        addMzTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 
-        addMassButton.setText("add");
-        addMassButton.setMaximumSize(new java.awt.Dimension(97, 23));
-        addMassButton.setMinimumSize(new java.awt.Dimension(97, 23));
-        addMassButton.setPreferredSize(new java.awt.Dimension(97, 23));
+        addMzButton.setText("add");
+        addMzButton.setMaximumSize(new java.awt.Dimension(97, 23));
+        addMzButton.setMinimumSize(new java.awt.Dimension(97, 23));
+        addMzButton.setPreferredSize(new java.awt.Dimension(97, 23));
 
-        removeMassButton.setText("remove");
-        removeMassButton.setMaximumSize(new java.awt.Dimension(97, 23));
-        removeMassButton.setMinimumSize(new java.awt.Dimension(97, 23));
-        removeMassButton.setPreferredSize(new java.awt.Dimension(97, 23));
+        removeMzButton.setText("remove");
+        removeMzButton.setMaximumSize(new java.awt.Dimension(97, 23));
+        removeMzButton.setMinimumSize(new java.awt.Dimension(97, 23));
+        removeMzButton.setPreferredSize(new java.awt.Dimension(97, 23));
 
-        massToleranceLabel.setText("Mass tolerance");
+        mzToleranceLabel.setText("M/z tolerance");
 
-        massToleranceTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+        mzToleranceTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 
         filterTypeLabel.setText("Filter type");
 
@@ -248,27 +248,27 @@ public class MassFilterDialog extends javax.swing.JDialog {
         filterTypeRadioButtonGroup.add(orRadioButton);
         orRadioButton.setText("or");
 
-        javax.swing.GroupLayout massFilterPanelLayout = new javax.swing.GroupLayout(massFilterPanel);
-        massFilterPanel.setLayout(massFilterPanelLayout);
-        massFilterPanelLayout.setHorizontalGroup(
-            massFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(massFilterPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout mzFilterPanelLayout = new javax.swing.GroupLayout(mzFilterPanel);
+        mzFilterPanel.setLayout(mzFilterPanelLayout);
+        mzFilterPanelLayout.setHorizontalGroup(
+            mzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mzFilterPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(massFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(massFilterPanelLayout.createSequentialGroup()
-                        .addComponent(massToleranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(mzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(mzFilterPanelLayout.createSequentialGroup()
+                        .addComponent(mzToleranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(massToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(massFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(massFilterPanelLayout.createSequentialGroup()
-                        .addComponent(addMassLabel)
+                        .addComponent(mzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(mzFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(mzFilterPanelLayout.createSequentialGroup()
+                        .addComponent(addMzLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addMassTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(massFilterPanelLayout.createSequentialGroup()
-                        .addComponent(addMassButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addMzTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mzFilterPanelLayout.createSequentialGroup()
+                        .addComponent(addMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(removeMassButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(massFilterPanelLayout.createSequentialGroup()
+                        .addComponent(removeMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mzFilterPanelLayout.createSequentialGroup()
                         .addComponent(filterTypeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(andRadioButton)
@@ -276,54 +276,54 @@ public class MassFilterDialog extends javax.swing.JDialog {
                         .addComponent(orRadioButton)))
                 .addContainerGap(154, Short.MAX_VALUE))
         );
-        massFilterPanelLayout.setVerticalGroup(
-            massFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(massFilterPanelLayout.createSequentialGroup()
+        mzFilterPanelLayout.setVerticalGroup(
+            mzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mzFilterPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(massFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(massToleranceLabel)
-                    .addComponent(massToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(mzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mzToleranceLabel)
+                    .addComponent(mzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(massFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mzFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(massFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addMassLabel)
-                    .addComponent(addMassTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(mzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addMzLabel)
+                    .addComponent(addMzTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(massFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addMassButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(removeMassButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(mzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(massFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(filterTypeLabel)
                     .addComponent(andRadioButton)
                     .addComponent(orRadioButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        FilteSettingsTabbedPane.addTab("Mass ratio filter settings", massFilterPanel);
+        FilteSettingsTabbedPane.addTab("M/z ratio filter settings", mzFilterPanel);
 
-        precRelMassFilterPanel.setOpaque(false);
+        precRelMzFilterPanel.setOpaque(false);
 
-        precRelMassFilterScrollPane.setViewportView(precRelMassFilterList);
+        precRelMzFilterScrollPane.setViewportView(precRelMzFilterList);
 
-        addPrecRelMassLabel.setText("Mass");
+        addPrecRelMzLabel.setText("M/z");
 
-        addPrecRelMassTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+        addPrecRelMzTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 
-        addPrecRelMassButton.setText("add");
-        addPrecRelMassButton.setMaximumSize(new java.awt.Dimension(97, 23));
-        addPrecRelMassButton.setMinimumSize(new java.awt.Dimension(97, 23));
-        addPrecRelMassButton.setPreferredSize(new java.awt.Dimension(97, 23));
+        addPrecRelMzButton.setText("add");
+        addPrecRelMzButton.setMaximumSize(new java.awt.Dimension(97, 23));
+        addPrecRelMzButton.setMinimumSize(new java.awt.Dimension(97, 23));
+        addPrecRelMzButton.setPreferredSize(new java.awt.Dimension(97, 23));
 
-        removePrecRelMassButton.setText("remove");
-        removePrecRelMassButton.setMaximumSize(new java.awt.Dimension(97, 23));
-        removePrecRelMassButton.setMinimumSize(new java.awt.Dimension(97, 23));
-        removePrecRelMassButton.setPreferredSize(new java.awt.Dimension(97, 23));
+        removePrecRelMzButton.setText("remove");
+        removePrecRelMzButton.setMaximumSize(new java.awt.Dimension(97, 23));
+        removePrecRelMzButton.setMinimumSize(new java.awt.Dimension(97, 23));
+        removePrecRelMzButton.setPreferredSize(new java.awt.Dimension(97, 23));
 
-        precRelMassToleranceLabel.setText("Mass tolerance");
+        precRelMzToleranceLabel.setText("M/z tolerance");
 
-        precRelMassToleranceTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+        precRelMzToleranceTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 
         precRelFilterTypeLabel.setText("Filter type");
 
@@ -333,27 +333,27 @@ public class MassFilterDialog extends javax.swing.JDialog {
         filterTypeRadioButtonGroup.add(precRelOrRadioButton);
         precRelOrRadioButton.setText("or");
 
-        javax.swing.GroupLayout precRelMassFilterPanelLayout = new javax.swing.GroupLayout(precRelMassFilterPanel);
-        precRelMassFilterPanel.setLayout(precRelMassFilterPanelLayout);
-        precRelMassFilterPanelLayout.setHorizontalGroup(
-            precRelMassFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(precRelMassFilterPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout precRelMzFilterPanelLayout = new javax.swing.GroupLayout(precRelMzFilterPanel);
+        precRelMzFilterPanel.setLayout(precRelMzFilterPanelLayout);
+        precRelMzFilterPanelLayout.setHorizontalGroup(
+            precRelMzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(precRelMzFilterPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(precRelMassFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(precRelMassFilterPanelLayout.createSequentialGroup()
-                        .addComponent(precRelMassToleranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(precRelMzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(precRelMzFilterPanelLayout.createSequentialGroup()
+                        .addComponent(precRelMzToleranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(precRelMassToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(precRelMassFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(precRelMassFilterPanelLayout.createSequentialGroup()
-                        .addComponent(addPrecRelMassLabel)
+                        .addComponent(precRelMzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(precRelMzFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(precRelMzFilterPanelLayout.createSequentialGroup()
+                        .addComponent(addPrecRelMzLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addPrecRelMassTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(precRelMassFilterPanelLayout.createSequentialGroup()
-                        .addComponent(addPrecRelMassButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addPrecRelMzTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(precRelMzFilterPanelLayout.createSequentialGroup()
+                        .addComponent(addPrecRelMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(removePrecRelMassButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(precRelMassFilterPanelLayout.createSequentialGroup()
+                        .addComponent(removePrecRelMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(precRelMzFilterPanelLayout.createSequentialGroup()
                         .addComponent(precRelFilterTypeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(precRelAndRadioButton)
@@ -361,32 +361,32 @@ public class MassFilterDialog extends javax.swing.JDialog {
                         .addComponent(precRelOrRadioButton)))
                 .addContainerGap(154, Short.MAX_VALUE))
         );
-        precRelMassFilterPanelLayout.setVerticalGroup(
-            precRelMassFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(precRelMassFilterPanelLayout.createSequentialGroup()
+        precRelMzFilterPanelLayout.setVerticalGroup(
+            precRelMzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(precRelMzFilterPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(precRelMassFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(precRelMassToleranceLabel)
-                    .addComponent(precRelMassToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(precRelMzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(precRelMzToleranceLabel)
+                    .addComponent(precRelMzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(precRelMassFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(precRelMzFilterScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(precRelMassFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addPrecRelMassLabel)
-                    .addComponent(addPrecRelMassTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(precRelMzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addPrecRelMzLabel)
+                    .addComponent(addPrecRelMzTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(precRelMassFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addPrecRelMassButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(removePrecRelMassButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(precRelMzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addPrecRelMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removePrecRelMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(precRelMassFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(precRelMzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(precRelFilterTypeLabel)
                     .addComponent(precRelAndRadioButton)
                     .addComponent(precRelOrRadioButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        FilteSettingsTabbedPane.addTab("Precursor relative mass ratio filter settings", precRelMassFilterPanel);
+        FilteSettingsTabbedPane.addTab("Precursor relative m/z ratio filter settings", precRelMzFilterPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -408,33 +408,33 @@ public class MassFilterDialog extends javax.swing.JDialog {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane FilteSettingsTabbedPane;
-    private javax.swing.JButton addMassButton;
-    private javax.swing.JLabel addMassLabel;
-    private javax.swing.JTextField addMassTextField;
-    private javax.swing.JButton addPrecRelMassButton;
-    private javax.swing.JLabel addPrecRelMassLabel;
-    private javax.swing.JTextField addPrecRelMassTextField;
+    private javax.swing.JButton addMzButton;
+    private javax.swing.JLabel addMzLabel;
+    private javax.swing.JTextField addMzTextField;
+    private javax.swing.JButton addPrecRelMzButton;
+    private javax.swing.JLabel addPrecRelMzLabel;
+    private javax.swing.JTextField addPrecRelMzTextField;
     private javax.swing.JRadioButton andRadioButton;
     private javax.swing.JLabel filterTypeLabel;
     private javax.swing.ButtonGroup filterTypeRadioButtonGroup;
-    private javax.swing.JList massFilterList;
-    private javax.swing.JPanel massFilterPanel;
-    private javax.swing.JScrollPane massFilterScrollPane;
-    private javax.swing.JLabel massToleranceLabel;
-    private javax.swing.JTextField massToleranceTextField;
+    private javax.swing.JList mzFilterList;
+    private javax.swing.JPanel mzFilterPanel;
+    private javax.swing.JScrollPane mzFilterScrollPane;
+    private javax.swing.JLabel mzToleranceLabel;
+    private javax.swing.JTextField mzToleranceTextField;
     private javax.swing.JPanel noiseFilterPanel;
     private javax.swing.JRadioButton orRadioButton;
     private javax.swing.JRadioButton precRelAndRadioButton;
     private javax.swing.JLabel precRelFilterTypeLabel;
     private javax.swing.ButtonGroup precRelFilterTypeRadioButtonGroup;
-    private javax.swing.JList precRelMassFilterList;
-    private javax.swing.JPanel precRelMassFilterPanel;
-    private javax.swing.JScrollPane precRelMassFilterScrollPane;
-    private javax.swing.JLabel precRelMassToleranceLabel;
-    private javax.swing.JTextField precRelMassToleranceTextField;
+    private javax.swing.JList precRelMzFilterList;
+    private javax.swing.JPanel precRelMzFilterPanel;
+    private javax.swing.JScrollPane precRelMzFilterScrollPane;
+    private javax.swing.JLabel precRelMzToleranceLabel;
+    private javax.swing.JTextField precRelMzToleranceTextField;
     private javax.swing.JRadioButton precRelOrRadioButton;
-    private javax.swing.JButton removeMassButton;
-    private javax.swing.JButton removePrecRelMassButton;
+    private javax.swing.JButton removeMzButton;
+    private javax.swing.JButton removePrecRelMzButton;
     private javax.swing.JLabel winsorConstantLabel;
     private javax.swing.JTextField winsorConstantTextField;
     private javax.swing.JLabel winsorConvergenceCriterionLabel;

@@ -34,38 +34,37 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
 
         TreeSet<Double> sortedKeys = new TreeSet<Double>(spectrum.getPeakMap().keySet());
         //outer loop
-        for (Double outerMass : sortedKeys) {
+        for (Double outerMz : sortedKeys) {
             TreeMap<Double, PeakBin> peakBins = new TreeMap<Double, PeakBin>();
             initPeakBins(peakBins, floor, ceiling, binSize);
             //inner loop            
-            for (Double innerMass : sortedKeys) {
-                int charge = spectrum.getPrecursor().getPossibleCharges().get(0).value;
-                double massDelta = (innerMass * charge) - (outerMass * charge);                
-                //check if mass delta value lies within the bins floor and ceiling
-                if ((floor <= massDelta) && (massDelta < ceiling)) {
+            for (Double innerMz : sortedKeys) {                               
+                double mzDelta = innerMz - outerMz;                
+                //check if m/z delta value lies within the bins floor and ceiling
+                if ((floor <= mzDelta) && (mzDelta < ceiling)) {
                     //add to peak bins
                     //addToPeakBins(peakBins, massDelta, spectrum.getPeakMap().get(innerMass).intensity / spectrum.getTotalIntensity());
-                    addToPeakBins(peakBins, massDelta, Math.sqrt(spectrum.getPeakMap().get(innerMass).intensity * spectrum.getPeakMap().get(outerMass).intensity) / spectrum.getTotalIntensity());
-                } else if (massDelta >= ceiling) {
+                    addToPeakBins(peakBins, mzDelta, Math.sqrt(spectrum.getPeakMap().get(innerMz).intensity * spectrum.getPeakMap().get(outerMz).intensity) / spectrum.getTotalIntensity());
+                } else if (mzDelta >= ceiling) {
                     break;
                 }
             }
             //add peak bins to map
-            peakBinsMap.put(outerMass, peakBins);
+            peakBinsMap.put(outerMz, peakBins);
         }
 
         return peakBinsMap;
     }
 
     /**
-     * Add a mass delta to the peakBins in the correct bin
+     * Add a m/z delta to the peakBins in the correct bin
      *
      * @param peakBins the peak bins map
-     * @param massDelta the mass delta
+     * @param mzDelta the m/z delta
      * @param intensity the intensity
      */
-    private void addToPeakBins(TreeMap<Double, PeakBin> peakBins, double massDelta, double intensity) {
-        Double key = peakBins.floorKey(massDelta);
+    private void addToPeakBins(TreeMap<Double, PeakBin> peakBins, double mzDelta, double intensity) {
+        Double key = peakBins.floorKey(mzDelta);
         PeakBin bin = peakBins.get(key);
         bin.addPeakCount();
         bin.addIntensity(intensity);
