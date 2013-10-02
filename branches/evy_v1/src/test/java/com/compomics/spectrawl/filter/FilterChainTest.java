@@ -5,8 +5,8 @@ import com.compomics.spectrawl.logic.filter.FilterChain;
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.logic.filter.impl.FilterChainImpl;
-import com.compomics.spectrawl.logic.filter.impl.BasicMassDeltaFilter;
-import com.compomics.spectrawl.logic.filter.impl.BasicMassFilter;
+import com.compomics.spectrawl.logic.filter.impl.BasicMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.BasicMzFilter;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
@@ -88,11 +88,11 @@ public class FilterChainTest {
         //add 2 filters to the first two filter chains
         List<Double> mzRatioFilterValues = new ArrayList<Double>();
         mzRatioFilterValues.add(230D);
-        Filter<SpectrumImpl> mzRatioFilter = new BasicMassFilter(0.5, mzRatioFilterValues);
+        Filter<SpectrumImpl> mzRatioFilter = new BasicMzFilter(0.5, mzRatioFilterValues);
         List<Double> filterValues = new ArrayList<Double>();
         filterValues.add(120D);
         filterValues.add(200D);
-        Filter<SpectrumImpl> binFilter = new BasicMassDeltaFilter(0.8, filterValues);
+        Filter<SpectrumImpl> binFilter = new BasicMzDeltaFilter(0.8, filterValues);
 
         andFilterChain.addFilter(mzRatioFilter);
         orFilterChain.addFilter(mzRatioFilter);

@@ -3,7 +3,7 @@ package com.compomics.spectrawl.filter;
 import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.impl.BasicMassDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.BasicMzDeltaFilter;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
@@ -61,60 +61,14 @@ public class BasicMassDeltaFilterTest {
         possibleCharges.add(new Charge(Charge.PLUS, 1));
         Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum_1.setPrecursor(precursor);
-        spectrum_1.setPeakList(peaks);
-
-        peaks = new HashMap<Double, Peak>();
-        peak = new Peak(100D / 2, 70D);
-        peaks.put(100D / 2, peak);
-        peak = new Peak(220.54 / 2, 30D);
-        peaks.put(220.54 / 2, peak);
-        peak = new Peak(220.5 / 2, 40D);
-        peaks.put(220.5 / 2, peak);
-        peak = new Peak(230D / 2, 100D);
-        peaks.put(230D / 2, peak);
-        peak = new Peak(300D / 2, 100D);
-        peaks.put(300D / 2, peak);
-        peak = new Peak(420.6 / 2, 100D);
-        peaks.put(420.6 / 2, peak);
-
-        SpectrumImpl spectrum_2 = new SpectrumImpl("2");
-        possibleCharges = new ArrayList<Charge>();
-        possibleCharges.add(new Charge(Charge.PLUS, 2));
-        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
-        spectrum_2.setPrecursor(precursor);
-        spectrum_2.setPeakList(peaks);
-
-        peaks = new HashMap<Double, Peak>();
-        peak = new Peak(100D / 3, 70D);
-        peaks.put(100D / 3, peak);
-        peak = new Peak(220.54 / 3, 30D);
-        peaks.put(220.54 / 3, peak);
-        peak = new Peak(220.5 / 3, 40D);
-        peaks.put(220.5 / 3, peak);
-        peak = new Peak(230D / 3, 100D);
-        peaks.put(230D / 3, peak);
-        peak = new Peak(300D / 3, 100D);
-        peaks.put(300D / 3, peak);
-        peak = new Peak(420.6 / 3, 100D);
-        peaks.put(420.6 / 3, peak);
-
-        SpectrumImpl spectrum_3 = new SpectrumImpl("3");
-        possibleCharges = new ArrayList<Charge>();
-        possibleCharges.add(new Charge(Charge.PLUS, 3));
-        precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
-        spectrum_3.setPrecursor(precursor);
-        spectrum_3.setPeakList(peaks);
+        spectrum_1.setPeakList(peaks);        
 
         //bin the spectra        
         spectrumBinner.binSpectrum(spectrum_1, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
-        spectrumBinner.binSpectrum(spectrum_2, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
-        spectrumBinner.binSpectrum(spectrum_3, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
 
         //add to experiment
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
         spectra.add(spectrum_1);
-        spectra.add(spectrum_2);
-        spectra.add(spectrum_3);
 
         experiment = new Experiment("1");
         experiment.setSpectra(spectra);
@@ -122,29 +76,16 @@ public class BasicMassDeltaFilterTest {
         //bin the experiment
         experimentBinner.binExperiment(experiment);
     }
-
-    /**
-     * Test for spectra with charge 1, 2 and 3. The spectra come from the same
-     * precursor but with different charge. So the 3 spectra should all pass the
-     * same filter.
-     */
+    
     @Test
     public void testPassesFilter() {
         List<Double> filterValues = new ArrayList<Double>();
         filterValues.add(120D);
         filterValues.add(200D);
-        Filter<SpectrumImpl> filter = new BasicMassDeltaFilter(0.3, filterValues);
+        Filter<SpectrumImpl> filter = new BasicMzDeltaFilter(0.3, filterValues);
 
         SpectrumImpl spectrum1 = experiment.getSpectra().get(0);
         assertTrue(filter.passesFilter(spectrum1, false));
-        assertFalse(filter.passesFilter(spectrum1, true));
-        
-        SpectrumImpl spectrum2 = experiment.getSpectra().get(1);
-        assertTrue(filter.passesFilter(spectrum2, false));
-        assertFalse(filter.passesFilter(spectrum2, true));
-        
-        SpectrumImpl spectrum3 = experiment.getSpectra().get(2);
-        assertTrue(filter.passesFilter(spectrum3, false));
-        assertFalse(filter.passesFilter(spectrum3, true));
+        assertFalse(filter.passesFilter(spectrum1, true));                
     }
 }

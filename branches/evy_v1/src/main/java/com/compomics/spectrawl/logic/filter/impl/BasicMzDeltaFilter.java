@@ -7,25 +7,25 @@ import java.util.List;
 /**
  * This filter looks for the presence of given mass delta values in a spectrum.
  */
-public class BasicMassDeltaFilter implements Filter<SpectrumImpl> {
+public class BasicMzDeltaFilter implements Filter<SpectrumImpl> {
 
     private double intensityThreshold;
-    private List<Double> massDeltaFilterValues;
+    private List<Double> mzDeltaFilterValues;
 
-    public BasicMassDeltaFilter() {
+    public BasicMzDeltaFilter() {
     }
 
-    public BasicMassDeltaFilter(double intensityThreshold, List<Double> massDeltaFilterValues) {
+    public BasicMzDeltaFilter(double intensityThreshold, List<Double> massDeltaFilterValues) {
         this.intensityThreshold = intensityThreshold;
-        this.massDeltaFilterValues = massDeltaFilterValues;
+        this.mzDeltaFilterValues = massDeltaFilterValues;
     }
 
-    public List<Double> getMassDeltaFilterValues() {
-        return massDeltaFilterValues;
+    public List<Double> getMzDeltaFilterValues() {
+        return mzDeltaFilterValues;
     }
 
-    public void setMassDeltaFilterValues(List<Double> massDeltaFilterValues) {
-        this.massDeltaFilterValues = massDeltaFilterValues;
+    public void setMzDeltaFilterValues(List<Double> massDeltaFilterValues) {
+        this.mzDeltaFilterValues = massDeltaFilterValues;
     }
 
     public double getIntensityThreshold() {
@@ -40,10 +40,8 @@ public class BasicMassDeltaFilter implements Filter<SpectrumImpl> {
     public boolean passesFilter(SpectrumImpl spectrum, boolean doInvert) {
         boolean passesFilter = true;
 
-        for (Double massDeltaFilterValue : massDeltaFilterValues) {
-            //take the charge of the spectrum into account
-            double chargeAdjustedFilterValue = massDeltaFilterValue;
-            Double key = spectrum.getBins().floorKey(chargeAdjustedFilterValue);
+        for (Double mzDeltaFilterValue : mzDeltaFilterValues) {
+            Double key = spectrum.getBins().floorKey(mzDeltaFilterValue);
             //the filter should fail if the key can't be found (is null) 
             //or the intensity in the found spectrum bin is lower than the threshold
             if (key == null || spectrum.getBins().get(key).getIntensitySum() < intensityThreshold) {

@@ -28,8 +28,8 @@
     
     <bean id="experimentBinner" class="com.compomics.spectrawl.logic.bin.impl.ExperimentBinnerImpl"/>                     
     
-    <bean id="fixedCombMassDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.FixedCombMassDeltaFilter"/>                     
+    <bean id="fixedCombMzDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.FixedCombMzDeltaFilter"/>                     
     
-    <bean id="variableCombMassDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.VariableCombMassDeltaFilter"/>                     
+    <bean id="variableCombMzDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.VariableCombMzDeltaFilter"/>                     
                            
 </beans>
