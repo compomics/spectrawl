@@ -142,8 +142,17 @@ public class ResultController {
         //create intensity chart
         JFreeChart intensitiesChart = ChartFactory.createBarChart("experiment bins", "bin", "relative intensity", intensitiesCategoryDataset, PlotOrientation.VERTICAL, true, true, false);
         CategoryPlot intensitiesPlot = (CategoryPlot) intensitiesChart.getPlot();
-        CategoryAxis xAxis = (CategoryAxis) intensitiesPlot.getDomainAxis();
+        CategoryAxis xAxis = (CategoryAxis) intensitiesPlot.getDomainAxis();        
         xAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
+        //set labels invisible for clarity
+        int counter = 0;
+        int divider = (experiment.getBins().size() > 100) ? 10 : 5;
+        for (Double floorBin : experiment.getBins().keySet()) {
+            if (counter % divider != 0) {
+                xAxis.setTickLabelPaint(floorBin.toString(), new Color(0, 0, 0, 0));
+            }
+            counter++;
+        }
         intensitiesPlot.setBackgroundPaint(Color.WHITE);
         intensitiesPlot.setOutlineVisible(false);
         GuiUtils.setShadowVisible(intensitiesChart, false);
