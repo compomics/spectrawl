@@ -20,7 +20,8 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
-        this.getContentPane().setBackground(new Color(255, 255, 255));
+        
+        this.getContentPane().setBackground(new Color(255, 255, 255));        
         setLocationRelativeTo(null);
         setExtendedState(Frame.MAXIMIZED_BOTH);
         setVisible(true);
@@ -58,8 +59,8 @@ public class MainFrame extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
+        mainSplitPane = new javax.swing.JSplitPane();
         experimentLoaderParentPanel = new javax.swing.JPanel();
         experimentBinsParentPanel = new javax.swing.JPanel();
         menuBar = new javax.swing.JMenuBar();
@@ -76,34 +77,19 @@ public class MainFrame extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(10, 10));
         setPreferredSize(new java.awt.Dimension(900, 700));
-        java.awt.GridBagLayout layout = new java.awt.GridBagLayout();
-        layout.columnWidths = new int[] {0, 5, 0};
-        layout.rowHeights = new int[] {0, 5, 0};
-        getContentPane().setLayout(layout);
+
+        mainSplitPane.setDividerLocation(220);
+        mainSplitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         experimentLoaderParentPanel.setBackground(new java.awt.Color(255, 255, 255));
         experimentLoaderParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         experimentLoaderParentPanel.setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.7;
-        gridBagConstraints.weighty = 0.3;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 0, 0);
-        getContentPane().add(experimentLoaderParentPanel, gridBagConstraints);
+        mainSplitPane.setTopComponent(experimentLoaderParentPanel);
 
         experimentBinsParentPanel.setBackground(new java.awt.Color(255, 255, 255));
         experimentBinsParentPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         experimentBinsParentPanel.setLayout(new java.awt.GridBagLayout());
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.7;
-        gridBagConstraints.weighty = 0.7;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 5, 0);
-        getContentPane().add(experimentBinsParentPanel, gridBagConstraints);
+        mainSplitPane.setBottomComponent(experimentBinsParentPanel);
 
         fileMenu.setText("File");
 
@@ -131,6 +117,23 @@ public class MainFrame extends javax.swing.JFrame {
 
         setJMenuBar(menuBar);
 
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mainSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(mainSplitPane, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -140,6 +143,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel experimentLoaderParentPanel;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu filterMenu;
+    private javax.swing.JSplitPane mainSplitPane;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu mzDeltaFilterMenu;
     private javax.swing.JMenuItem mzDeltaFilterSettingsMenuItem;
