@@ -256,6 +256,34 @@
                     <artifactId>jmol</artifactId>
                     <groupId>niklaas</groupId>
                 </exclusion>
+                <exclusion>
+                    <artifactId>lmjunit</artifactId>
+                    <groupId>lennart</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>statlib</artifactId>
+                    <groupId>lennart</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jfreechart</artifactId>
+                    <groupId>jfree</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>rover</artifactId>
+                    <groupId>com.compomics</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>peptizer</artifactId>
+                    <groupId>com.compomics</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mascotdatfile</artifactId>
+                    <groupId>com.compomics</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>thermo_msf_parser</artifactId>
+                    <groupId>com.compomics</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
 
@@ -279,6 +307,10 @@
                 <exclusion>
                     <artifactId>batik-all</artifactId>
                     <groupId>batik</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>jfreechart</artifactId>
+                    <groupId>jfree</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

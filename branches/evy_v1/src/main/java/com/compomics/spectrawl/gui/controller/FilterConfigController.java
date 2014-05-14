@@ -13,6 +13,7 @@ import com.compomics.spectrawl.logic.filter.impl.BasicMzDeltaFilter;
 import com.compomics.spectrawl.logic.filter.impl.BasicMzFilter;
 import com.compomics.spectrawl.logic.filter.impl.FilterChainImpl;
 import com.compomics.spectrawl.logic.filter.impl.FixedCombMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.PrecRelMzFilter;
 import com.compomics.spectrawl.model.FilterParams;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.awt.event.ActionEvent;
@@ -182,25 +183,25 @@ public class FilterConfigController {
             //check filter type
             if (mzFilterDialog.getPrecRelAndRadioButton().isSelected()) {
                 //if the filtertype is "and", add all the values to the same filter                
-                BasicMzFilter basicMzFilter = new BasicMzFilter();
-                basicMzFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getPrecRelMzToleranceTextField().getText()));                
+                PrecRelMzFilter precRelMzFilter = new PrecRelMzFilter();
+                precRelMzFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getPrecRelMzToleranceTextField().getText()));                
                 List<Double> massFilterValues = new ArrayList<Double>();
                 for (Object value : mzFilterListModel.toArray()) {
                     massFilterValues.add((Double) value);
                 }
-                basicMzFilter.setMzFilterValues(massFilterValues);
-                spectrumFilterChain.addFilter(basicMzFilter);
+                precRelMzFilter.setPrecRelMzFilterValues(massFilterValues);
+                spectrumFilterChain.addFilter(precRelMzFilter);
             } else {
                 //if the filtertype is "or", add all the values to the different filters in the same filterchain            
                 FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<SpectrumImpl>();
                 orFilterChain.setFilterChainType(FilterChain.FilterChainType.OR);
                 for (Object value : mzFilterListModel.toArray()) {
-                    BasicMzFilter basicMzFilter = new BasicMzFilter();
-                    basicMzFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getPrecRelMzToleranceTextField().getText()));
-                    List<Double> mzFilterValues = new ArrayList<Double>();
-                    mzFilterValues.add((Double) value);
-                    basicMzFilter.setMzFilterValues(mzFilterValues);
-                    orFilterChain.addFilter(basicMzFilter);
+                    PrecRelMzFilter precRelMzFilter = new PrecRelMzFilter();
+                    precRelMzFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getPrecRelMzToleranceTextField().getText()));
+                    List<Double> massFilterValues = new ArrayList<Double>();
+                    massFilterValues.add((Double) value);
+                    precRelMzFilter.setPrecRelMzFilterValues(massFilterValues);
+                    orFilterChain.addFilter(precRelMzFilter);
                 }
                 spectrumFilterChain.addFilter(orFilterChain);
             }
@@ -246,7 +247,6 @@ public class FilterConfigController {
         }
 
         //update VariableCombMzDeltaFilter
-
     }
 
     /**
