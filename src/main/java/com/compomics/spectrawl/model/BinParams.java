@@ -8,7 +8,7 @@ import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 public enum BinParams {
     

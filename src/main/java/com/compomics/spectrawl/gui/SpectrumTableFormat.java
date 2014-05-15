@@ -4,13 +4,12 @@ import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.gui.AdvancedTableFormat;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.Comparator;
-import org.apache.log4j.Logger;
 
 /**
  *
  * @author Niels Hulstaert
  */
-public class SpectrumTableFormat implements AdvancedTableFormat<Object> {
+public class SpectrumTableFormat implements AdvancedTableFormat<SpectrumImpl> {
 
     private static final String[] columnNames = {"ID", "File name", "Precursor M/Z", "Charge"};
     public static final int SPECTRUM_ID = 0;
@@ -50,8 +49,7 @@ public class SpectrumTableFormat implements AdvancedTableFormat<Object> {
     }
 
     @Override
-    public Object getColumnValue(Object baseObject, int column) {
-        SpectrumImpl spectrum = (SpectrumImpl) baseObject;
+    public Object getColumnValue(SpectrumImpl spectrum, int column) {
         switch (column) {
             case SPECTRUM_ID:
                 return spectrum.getSpectrumId();

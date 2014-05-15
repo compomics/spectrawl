@@ -27,7 +27,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 @Service("mgfExperimentService")
 public class MgfExperimentServiceImpl implements MgfExperimentService {

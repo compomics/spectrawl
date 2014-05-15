@@ -32,7 +32,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 @Component("experimentLoaderController")
 public class ExperimentLoaderController {

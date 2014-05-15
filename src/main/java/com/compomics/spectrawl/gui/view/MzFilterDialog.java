@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 public class MzFilterDialog extends javax.swing.JDialog {
 

@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 @Component("mainController")
 public class MainController implements ActionListener {
@@ -113,7 +113,7 @@ public class MainController implements ActionListener {
             experimentLoaderController.loadExperiment();
         } else {
             validationMessages.add(0, "Validation errors found:");
-            eventBus.post(new MessageEvent("Validation errors", validationMessages, JOptionPane.WARNING_MESSAGE));
+            eventBus.post(new MessageEvent("validation errors", validationMessages, JOptionPane.WARNING_MESSAGE));
         }
     }
 

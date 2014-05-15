@@ -9,7 +9,7 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 public class MzDeltaFilterDialog extends javax.swing.JDialog {
 

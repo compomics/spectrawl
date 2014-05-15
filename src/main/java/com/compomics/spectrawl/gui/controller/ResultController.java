@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 @Component("resultController")
 public class ResultController {

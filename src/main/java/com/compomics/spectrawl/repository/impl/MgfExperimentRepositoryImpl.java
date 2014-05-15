@@ -26,7 +26,7 @@ import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 @Repository("mgfExperimentRepository")
 public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
