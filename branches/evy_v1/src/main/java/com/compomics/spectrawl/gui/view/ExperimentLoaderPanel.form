@@ -30,8 +30,8 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="binConfigurationPanel" pref="461" max="32767" attributes="0"/>
-                  <Component id="experimentSelectionTabbedPane" alignment="0" pref="461" max="32767" attributes="0"/>
+                  <Component id="binConfigurationPanel" pref="572" max="32767" attributes="0"/>
+                  <Component id="experimentSelectionTabbedPane" alignment="0" pref="572" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -43,7 +43,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="binConfigurationPanel" min="-2" pref="51" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="experimentSelectionTabbedPane" pref="141" max="32767" attributes="0"/>
+              <Component id="experimentSelectionTabbedPane" pref="207" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -176,7 +176,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace pref="227" max="32767" attributes="0"/>
+                      <EmptySpace pref="338" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="experimentIdLabel" min="-2" max="-2" attributes="0"/>
@@ -199,7 +199,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="loadMsLimsExperimentButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="32" max="32767" attributes="0"/>
+                      <EmptySpace pref="98" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -256,7 +256,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="121" max="32767" attributes="0"/>
                       <Component id="mgfFileLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="mgfFilesListScrollPane" min="-2" pref="243" max="-2" attributes="0"/>
@@ -292,7 +292,7 @@
                                   </Group>
                                   <Component id="mgfFilesListScrollPane" min="-2" pref="87" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="77" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

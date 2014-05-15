@@ -25,7 +25,7 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 public class GuiUtils {
 

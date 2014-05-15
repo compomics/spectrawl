@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 @Component("filterConfigController")
 public class FilterConfigController {

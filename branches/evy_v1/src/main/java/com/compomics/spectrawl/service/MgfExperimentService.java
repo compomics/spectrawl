@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  *
- * @author niels
+ * @author Niels Hulstaert
  */
 public interface MgfExperimentService extends ExperimentService {
         
