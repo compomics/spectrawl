@@ -1,6 +1,8 @@
 package com.compomics.spectrawl.model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -13,8 +15,9 @@ public class Experiment implements Binnable<ExperimentBin> {
 
         MSLIMS, MGF
     }
+
     private String experimentId;
-    private List<SpectrumImpl> spectra;
+    private List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
     private TreeMap<Double, ExperimentBin> experimentBins;
     private int numberOfSpectra;
     private int numberOfFilteredSpectra;
@@ -53,6 +56,29 @@ public class Experiment implements Binnable<ExperimentBin> {
 
     public TreeMap<Double, ExperimentBin> getExperimentBins() {
         return experimentBins;
+    }
+
+    public void addSpectrum(SpectrumImpl spectrum) {
+        spectra.add(spectrum);
+
+        //iterate over bins
+        for (Map.Entry<Double, ExperimentBin> entry : experimentBins.entrySet()) {
+            ExperimentBin experimentBin = entry.getValue();
+            SpectrumBin spectrumBin = spectrum.getBins().get(entry.getKey());
+            experimentBin.addSpectrumBin(spectrumBin);
+        }
+
+        //clear spectrumBins
+        spectrum.getBins().clear();
+    }
+
+    public void calculateQuantiles() {
+        //iterate over bins
+        for (Map.Entry<Double, ExperimentBin> entry : experimentBins.entrySet()) {
+            ExperimentBin experimentBin = entry.getValue();
+
+            experimentBin.calculateQuantiles();
+        }
     }
 
     @Override

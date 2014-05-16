@@ -5,7 +5,6 @@
 package com.compomics.spectrawl.service;
 
 import com.compomics.spectrawl.model.Experiment;
-import com.compomics.spectrawl.repository.MsLimsExperimentRepository;
 import java.util.List;
 
 /**

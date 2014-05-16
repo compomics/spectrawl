@@ -1,13 +1,14 @@
 package com.compomics.spectrawl.service.impl;
 
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.service.MsLimsExperimentService;
-import com.compomics.spectrawl.repository.MsLimsExperimentRepository;
 import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
+import com.compomics.spectrawl.repository.MsLimsExperimentRepository;
+import com.compomics.spectrawl.service.MsLimsExperimentService;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -39,6 +40,8 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
     @Override
     public Experiment loadExperiment(String experimentId) {
         Experiment experiment = new Experiment(experimentId);
+        experiment.initBins();
+
         List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
 
         int numberOfSpectra = msLimsSpectrumRepository.loadSpectraByExperimentId(Long.parseLong(experimentId));
@@ -51,18 +54,23 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
 
         //submit a job for each spectrum
         List<Future<SpectrumImpl>> futureList = new ArrayList<Future<SpectrumImpl>>();
-        for (int i = 0; i < numberOfSpectra ; i++) {
+        for (int i = 0; i < numberOfSpectra; i++) {
             Future<SpectrumImpl> future = taskExecutor.submit(new SpectrumLoader());
             futureList.add(future);
         }
 
-        //run over the list of Futures and
-        for (Future<SpectrumImpl> future : futureList) {
+        //iterate over Futures and remove them when finished
+        Iterator<Future<SpectrumImpl>> iterator = futureList.iterator();
+
+        while (iterator.hasNext()) {
+            Future<SpectrumImpl> future = iterator.next();
             try {
                 SpectrumImpl spectrum = future.get();
                 if (spectrum != null) {
-                    spectra.add(spectrum);
+//                    spectra.add(spectrum);
+                    experiment.addSpectrum(spectrum);
                 }
+                iterator.remove();
             } catch (InterruptedException e) {
                 LOGGER.error(e.getMessage(), e);
             } catch (ExecutionException e) {
@@ -70,17 +78,27 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
             }
         }
 
+//        //run over the list of Futures and
+//        for (Future<SpectrumImpl> future : futureList) {
+//            try {
+//                SpectrumImpl spectrum = future.get();
+//                if (spectrum != null) {
+//                    spectra.add(spectrum);
+//                }
+//            } catch (InterruptedException e) {
+//                LOGGER.error(e.getMessage(), e);
+//            } catch (ExecutionException e) {
+//                LOGGER.error(e.getMessage(), e);
+//            }
+//        }
         //set number of spectra after filtering
         experiment.setNumberOfFilteredSpectra(spectra.size());
 
-        LOGGER.info("done loading experiment with " + spectra.size() + " spectra after filtering");
-
-        //set experiment spectra
-        experiment.setSpectra(spectra);
+        LOGGER.info("done loading experiment with " + spectra.size() + " spectra after filtering");        
 
         return experiment;
     }
-    
+
     @Override
     public Experiment loadExperiment(List<Long> spectrumIds) {
         Experiment experiment = new Experiment("stubExperiment");
@@ -96,7 +114,7 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
 
         //submit a job for each spectrum
         List<Future<SpectrumImpl>> futureList = new ArrayList<Future<SpectrumImpl>>();
-        for (int i = 0; i < numberOfSpectra ; i++) {
+        for (int i = 0; i < numberOfSpectra; i++) {
             Future<SpectrumImpl> future = taskExecutor.submit(new SpectrumLoader());
             futureList.add(future);
         }
@@ -129,14 +147,14 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
     @Override
     public void setDoNoiseFiltering(boolean doNoiseFiltering) {
         msLimsSpectrumRepository.setDoNoiseFiltering(doNoiseFiltering);
-    }    
+    }
 
     private class SpectrumLoader implements Callable<SpectrumImpl> {
 
         @Override
         public SpectrumImpl call() throws Exception {
             SpectrumImpl spectrum = msLimsSpectrumRepository.getSpectrum();
-            //LOGGER.debug("spectrum " + spectrum.getSpectrumId() + " is processed by " + Thread.currentThread().getName());
+            LOGGER.debug("spectrum " + spectrum.getSpectrumId() + " is processed by " + Thread.currentThread().getName());
 
             //bin the spectrum
             spectrumBinner.binSpectrum(spectrum, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
@@ -144,10 +162,10 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
             //add the spectrum to the spectra
             //if the spectrum passes the filter
             if (spectrumFilter.passesFilter(spectrum, Boolean.FALSE)) {
-                //LOGGER.debug("spectrum " + spectrum.getSpectrumId() + " passed the filter.");
+                LOGGER.debug("spectrum " + spectrum.getSpectrumId() + " passed the filter.");
                 return spectrum;
             } else {
-                //LOGGER.debug("spectrum " + spectrum.getSpectrumId() + " didn't pass the filter.");
+                LOGGER.debug("spectrum " + spectrum.getSpectrumId() + " didn't pass the filter.");
                 return null;
             }
         }

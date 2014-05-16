@@ -243,9 +243,14 @@ public class ExperimentLoaderController {
                 LOGGER.info("done loading MGF file(s)");
             }
 
-            //bin experiment
+//            //bin experiment
+//            if (experiment != null) {
+//                experimentBinner.binExperiment(experiment);
+//            }
+            
+            //calculate quantiles
             if (experiment != null) {
-                experimentBinner.binExperiment(experiment);
+                experiment.calculateQuantiles();
             }
 
             return experiment;

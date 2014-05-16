@@ -13,7 +13,6 @@ import com.compomics.spectrawl.util.PeakUtils;
 import com.compomics.util.experiment.massspectrometry.Charge;
 import com.compomics.util.experiment.massspectrometry.Peak;
 import com.compomics.util.experiment.massspectrometry.Precursor;
-import com.compomics.util.experiment.massspectrometry.Spectrum;
 import com.google.common.base.Joiner;
 import java.io.IOException;
 import java.util.ArrayList;
