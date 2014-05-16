@@ -1,7 +1,6 @@
     package com.compomics.spectrawl.logic.bin.impl;
 
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.PeakBin;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.HashMap;
