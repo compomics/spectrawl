@@ -92,9 +92,9 @@ public class MsLimsExperimentServiceImpl implements MsLimsExperimentService {
 //            }
 //        }
         //set number of spectra after filtering
-        experiment.setNumberOfFilteredSpectra(spectra.size());
+        experiment.setNumberOfFilteredSpectra(experiment.getSpectra().size());
 
-        LOGGER.info("done loading experiment with " + spectra.size() + " spectra after filtering");        
+        LOGGER.info("done loading experiment with " + experiment.getSpectra().size() + " spectra after filtering");        
 
         return experiment;
     }
