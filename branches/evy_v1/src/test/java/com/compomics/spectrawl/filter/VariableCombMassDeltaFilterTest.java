@@ -1,6 +1,5 @@
 package com.compomics.spectrawl.filter;
 
-import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.logic.filter.impl.VariableCombMzDeltaFilter;
 import com.compomics.spectrawl.model.BinParams;
@@ -28,13 +27,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:springXMLConfig.xml")
 public class VariableCombMassDeltaFilterTest {
 
+    private Experiment experiment;
     @Autowired
     SpectrumBinner spectrumBinner;
     @Autowired
-    ExperimentBinner experimentBinner;
-    @Autowired
     VariableCombMzDeltaFilter variableCombMzDeltaFilter;
-    private Experiment experiment;
 
     @Before
     public void setUp() {
@@ -74,15 +71,11 @@ public class VariableCombMassDeltaFilterTest {
         //bin the spectra        
         spectrumBinner.binSpectrum(spectrum_1, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
 
-        //add to experiment
-        List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
-        spectra.add(spectrum_1);
-
         experiment = new Experiment("1");
-        experiment.setSpectra(spectra);
+        //add to experiment              
+        experiment.addSpectrum(spectrum_1);
 
-        //bin the experiment
-        experimentBinner.binExperiment(experiment);
+        experiment.calculateQuantiles();
     }
 
     /**

@@ -1,12 +1,7 @@
 package com.compomics.spectrawl.filter;
 
 import com.compomics.spectrawl.logic.filter.Filter;
-import com.compomics.spectrawl.logic.bin.ExperimentBinner;
-import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.impl.BasicMzFilter;
-import com.compomics.spectrawl.logic.filter.impl.PrecRelMzFilter;
-import com.compomics.spectrawl.model.BinParams;
-import com.compomics.spectrawl.model.Experiment;
+import com.compomics.spectrawl.logic.filter.impl.PrecRelMassFilter;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Charge;
 import com.compomics.util.experiment.massspectrometry.Peak;
@@ -20,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -32,11 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:springXMLConfig.xml")
 public class PrecRelMassFilterTest {
 
-    @Autowired
-    SpectrumBinner spectrumBinner;
-    @Autowired
-    ExperimentBinner experimentBinner;
-    private Experiment experiment;
+    private List<SpectrumImpl> spectra;
 
     @Before
     public void setUp() {
@@ -65,18 +55,56 @@ public class PrecRelMassFilterTest {
         spectrum_1.setPrecursor(precursor);
         spectrum_1.setPeakList(peaks);
 
-        //bin the spectra        
-        spectrumBinner.binSpectrum(spectrum_1, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
+        peaks = new HashMap<Double, Peak>();
+        peak = new Peak(100.0 / 2, 70D);
+        peaks.put(100.0 / 2, peak);
+        peak = new Peak(220.54 / 2, 30D);
+        peaks.put(220.54 / 2, peak);
+        peak = new Peak(220.5 / 2, 40D);
+        peaks.put(220.5 / 2, peak);
+        peak = new Peak(230D / 2, 100D);
+        peaks.put(230D / 2, peak);
+        peak = new Peak(300D / 2, 100D);
+        peaks.put(300D / 2, peak);
+        peak = new Peak(420.6 / 2, 100D);
+        peaks.put(420.6 / 2, peak);
+        peak = new Peak(450.6 / 2, 100D);
+        peaks.put(450.6 / 2, peak);
 
-        //add to experiment
-        List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
+        SpectrumImpl spectrum_2 = new SpectrumImpl("2");
+        possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 2));
+        precursor = new Precursor(0.0, 430.6 / 2, 0.0, possibleCharges);
+        spectrum_2.setPrecursor(precursor);
+        spectrum_2.setPeakList(peaks);
+
+        peaks = new HashMap<Double, Peak>();
+        peak = new Peak(100D / 3, 70D);
+        peaks.put(100D / 3, peak);
+        peak = new Peak(220.54 / 3, 30D);
+        peaks.put(220.54 / 3, peak);
+        peak = new Peak(220.5 / 3, 40D);
+        peaks.put(220.5 / 3, peak);
+        peak = new Peak(230D / 3, 100D);
+        peaks.put(230D / 3, peak);
+        peak = new Peak(300D / 3, 100D);
+        peaks.put(300D / 3, peak);
+        peak = new Peak(420.6 / 3, 100D);
+        peaks.put(420.6 / 3, peak);
+        peak = new Peak(450.6 / 3, 100D);
+        peaks.put(450.6 / 3, peak);
+
+        SpectrumImpl spectrum_3 = new SpectrumImpl("3");
+        possibleCharges = new ArrayList<Charge>();
+        possibleCharges.add(new Charge(Charge.PLUS, 3));
+        precursor = new Precursor(0.0, 430.6 / 3, 0.0, possibleCharges);
+        spectrum_3.setPrecursor(precursor);
+        spectrum_3.setPeakList(peaks);
+
+        spectra = new ArrayList<SpectrumImpl>();
         spectra.add(spectrum_1);
-
-        experiment = new Experiment("1");
-        experiment.setSpectra(spectra);
-
-        //bin the experiment
-        experimentBinner.binExperiment(experiment);
+        spectra.add(spectrum_2);
+        spectra.add(spectrum_3);
     }
 
     /**
@@ -89,9 +117,17 @@ public class PrecRelMassFilterTest {
         List<Double> massFilterValues = new ArrayList<Double>();
         massFilterValues.add(-10D);
         massFilterValues.add(20D);
-        Filter<SpectrumImpl> filter = new PrecRelMzFilter(0.5, massFilterValues);
+        Filter<SpectrumImpl> filter = new PrecRelMassFilter(0.5, massFilterValues);
 
-        SpectrumImpl spectrum = experiment.getSpectra().get(0);
+        SpectrumImpl spectrum = spectra.get(0);
+        assertTrue(filter.passesFilter(spectrum, false));
+        assertFalse(filter.passesFilter(spectrum, true));
+
+        spectrum = spectra.get(1);
+        assertTrue(filter.passesFilter(spectrum, false));
+        assertFalse(filter.passesFilter(spectrum, true));
+
+        spectrum = spectra.get(2);
         assertTrue(filter.passesFilter(spectrum, false));
         assertFalse(filter.passesFilter(spectrum, true));
     }

@@ -9,6 +9,7 @@ import java.util.TreeMap;
  * Date: 9/02/12
  * Time: 13:55
  * To change this template use File | Settings | File Templates.
+ * @param <T>
  */
 public interface Binnable<T> {
     

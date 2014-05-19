@@ -23,7 +23,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="500" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="370" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Component id="FilterConfigTabbedPane" alignment="0" max="32767" attributes="0"/>
           </Group>
@@ -62,30 +62,32 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="fixedCombIntThresholdLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="fixedCombIntThresholdTextField" min="-2" pref="99" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="minConsecMzDeltasLabel" max="32767" attributes="0"/>
+                                  <Component id="maxConsecMzDeltasLabel" pref="140" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="maxConsecMzDeltasTextField" max="32767" attributes="0"/>
+                                  <Component id="minConsecMzDeltasTextField" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="mzDeltaLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="mzDeltaTextField" min="-2" pref="99" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Component id="maxConsecMzDeltasLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="maxConsecMzDeltasTextField" min="-2" pref="99" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="minConsecMzDeltasLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="minConsecMzDeltasTextField" min="-2" pref="99" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="fixedCombIntThresholdLabel" max="32767" attributes="0"/>
+                                  <Component id="mzDeltaLabel" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="mzDeltaTextField" pref="201" max="32767" attributes="0"/>
+                                  <Component id="fixedCombIntThresholdTextField" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="236" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -97,22 +99,22 @@
                           <Component id="fixedCombIntThresholdLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="fixedCombIntThresholdTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="mzDeltaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="mzDeltaTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="minConsecMzDeltasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="minConsecMzDeltasTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="maxConsecMzDeltasLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="maxConsecMzDeltasTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="157" max="32767" attributes="0"/>
+                      <EmptySpace pref="162" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -120,7 +122,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="mzDeltaLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/z delta"/>
+                <Property name="text" type="java.lang.String" value="M/Z delta"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="mzDeltaTextField">
@@ -188,25 +190,26 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="varCombMzDeltaFilterScrollPane" pref="345" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="varCombIntThresholdLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="varCombIntThresholdTextField" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="addMzDeltaLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="addMzDeltaTextField" min="-2" pref="110" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="varCombMzDeltaFilterScrollPane" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="addMzDeltaButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="removeMzDeltaButton" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="addMzDeltaLabel" min="-2" pref="91" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="addMzDeltaTextField" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="285" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -218,19 +221,19 @@
                           <Component id="varCombIntThresholdLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="varCombIntThresholdTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="varCombMzDeltaFilterScrollPane" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="varCombMzDeltaFilterScrollPane" pref="178" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="addMzDeltaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="addMzDeltaTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                          <Component id="addMzDeltaLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="removeMzDeltaButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="addMzDeltaButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="54" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -251,7 +254,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="addMzDeltaLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/z delta"/>
+                <Property name="text" type="java.lang.String" value="M/Z delta"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="addMzDeltaTextField">

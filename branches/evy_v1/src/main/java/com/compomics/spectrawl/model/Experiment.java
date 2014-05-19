@@ -24,6 +24,7 @@ public class Experiment implements Binnable<ExperimentBin> {
 
     public Experiment(String experimentId) {
         this.experimentId = experimentId;
+        initBins();
     }
 
     public String getExperimentId() {
@@ -58,6 +59,12 @@ public class Experiment implements Binnable<ExperimentBin> {
         return experimentBins;
     }
 
+    /**
+     * Add a spectrum to the experiment. The spectrum bins are added to the
+     * experiment bins and cleared afterwards.
+     *
+     * @param spectrum
+     */
     public void addSpectrum(SpectrumImpl spectrum) {
         spectra.add(spectrum);
 
@@ -72,6 +79,9 @@ public class Experiment implements Binnable<ExperimentBin> {
         spectrum.getBins().clear();
     }
 
+    /**
+     * Calculate the quantiles for all experiment bins.
+     */
     public void calculateQuantiles() {
         //iterate over bins
         for (Map.Entry<Double, ExperimentBin> entry : experimentBins.entrySet()) {

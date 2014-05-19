@@ -2,13 +2,11 @@ package com.compomics.spectrawl.filter;
 
 import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.logic.filter.FilterChain;
-import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.logic.filter.impl.FilterChainImpl;
 import com.compomics.spectrawl.logic.filter.impl.BasicMzDeltaFilter;
 import com.compomics.spectrawl.logic.filter.impl.BasicMzFilter;
 import com.compomics.spectrawl.model.BinParams;
-import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Charge;
 import com.compomics.util.experiment.massspectrometry.Peak;
@@ -34,11 +32,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:springXMLConfig.xml")
 public class FilterChainTest {
 
+    private SpectrumImpl spectrum;
     @Autowired
-    SpectrumBinner spectrumBinner;
-    @Autowired
-    ExperimentBinner experimentBinner;
-    private Experiment experiment;
+    SpectrumBinner spectrumBinner;    
 
     @Before
     public void setUp() {
@@ -58,25 +54,15 @@ public class FilterChainTest {
         peak = new Peak(420.6, 100D);
         peaks.put(420.6, peak);
 
-        SpectrumImpl spectrum_1 = new SpectrumImpl("1");
+        spectrum = new SpectrumImpl("1");
         ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
         possibleCharges.add(new Charge(Charge.PLUS, 1));
         Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
-        spectrum_1.setPrecursor(precursor);
-        spectrum_1.setPeakList(peaks);
+        spectrum.setPrecursor(precursor);
+        spectrum.setPeakList(peaks);
 
         //bin the spectra        
-        spectrumBinner.binSpectrum(spectrum_1, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
-
-        //add to experiment
-        List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
-        spectra.add(spectrum_1);
-
-        experiment = new Experiment("1");
-        experiment.setSpectra(spectra);
-
-        //bin the experiment
-        experimentBinner.binExperiment(experiment);
+        spectrumBinner.binSpectrum(spectrum, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
     }
 
     @Test
@@ -102,8 +88,6 @@ public class FilterChainTest {
         //add the first two filter chains to the last one
         combinedFilterChain.addFilter(andFilterChain);
         combinedFilterChain.addFilter(orFilterChain);
-
-        SpectrumImpl spectrum = experiment.getSpectra().get(0);
 
         assertFalse(andFilterChain.passesFilter(spectrum, false));
         assertTrue(orFilterChain.passesFilter(spectrum, false));

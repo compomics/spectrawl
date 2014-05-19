@@ -75,7 +75,8 @@ public class ExperimentBin {
     }
 
     /**
-     * After all SpectrumBins have been added, calculate the quantiles.
+     * After all SpectrumBins have been added, calculate the quantiles and clear
+     * the descriptive statistics.
      */
     public void calculateQuantiles() {
         peakCountQuantiles = new Quantiles(peakCountStatistics.getMin(), peakCountStatistics.getPercentile(25),
@@ -89,8 +90,10 @@ public class ExperimentBin {
         clearDescriptiveStatistics();
     }
 
+    /**
+     * Clear the descriptive statistics.
+     */
     private void clearDescriptiveStatistics() {
-        //clear DescriptiveStatistics
         peakCountStatistics.clear();
         intensitySumStatistics.clear();
         highestIntensityStatistics.clear();

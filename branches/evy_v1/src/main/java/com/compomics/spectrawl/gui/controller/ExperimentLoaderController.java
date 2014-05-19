@@ -11,7 +11,6 @@ import com.compomics.spectrawl.gui.event.UnexpectedErrorMessageEvent;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.gui.view.ExperimentLoaderPanel;
-import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.util.io.filefilters.MgfFileFilter;
 import com.google.common.eventbus.EventBus;
 import java.awt.event.ActionEvent;
@@ -57,8 +56,6 @@ public class ExperimentLoaderController {
     private MsLimsExperimentService msLimsExperimentService;
     @Autowired
     private MgfExperimentService mgfExperimentService;
-    @Autowired
-    private ExperimentBinner experimentBinner;
 
     public ExperimentLoaderPanel getExperimentLoaderPanel() {
         return experimentLoaderPanel;

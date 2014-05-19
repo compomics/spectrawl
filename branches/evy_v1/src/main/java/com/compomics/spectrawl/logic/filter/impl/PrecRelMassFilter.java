@@ -9,16 +9,16 @@ import java.util.List;
  * This filter looks for the presence of given M/Z ratio values relative to the
  * precursor mass in a spectrum.
  */
-public class PrecRelMzFilter implements Filter<SpectrumImpl> {
+public class PrecRelMassFilter implements Filter<SpectrumImpl> {
 
     //@TODO: add a name to the filter?
     private double mzTolerance;
     private List<Double> precRelMzFilterValues;
 
-    public PrecRelMzFilter() {
+    public PrecRelMassFilter() {
     }
 
-    public PrecRelMzFilter(double mzTolerance, List<Double> precRelMzFilterValues) {
+    public PrecRelMassFilter(double mzTolerance, List<Double> precRelMzFilterValues) {
         this.mzTolerance = mzTolerance;
         this.precRelMzFilterValues = precRelMzFilterValues;
     }
@@ -57,18 +57,18 @@ public class PrecRelMzFilter implements Filter<SpectrumImpl> {
     }
 
     /**
-     * Check if the m/z value relative to the precursor value is found in the
+     * Check if the mass value relative to the precursor value is found in the
      * spectrum.
      *
      * @param spectrum
-     * @param precRelMzFilterValue
+     * @param precRelMassFilterValue
      * @return
      */
-    private boolean passesPrecRelMzFilterValue(SpectrumImpl spectrum, double precRelMzFilterValue) {
+    private boolean passesPrecRelMzFilterValue(SpectrumImpl spectrum, double precRelMassFilterValue) {
         boolean passesPrecRelMzFilterValue = false;
         for (Peak peak : spectrum.getPeakList()) {
             //@todo consider twice the tolerance or not?
-            if (Math.abs(peak.mz - (spectrum.getPrecursor().getMz() + precRelMzFilterValue)) < mzTolerance) {
+            if (Math.abs(peak.mz - (spectrum.getPrecursor().getMz() + (precRelMassFilterValue / spectrum.getPrecursor().getPossibleCharges().get(0).value))) < mzTolerance) {
                 passesPrecRelMzFilterValue = true;
                 break;
             }
