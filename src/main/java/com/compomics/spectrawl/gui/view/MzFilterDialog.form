@@ -29,7 +29,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="369" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="370" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Component id="FilteSettingsTabbedPane" alignment="0" max="32767" attributes="0"/>
           </Group>
@@ -37,9 +37,9 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="360" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="350" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Component id="FilteSettingsTabbedPane" alignment="0" max="32767" attributes="0"/>
+              <Component id="FilteSettingsTabbedPane" alignment="0" pref="350" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -64,27 +64,22 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="winsorConvergenceCriterionLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="115" max="32767" attributes="0"/>
-                              <Component id="winsorConvergenceCriterionTextField" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="winsorFilterCheckBox" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Component id="winsorFilterCheckBox" min="-2" pref="169" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="winsorConstantLabel" min="-2" pref="169" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="winsorConstantTextField" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="winsorOutlierLimitLabel" min="-2" pref="169" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="winsorOutlierLimitTextField" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="winsorOutlierLimitLabel" max="32767" attributes="0"/>
+                                  <Component id="winsorConvergenceCriterionLabel" pref="202" max="32767" attributes="0"/>
+                                  <Component id="winsorConstantLabel" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="winsorOutlierLimitTextField" alignment="1" pref="133" max="32767" attributes="0"/>
+                                  <Component id="winsorConvergenceCriterionTextField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="winsorConstantTextField" alignment="1" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -111,7 +106,7 @@
                           <Component id="winsorOutlierLimitLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="winsorOutlierLimitTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="157" max="32767" attributes="0"/>
+                      <EmptySpace pref="147" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -120,6 +115,7 @@
             <Component class="javax.swing.JCheckBox" name="winsorFilterCheckBox">
               <Properties>
                 <Property name="text" type="java.lang.String" value="do winsorisation filtering"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="winsorConstantLabel">
@@ -175,8 +171,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="M/z ratio filter settings">
-                <Property name="tabTitle" type="java.lang.String" value="M/z ratio filter settings"/>
+              <JTabbedPaneConstraints tabName="M/Z ratio filter settings">
+                <Property name="tabTitle" type="java.lang.String" value="M/Z ratio filter settings"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -184,64 +180,69 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="mzFilterScrollPane" alignment="0" pref="345" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="mzToleranceLabel" min="-2" pref="67" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="mzToleranceTextField" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="mzToleranceLabel" min="-2" pref="80" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="mzToleranceTextField" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="mzFilterScrollPane" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="addMzLabel" min="-2" pref="80" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="addMzTextField" max="32767" attributes="0"/>
+                          </Group>
                           <Group type="102" attributes="0">
-                              <Component id="addMzLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="addMzTextField" min="-2" pref="110" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="addMzButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="removeMzButton" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="filterTypeLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="andRadioButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="orRadioButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="filterTypeLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="andRadioButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="orRadioButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="addMzButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="removeMzButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="154" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="mzToleranceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="mzToleranceTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="mzFilterScrollPane" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="mzFilterScrollPane" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="addMzLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="addMzTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="addMzButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="removeMzButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="filterTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="andRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="orRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -262,7 +263,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="addMzLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/z"/>
+                <Property name="text" type="java.lang.String" value="M/Z"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="addMzTextField">
@@ -302,7 +303,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="mzToleranceLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/z tolerance"/>
+                <Property name="text" type="java.lang.String" value="M/Z tolerance"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="mzToleranceTextField">
@@ -323,6 +324,7 @@
                   <ComponentRef name="filterTypeRadioButtonGroup"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="and"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="orRadioButton">
@@ -331,6 +333,7 @@
                   <ComponentRef name="filterTypeRadioButtonGroup"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="or"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -341,8 +344,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Precursor relative m/z ratio filter settings">
-                <Property name="tabTitle" type="java.lang.String" value="Precursor relative m/z ratio filter settings"/>
+              <JTabbedPaneConstraints tabName="Precursor relative mass ratio filter settings">
+                <Property name="tabTitle" type="java.lang.String" value="Precursor relative mass ratio filter settings"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -351,63 +354,63 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="precRelMzFilterScrollPane" pref="345" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="precRelMzToleranceLabel" min="-2" pref="67" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="precRelMzToleranceTextField" min="-2" pref="110" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="precRelMzFilterScrollPane" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="addPrecRelMzLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="addPrecRelMzTextField" min="-2" pref="110" max="-2" attributes="0"/>
+                              <Component id="precRelMzToleranceLabel" min="-2" pref="80" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="precRelMzToleranceTextField" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
+                              <Component id="addPrecRelMzLabel" min="-2" pref="80" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="addPrecRelMzTextField" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
                               <Component id="addPrecRelMzButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="removePrecRelMzButton" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <Component id="precRelFilterTypeLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="precRelAndRadioButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="precRelOrRadioButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="154" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="precRelMzToleranceLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="precRelMzToleranceTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="precRelMzFilterScrollPane" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="precRelMzFilterScrollPane" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="addPrecRelMzLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="addPrecRelMzTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="addPrecRelMzButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="removePrecRelMzButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="precRelFilterTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="precRelAndRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="precRelOrRadioButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="precRelFilterTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -428,7 +431,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="addPrecRelMzLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/z"/>
+                <Property name="text" type="java.lang.String" value="Mass"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="addPrecRelMzTextField">
@@ -489,6 +492,7 @@
                   <ComponentRef name="filterTypeRadioButtonGroup"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="and"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="precRelOrRadioButton">
@@ -497,6 +501,7 @@
                   <ComponentRef name="filterTypeRadioButtonGroup"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="or"/>
+                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>

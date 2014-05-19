@@ -1,6 +1,5 @@
 package com.compomics.spectrawl.bin;
 
-import com.compomics.spectrawl.logic.bin.ExperimentBinner;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
@@ -29,11 +28,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:springXMLConfig.xml")
 public class BinnerTest {
 
+    private List<SpectrumImpl> spectra;
     @Autowired
-    private ExperimentBinner experimentBinner;
-    @Autowired
-    private SpectrumBinner spectrumBinner;
-    private Experiment experiment;
+    private SpectrumBinner spectrumBinner;    
 
     @Before
     public void setUp() {
@@ -170,21 +167,15 @@ public class BinnerTest {
         spectrumBinner.binSpectrum(spectrum_4, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
         spectrumBinner.binSpectrum(spectrum_5, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
         spectrumBinner.binSpectrum(spectrum_6, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
-
-        //add to experiment
-        List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
+        
+        //add spectra to list
+        spectra = new ArrayList<SpectrumImpl>();
         spectra.add(spectrum_1);
         spectra.add(spectrum_2);
         spectra.add(spectrum_3);
         spectra.add(spectrum_4);
         spectra.add(spectrum_5);
-        spectra.add(spectrum_6);
-
-        experiment = new Experiment("1");
-        experiment.setSpectra(spectra);
-
-        //bin the experiment
-        experimentBinner.binExperiment(experiment);
+        spectra.add(spectrum_6);        
     }    
 
     /**
@@ -193,7 +184,7 @@ public class BinnerTest {
     @Test
     public void testSpectrumBins() {
         //get the first spectrum
-        SpectrumImpl spectrum = experiment.getSpectra().get(0);
+        SpectrumImpl spectrum = spectra.get(0);
 
         //bin 70
         SpectrumBin spectrumBin = spectrum.getBins().get(70D);
@@ -237,6 +228,12 @@ public class BinnerTest {
      */
     @Test
     public void testExperimentBins() {
+        Experiment experiment = new Experiment("1");        
+        for(SpectrumImpl spectrum : spectra){
+            experiment.addSpectrum(spectrum);
+        }
+        experiment.calculateQuantiles();
+        
         //bin 40
         ExperimentBin experimentBin = experiment.getExperimentBins().get(40D);        
         

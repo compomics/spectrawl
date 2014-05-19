@@ -24,9 +24,7 @@
     <!-- beans used in tests -->
     <bean id="noiseThresholdFinder" class="com.compomics.spectrawl.logic.filter.noise.impl.WinsorNoiseThresholdFinder"/>                     
     
-    <bean id="spectrumBinner" class="com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerImpl"/>                     
-    
-    <bean id="experimentBinner" class="com.compomics.spectrawl.logic.bin.impl.ExperimentBinnerImpl"/>                     
+    <bean id="spectrumBinner" class="com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerImpl"/>                                   
     
     <bean id="fixedCombMzDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.FixedCombMzDeltaFilter"/>                     
     
