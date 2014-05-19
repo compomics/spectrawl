@@ -87,25 +87,26 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
         varCombIntThresholdTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(650, 350));
 
         fixedCombMzDeltaFilterPanel.setMinimumSize(new java.awt.Dimension(4, 4));
         fixedCombMzDeltaFilterPanel.setOpaque(false);
 
         mzDeltaLabel.setText("M/Z delta");
 
-        mzDeltaTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+        mzDeltaTextField.setPreferredSize(new java.awt.Dimension(60, 25));
 
         fixedCombIntThresholdLabel.setText("Intensity threshold");
 
-        fixedCombIntThresholdTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+        fixedCombIntThresholdTextField.setPreferredSize(new java.awt.Dimension(60, 25));
 
         minConsecMzDeltasLabel.setText("Min consecutive m/z deltas");
 
-        minConsecMzDeltasTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+        minConsecMzDeltasTextField.setPreferredSize(new java.awt.Dimension(60, 25));
 
         maxConsecMzDeltasLabel.setText("Max consecutive m/z deltas");
 
-        maxConsecMzDeltasTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+        maxConsecMzDeltasTextField.setPreferredSize(new java.awt.Dimension(60, 25));
 
         javax.swing.GroupLayout fixedCombMzDeltaFilterPanelLayout = new javax.swing.GroupLayout(fixedCombMzDeltaFilterPanel);
         fixedCombMzDeltaFilterPanel.setLayout(fixedCombMzDeltaFilterPanelLayout);
@@ -115,21 +116,21 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(fixedCombMzDeltaFilterPanelLayout.createSequentialGroup()
-                        .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(minConsecMzDeltasLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(maxConsecMzDeltasLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
-                        .addGap(4, 4, 4)
                         .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(maxConsecMzDeltasTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(minConsecMzDeltasTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(minConsecMzDeltasLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(maxConsecMzDeltasLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
+                        .addGap(12, 12, 12)
+                        .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(minConsecMzDeltasTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                            .addComponent(maxConsecMzDeltasTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(fixedCombMzDeltaFilterPanelLayout.createSequentialGroup()
-                        .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fixedCombIntThresholdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(mzDeltaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(53, 53, 53)
-                        .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mzDeltaTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
-                            .addComponent(fixedCombIntThresholdTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(fixedCombIntThresholdTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                            .addComponent(mzDeltaTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         fixedCombMzDeltaFilterPanelLayout.setVerticalGroup(
@@ -151,7 +152,7 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
                 .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(maxConsecMzDeltasLabel)
                     .addComponent(maxConsecMzDeltasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(162, Short.MAX_VALUE))
+                .addContainerGap(190, Short.MAX_VALUE))
         );
 
         FilterConfigTabbedPane.addTab("Fixed comb m/z delta filter settings", fixedCombMzDeltaFilterPanel);
@@ -186,20 +187,20 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
             .addGroup(variableCombMzDeltaFilterPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(variableCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(varCombMzDeltaFilterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
-                    .addGroup(variableCombMzDeltaFilterPanelLayout.createSequentialGroup()
-                        .addComponent(varCombIntThresholdLabel)
+                    .addComponent(varCombMzDeltaFilterScrollPane)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, variableCombMzDeltaFilterPanelLayout.createSequentialGroup()
+                        .addComponent(varCombIntThresholdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(varCombIntThresholdTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(varCombIntThresholdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, variableCombMzDeltaFilterPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(addMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(removeMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, variableCombMzDeltaFilterPanelLayout.createSequentialGroup()
-                        .addComponent(addMzDeltaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addMzDeltaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addMzDeltaTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(addMzDeltaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         variableCombMzDeltaFilterPanelLayout.setVerticalGroup(
@@ -210,7 +211,7 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
                     .addComponent(varCombIntThresholdLabel)
                     .addComponent(varCombIntThresholdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(varCombMzDeltaFilterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addComponent(varCombMzDeltaFilterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(variableCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addMzDeltaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -228,13 +229,13 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 370, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(FilterConfigTabbedPane))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 350, Short.MAX_VALUE)
+            .addGap(0, 375, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(FilterConfigTabbedPane))
         );
