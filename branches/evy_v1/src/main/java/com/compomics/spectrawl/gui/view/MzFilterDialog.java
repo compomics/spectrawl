@@ -150,11 +150,11 @@ public class MzFilterDialog extends javax.swing.JDialog {
         precRelOrRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(650, 350));
 
         noiseFilterPanel.setOpaque(false);
 
         winsorFilterCheckBox.setText("do winsorisation filtering");
-        winsorFilterCheckBox.setOpaque(false);
 
         winsorConstantLabel.setText("winsorisation constant");
 
@@ -182,15 +182,15 @@ public class MzFilterDialog extends javax.swing.JDialog {
                 .addGroup(noiseFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(winsorFilterCheckBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(noiseFilterPanelLayout.createSequentialGroup()
-                        .addGroup(noiseFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(winsorOutlierLimitLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(winsorConvergenceCriterionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                            .addComponent(winsorConstantLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(10, 10, 10)
+                        .addGroup(noiseFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(winsorConvergenceCriterionLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+                            .addComponent(winsorConstantLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(winsorOutlierLimitLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(noiseFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(winsorOutlierLimitTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                            .addComponent(winsorConvergenceCriterionTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(winsorConstantTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(winsorConvergenceCriterionTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                            .addComponent(winsorConstantTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(winsorOutlierLimitTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         noiseFilterPanelLayout.setVerticalGroup(
@@ -210,7 +210,7 @@ public class MzFilterDialog extends javax.swing.JDialog {
                 .addGroup(noiseFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(winsorOutlierLimitLabel)
                     .addComponent(winsorOutlierLimitTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
 
         FilteSettingsTabbedPane.addTab("Noise filter settings", noiseFilterPanel);
@@ -241,11 +241,9 @@ public class MzFilterDialog extends javax.swing.JDialog {
 
         filterTypeRadioButtonGroup.add(andRadioButton);
         andRadioButton.setText("and");
-        andRadioButton.setOpaque(false);
 
         filterTypeRadioButtonGroup.add(orRadioButton);
         orRadioButton.setText("or");
-        orRadioButton.setOpaque(false);
 
         javax.swing.GroupLayout mzFilterPanelLayout = new javax.swing.GroupLayout(mzFilterPanel);
         mzFilterPanel.setLayout(mzFilterPanelLayout);
@@ -254,15 +252,11 @@ public class MzFilterDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mzFilterPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(mzFilterScrollPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mzFilterPanelLayout.createSequentialGroup()
-                        .addComponent(mzToleranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(mzFilterScrollPane, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mzFilterPanelLayout.createSequentialGroup()
+                        .addComponent(mzToleranceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mzToleranceTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, mzFilterPanelLayout.createSequentialGroup()
-                        .addComponent(addMzLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addMzTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(mzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(mzFilterPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(mzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -275,7 +269,11 @@ public class MzFilterDialog extends javax.swing.JDialog {
                             .addGroup(mzFilterPanelLayout.createSequentialGroup()
                                 .addComponent(addMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(removeMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(removeMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(mzFilterPanelLayout.createSequentialGroup()
+                        .addComponent(addMzLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addMzTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         mzFilterPanelLayout.setVerticalGroup(
@@ -286,7 +284,7 @@ public class MzFilterDialog extends javax.swing.JDialog {
                     .addComponent(mzToleranceLabel)
                     .addComponent(mzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mzFilterScrollPane)
+                .addComponent(mzFilterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(mzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addMzLabel)
@@ -331,11 +329,9 @@ public class MzFilterDialog extends javax.swing.JDialog {
 
         filterTypeRadioButtonGroup.add(precRelAndRadioButton);
         precRelAndRadioButton.setText("and");
-        precRelAndRadioButton.setOpaque(false);
 
         filterTypeRadioButtonGroup.add(precRelOrRadioButton);
         precRelOrRadioButton.setText("or");
-        precRelOrRadioButton.setOpaque(false);
 
         javax.swing.GroupLayout precRelMzFilterPanelLayout = new javax.swing.GroupLayout(precRelMzFilterPanel);
         precRelMzFilterPanel.setLayout(precRelMzFilterPanelLayout);
@@ -344,25 +340,28 @@ public class MzFilterDialog extends javax.swing.JDialog {
             .addGroup(precRelMzFilterPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(precRelMzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(precRelMzFilterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
-                    .addGroup(precRelMzFilterPanelLayout.createSequentialGroup()
-                        .addComponent(precRelMzToleranceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(precRelMzToleranceTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(precRelMzFilterPanelLayout.createSequentialGroup()
-                        .addComponent(addPrecRelMzLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addPrecRelMzTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(precRelMzFilterScrollPane)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, precRelMzFilterPanelLayout.createSequentialGroup()
-                        .addComponent(addPrecRelMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(precRelMzToleranceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(removePrecRelMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(precRelMzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, precRelMzFilterPanelLayout.createSequentialGroup()
-                        .addComponent(precRelFilterTypeLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(precRelAndRadioButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(precRelOrRadioButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(precRelMzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, precRelMzFilterPanelLayout.createSequentialGroup()
+                                .addComponent(addPrecRelMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(removePrecRelMzButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, precRelMzFilterPanelLayout.createSequentialGroup()
+                                .addComponent(precRelFilterTypeLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(precRelAndRadioButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(precRelOrRadioButton))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, precRelMzFilterPanelLayout.createSequentialGroup()
+                        .addComponent(addPrecRelMzLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(addPrecRelMzTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         precRelMzFilterPanelLayout.setVerticalGroup(
@@ -373,7 +372,7 @@ public class MzFilterDialog extends javax.swing.JDialog {
                     .addComponent(precRelMzToleranceLabel)
                     .addComponent(precRelMzToleranceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(precRelMzFilterScrollPane)
+                .addComponent(precRelMzFilterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(precRelMzFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addPrecRelMzLabel)
@@ -396,7 +395,7 @@ public class MzFilterDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 370, Short.MAX_VALUE)
+            .addGap(0, 659, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(FilteSettingsTabbedPane))
         );
@@ -404,7 +403,7 @@ public class MzFilterDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 350, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(FilteSettingsTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
+                .addComponent(FilteSettingsTabbedPane, javax.swing.GroupLayout.Alignment.TRAILING))
         );
 
         pack();

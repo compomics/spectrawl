@@ -9,6 +9,9 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[650, 350]"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -29,7 +32,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <EmptySpace min="0" pref="370" max="32767" attributes="0"/>
+          <EmptySpace min="0" pref="659" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Component id="FilteSettingsTabbedPane" alignment="0" max="32767" attributes="0"/>
           </Group>
@@ -39,7 +42,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <EmptySpace min="0" pref="350" max="32767" attributes="0"/>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-              <Component id="FilteSettingsTabbedPane" alignment="0" pref="350" max="32767" attributes="0"/>
+              <Component id="FilteSettingsTabbedPane" alignment="1" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,24 +68,24 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Component id="winsorFilterCheckBox" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="winsorOutlierLimitLabel" max="32767" attributes="0"/>
-                                  <Component id="winsorConvergenceCriterionLabel" pref="202" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="winsorConvergenceCriterionLabel" pref="426" max="32767" attributes="0"/>
                                   <Component id="winsorConstantLabel" max="32767" attributes="0"/>
+                                  <Component id="winsorOutlierLimitLabel" max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="winsorOutlierLimitTextField" alignment="1" pref="133" max="32767" attributes="0"/>
-                                  <Component id="winsorConvergenceCriterionTextField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="winsorConvergenceCriterionTextField" alignment="1" pref="189" max="32767" attributes="0"/>
                                   <Component id="winsorConstantTextField" alignment="1" max="32767" attributes="0"/>
+                                  <Component id="winsorOutlierLimitTextField" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -106,7 +109,7 @@
                           <Component id="winsorOutlierLimitLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="winsorOutlierLimitTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="147" max="32767" attributes="0"/>
+                      <EmptySpace pref="151" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -115,7 +118,6 @@
             <Component class="javax.swing.JCheckBox" name="winsorFilterCheckBox">
               <Properties>
                 <Property name="text" type="java.lang.String" value="do winsorisation filtering"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="winsorConstantLabel">
@@ -183,16 +185,11 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="mzFilterScrollPane" alignment="0" pref="345" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="mzToleranceLabel" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="mzFilterScrollPane" alignment="0" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="mzToleranceLabel" pref="359" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="mzToleranceTextField" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="addMzLabel" min="-2" pref="80" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="addMzTextField" max="32767" attributes="0"/>
+                              <Component id="mzToleranceTextField" min="-2" pref="256" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -211,6 +208,11 @@
                                   </Group>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="addMzLabel" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="addMzTextField" min="-2" pref="256" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -225,7 +227,7 @@
                           <Component id="mzToleranceTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="mzFilterScrollPane" max="32767" attributes="0"/>
+                      <Component id="mzFilterScrollPane" pref="141" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="addMzLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -324,7 +326,6 @@
                   <ComponentRef name="filterTypeRadioButtonGroup"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="and"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="orRadioButton">
@@ -333,7 +334,6 @@
                   <ComponentRef name="filterTypeRadioButtonGroup"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="or"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -356,28 +356,33 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="precRelMzFilterScrollPane" pref="345" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="precRelMzToleranceLabel" min="-2" pref="80" max="-2" attributes="0"/>
+                          <Component id="precRelMzFilterScrollPane" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="precRelMzToleranceLabel" pref="359" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
-                              <Component id="precRelMzToleranceTextField" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="addPrecRelMzLabel" min="-2" pref="80" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="addPrecRelMzTextField" max="32767" attributes="0"/>
+                              <Component id="precRelMzToleranceTextField" min="-2" pref="256" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="addPrecRelMzButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="removePrecRelMzButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="addPrecRelMzButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="removePrecRelMzButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="precRelFilterTypeLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="precRelAndRadioButton" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="precRelOrRadioButton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="precRelFilterTypeLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="precRelAndRadioButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="precRelOrRadioButton" min="-2" max="-2" attributes="0"/>
+                              <Component id="addPrecRelMzLabel" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="addPrecRelMzTextField" min="-2" pref="256" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -393,7 +398,7 @@
                           <Component id="precRelMzToleranceTextField" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-                      <Component id="precRelMzFilterScrollPane" max="32767" attributes="0"/>
+                      <Component id="precRelMzFilterScrollPane" pref="141" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="addPrecRelMzLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -492,7 +497,6 @@
                   <ComponentRef name="filterTypeRadioButtonGroup"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="and"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="precRelOrRadioButton">
@@ -501,7 +505,6 @@
                   <ComponentRef name="filterTypeRadioButtonGroup"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="or"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>
