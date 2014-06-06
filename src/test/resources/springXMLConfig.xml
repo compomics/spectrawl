@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"       
+       xmlns:context="http://www.springframework.org/schema/context"       
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <context:annotation-config/>
+    
+    <!-- Property placeholder-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:resources/spectrawl.properties
+                </value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders">
+            <value>true</value>
+        </property>       
+    </bean> 
+                                                                                                                                                                                         
+    <!-- beans used in tests -->
+    <bean id="noiseThresholdFinder" class="com.compomics.spectrawl.logic.filter.noise.impl.WinsorNoiseThresholdFinder"/>                     
+    
+    <bean id="spectrumBinner" class="com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerImpl"/>                                   
+    
+    <bean id="fixedCombMzDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.FixedCombMzDeltaFilter"/>                     
+    
+    <bean id="variableCombMzDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.VariableCombMzDeltaFilter"/>                     
+                           
+</beans>
