@@ -20,6 +20,7 @@ import com.compomics.spectrawl.util.GuiUtils;
 import com.compomics.util.gui.spectrum.SpectrumPanel;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
+import javax.swing.BorderFactory;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import org.apache.log4j.Logger;
@@ -72,9 +73,9 @@ public class ResultController {
         //init the panel
         resultPanel = new ResultPanel();
         intensitiesChartPanel = new ChartPanel(null);
-        intensitiesChartPanel.setOpaque(Boolean.FALSE);
+        intensitiesChartPanel.setOpaque(false);
         countChartPanel = new ChartPanel(null);
-        countChartPanel.setOpaque(Boolean.FALSE);
+        countChartPanel.setOpaque(false);
 
         spectrumEventList = new BasicEventList<SpectrumImpl>();
         sortedSpectrumList = new SortedList<SpectrumImpl>(spectrumEventList, new SpectrumComparator());
@@ -114,7 +115,7 @@ public class ResultController {
         gridBagConstraints.weighty = 1.0;
 
         resultPanel.getIntensityChartParentPanel().add(intensitiesChartPanel, gridBagConstraints);
-        resultPanel.getCountChartParentPanel().add(countChartPanel  , gridBagConstraints);
+        resultPanel.getCountChartParentPanel().add(countChartPanel, gridBagConstraints);
     }
 
     /**
