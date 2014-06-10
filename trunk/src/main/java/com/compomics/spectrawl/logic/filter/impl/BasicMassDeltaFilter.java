@@ -44,7 +44,7 @@ public class BasicMassDeltaFilter implements Filter<SpectrumImpl> {
             Double key = spectrum.getBins().floorKey(mzDeltaFilterValue);
             //the filter should fail if the key can't be found (is null) 
             //or the intensity in the found spectrum bin is lower than the threshold
-            if (key == null || spectrum.getBins().get(key).getIntensitySum() < intensityThreshold) {
+            if (key == null || spectrum.getBins().get(key) == null || spectrum.getBins().get(key).getIntensitySum() < intensityThreshold) {
                 passesFilter = false;
                 break;
             }
