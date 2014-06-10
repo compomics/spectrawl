@@ -1,7 +1,7 @@
 package com.compomics.spectrawl.filter;
 
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.impl.VariableCombMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.VariableCombMassDeltaFilter;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
@@ -31,13 +31,13 @@ public class VariableCombMassDeltaFilterTest {
     @Autowired
     SpectrumBinner spectrumBinner;
     @Autowired
-    VariableCombMzDeltaFilter variableCombMzDeltaFilter;
+    VariableCombMassDeltaFilter variableCombMzDeltaFilter;
 
     @Before
     public void setUp() {
 
         //compose spectra and add them to the experiment
-        HashMap<Double, Peak> peaks = new HashMap<Double, Peak>();
+        HashMap<Double, Peak> peaks = new HashMap<>();
         Peak peak = new Peak(100D, 100D);
         peaks.put(100D, peak);
         peak = new Peak(150.5, 100D);
@@ -62,7 +62,7 @@ public class VariableCombMassDeltaFilterTest {
         peaks.put(333.6, peak);
 
         SpectrumImpl spectrum_1 = new SpectrumImpl("1");
-        ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
+        ArrayList<Charge> possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 1));
         Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum_1.setPrecursor(precursor);

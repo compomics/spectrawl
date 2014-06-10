@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springXMLConfig.xml")
-public class BasicMassFilterTest {
+public class BasicMzFilterTest {
 
     private SpectrumImpl spectrum;
     @Autowired
@@ -37,7 +37,7 @@ public class BasicMassFilterTest {
     public void setUp() {
 
         //compose spectra and add them to the experiment
-        HashMap<Double, Peak> peaks = new HashMap<Double, Peak>();
+        HashMap<Double, Peak> peaks = new HashMap<>();
         Peak peak = new Peak(100D, 70D);
         peaks.put(100D, peak);
         peak = new Peak(220.54, 30D);
@@ -52,7 +52,7 @@ public class BasicMassFilterTest {
         peaks.put(420.6, peak);
 
         spectrum = new SpectrumImpl("1");
-        ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
+        ArrayList<Charge> possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 1));
         Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum.setPrecursor(precursor);
@@ -64,7 +64,7 @@ public class BasicMassFilterTest {
    
     @Test
     public void testPassesFilter() {
-        List<Double> massFilterValues = new ArrayList<Double>();
+        List<Double> massFilterValues = new ArrayList<>();
         massFilterValues.add(220.3);
         massFilterValues.add(230D);
         Filter<SpectrumImpl> filter = new BasicMzFilter(0.5, massFilterValues);

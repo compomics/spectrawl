@@ -21,17 +21,17 @@
             <Property name="text" type="java.lang.String" value="Filter"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="mzDeltaFilterMenu">
+            <Menu class="javax.swing.JMenu" name="massDeltaFilterMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/Z delta"/>
+                <Property name="text" type="java.lang.String" value="Mass delta"/>
               </Properties>
               <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="mzDeltaFilterSettingsMenuItem">
+                <MenuItem class="javax.swing.JMenuItem" name="massDeltaFilterSettingsMenuItem">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Basic"/>
                   </Properties>
                 </MenuItem>
-                <MenuItem class="javax.swing.JMenuItem" name="advancedMzDeltaFilterSettingsMenuItem">
+                <MenuItem class="javax.swing.JMenuItem" name="advancedMassDeltaFilterSettingsMenuItem">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Advanced"/>
                   </Properties>

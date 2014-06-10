@@ -7,25 +7,25 @@ import java.util.List;
 /**
  * This filter looks for the presence of given mass delta values in a spectrum.
  */
-public class BasicMzDeltaFilter implements Filter<SpectrumImpl> {
+public class BasicMassDeltaFilter implements Filter<SpectrumImpl> {
 
     private double intensityThreshold;
-    private List<Double> mzDeltaFilterValues;
+    private List<Double> massDeltaFilterValues;
 
-    public BasicMzDeltaFilter() {
+    public BasicMassDeltaFilter() {
     }
 
-    public BasicMzDeltaFilter(double intensityThreshold, List<Double> massDeltaFilterValues) {
+    public BasicMassDeltaFilter(double intensityThreshold, List<Double> massDeltaFilterValues) {
         this.intensityThreshold = intensityThreshold;
-        this.mzDeltaFilterValues = massDeltaFilterValues;
+        this.massDeltaFilterValues = massDeltaFilterValues;
     }
 
-    public List<Double> getMzDeltaFilterValues() {
-        return mzDeltaFilterValues;
+    public List<Double> getMassDeltaFilterValues() {
+        return massDeltaFilterValues;
     }
 
-    public void setMzDeltaFilterValues(List<Double> massDeltaFilterValues) {
-        this.mzDeltaFilterValues = massDeltaFilterValues;
+    public void setMassDeltaFilterValues(List<Double> massDeltaFilterValues) {
+        this.massDeltaFilterValues = massDeltaFilterValues;
     }
 
     public double getIntensityThreshold() {
@@ -40,7 +40,7 @@ public class BasicMzDeltaFilter implements Filter<SpectrumImpl> {
     public boolean passesFilter(SpectrumImpl spectrum, boolean doInvert) {
         boolean passesFilter = true;
 
-        for (Double mzDeltaFilterValue : mzDeltaFilterValues) {
+        for (Double mzDeltaFilterValue : massDeltaFilterValues) {
             Double key = spectrum.getBins().floorKey(mzDeltaFilterValue);
             //the filter should fail if the key can't be found (is null) 
             //or the intensity in the found spectrum bin is lower than the threshold

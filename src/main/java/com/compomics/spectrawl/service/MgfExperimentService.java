@@ -108,7 +108,7 @@ public class MgfExperimentService implements ExperimentService {
 
     private class SpectrumLoader implements Callable<SpectrumImpl> {
 
-        private String spectrumKey;
+        private final String spectrumKey;
 
         public SpectrumLoader(String spectrumKey) {
             this.spectrumKey = spectrumKey;
@@ -117,13 +117,14 @@ public class MgfExperimentService implements ExperimentService {
         @Override
         public SpectrumImpl call() throws Exception {
             SpectrumImpl spectrum = mgfExperimentRepository.getSpectrumByKey(spectrumKey);
+            LOGGER.debug("spectrum with key " + spectrumKey + " is processed by " + Thread.currentThread().getName());
 
             //bin the spectrum
             spectrumBinner.binSpectrum(spectrum, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
 
             //add the spectrum to the spectra
             //if the spectrum passes the filter
-            if (spectrumFilter.passesFilter(spectrum, Boolean.FALSE)) {
+            if (spectrumFilter.passesFilter(spectrum, false)) {
                 return spectrum;
             } else {
                 return null;

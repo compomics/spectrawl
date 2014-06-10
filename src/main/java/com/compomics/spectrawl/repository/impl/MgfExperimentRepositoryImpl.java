@@ -36,7 +36,6 @@ public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
     @Autowired
     private NoiseThresholdFinder noiseThresholdFinder;
     @Autowired
-    //@Qualifier("spectrumNoiseFilter")
     private NoiseFilter<HashMap<Double, Peak>> spectrumNoiseFilter;
 
     public MgfExperimentRepositoryImpl() {

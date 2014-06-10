@@ -48,7 +48,7 @@ public class ResourceUtils {
      * @return the is existing boolean
      */
     public static boolean isExistingFile(String relativePath) {
-        boolean isExistingResource = Boolean.FALSE;
+        boolean isExistingResource = false;
 
         Resource resource = new FileSystemResource(relativePath);
         if (resource.exists()) {

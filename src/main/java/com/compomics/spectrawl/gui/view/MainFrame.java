@@ -39,12 +39,12 @@ public class MainFrame extends javax.swing.JFrame {
         return exitMenuItem;
     }
 
-    public JMenuItem getAdvancedMzDeltaFilterSettingsMenuItem() {
-        return advancedMzDeltaFilterSettingsMenuItem;
+    public JMenuItem getAdvancedMassDeltaFilterSettingsMenuItem() {
+        return advancedMassDeltaFilterSettingsMenuItem;
     }
 
-    public JMenuItem getMzDeltaFilterSettingsMenuItem() {
-        return mzDeltaFilterSettingsMenuItem;
+    public JMenuItem getMassDeltaFilterSettingsMenuItem() {
+        return massDeltaFilterSettingsMenuItem;
     }
 
     public JMenuItem getMzRatioFilterSettingsMenuItem() {
@@ -67,9 +67,9 @@ public class MainFrame extends javax.swing.JFrame {
         fileMenu = new javax.swing.JMenu();
         exitMenuItem = new javax.swing.JMenuItem();
         filterMenu = new javax.swing.JMenu();
-        mzDeltaFilterMenu = new javax.swing.JMenu();
-        mzDeltaFilterSettingsMenuItem = new javax.swing.JMenuItem();
-        advancedMzDeltaFilterSettingsMenuItem = new javax.swing.JMenuItem();
+        massDeltaFilterMenu = new javax.swing.JMenu();
+        massDeltaFilterSettingsMenuItem = new javax.swing.JMenuItem();
+        advancedMassDeltaFilterSettingsMenuItem = new javax.swing.JMenuItem();
         mzRatioFilterSettingsMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -100,15 +100,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         filterMenu.setText("Filter");
 
-        mzDeltaFilterMenu.setText("M/Z delta");
+        massDeltaFilterMenu.setText("Mass delta");
 
-        mzDeltaFilterSettingsMenuItem.setText("Basic");
-        mzDeltaFilterMenu.add(mzDeltaFilterSettingsMenuItem);
+        massDeltaFilterSettingsMenuItem.setText("Basic");
+        massDeltaFilterMenu.add(massDeltaFilterSettingsMenuItem);
 
-        advancedMzDeltaFilterSettingsMenuItem.setText("Advanced");
-        mzDeltaFilterMenu.add(advancedMzDeltaFilterSettingsMenuItem);
+        advancedMassDeltaFilterSettingsMenuItem.setText("Advanced");
+        massDeltaFilterMenu.add(advancedMassDeltaFilterSettingsMenuItem);
 
-        filterMenu.add(mzDeltaFilterMenu);
+        filterMenu.add(massDeltaFilterMenu);
 
         mzRatioFilterSettingsMenuItem.setText("M/Z ratio");
         filterMenu.add(mzRatioFilterSettingsMenuItem);
@@ -137,16 +137,16 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem advancedMzDeltaFilterSettingsMenuItem;
+    private javax.swing.JMenuItem advancedMassDeltaFilterSettingsMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JPanel experimentBinsParentPanel;
     private javax.swing.JPanel experimentLoaderParentPanel;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu filterMenu;
     private javax.swing.JSplitPane mainSplitPane;
+    private javax.swing.JMenu massDeltaFilterMenu;
+    private javax.swing.JMenuItem massDeltaFilterSettingsMenuItem;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenu mzDeltaFilterMenu;
-    private javax.swing.JMenuItem mzDeltaFilterSettingsMenuItem;
     private javax.swing.JMenuItem mzRatioFilterSettingsMenuItem;
     // End of variables declaration//GEN-END:variables
 }

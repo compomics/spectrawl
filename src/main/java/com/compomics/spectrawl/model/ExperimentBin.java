@@ -69,6 +69,9 @@ public class ExperimentBin {
      * @param spectrumBin
      */
     public void addSpectrumBin(SpectrumBin spectrumBin) {
+        if(spectrumBin == null){
+            spectrumBin = new SpectrumBin();
+        }
         peakCountStatistics.addValue(spectrumBin.getPeakCount());
         intensitySumStatistics.addValue(spectrumBin.getIntensitySum());
         highestIntensityStatistics.addValue(spectrumBin.getHighestIntensity());

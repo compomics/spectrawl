@@ -2,10 +2,10 @@ package com.compomics.spectrawl;
 
 import com.compomics.spectrawl.config.ApplicationContextProvider;
 import com.compomics.spectrawl.logic.filter.FilterChain;
-import com.compomics.spectrawl.logic.filter.impl.BasicMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.BasicMassDeltaFilter;
 import com.compomics.spectrawl.logic.filter.impl.FilterChainImpl;
-import com.compomics.spectrawl.logic.filter.impl.FixedCombMzDeltaFilter;
-import com.compomics.spectrawl.logic.filter.impl.VariableCombMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.FixedCombMassDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.VariableCombMassDeltaFilter;
 import com.compomics.spectrawl.model.Experiment;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.spectrawl.repository.MsLimsExperimentRepository;
@@ -48,14 +48,14 @@ public class Playground {
         massDeltaFilterValues.add(83.0371);    
         
         for (double value : massDeltaFilterValues) {
-            BasicMzDeltaFilter basicMassDeltaFilter = new BasicMzDeltaFilter();
+            BasicMassDeltaFilter basicMassDeltaFilter = new BasicMassDeltaFilter();
             
             //set the intensity threshold, tweakable
             basicMassDeltaFilter.setIntensityThreshold(0.01);
             
             List<Double> singleFilterMassDeltaFilterValues = new ArrayList<Double>();
             singleFilterMassDeltaFilterValues.add(value);
-            basicMassDeltaFilter.setMzDeltaFilterValues(singleFilterMassDeltaFilterValues);
+            basicMassDeltaFilter.setMassDeltaFilterValues(singleFilterMassDeltaFilterValues);
             orFilterChain.addFilter(basicMassDeltaFilter);
         }
         

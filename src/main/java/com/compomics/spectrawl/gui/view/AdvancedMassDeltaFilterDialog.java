@@ -9,48 +9,50 @@ import javax.swing.JTextField;
  *
  * @author Niels Hulstaert
  */
-public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
+public class AdvancedMassDeltaFilterDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form FilterConfigDialog
+     * @param parent
+     * @param modal
      */
-    public AdvancedMzDeltaFilterDialog(java.awt.Frame parent, boolean modal) {
+    public AdvancedMassDeltaFilterDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);        
         initComponents();
         this.getContentPane().setBackground(Color.WHITE);
         setLocationRelativeTo(parent);
     }   
 
-    public JButton getAddMzDeltaButton() {
-        return addMzDeltaButton;
+    public JButton getAddMassDeltaButton() {
+        return addMassDeltaButton;
     }
 
     public JTextField getAddMzDeltaTextField() {
-        return addMzDeltaTextField;
+        return addMassDeltaTextField;
     }
 
     public JTextField getFixedCombIntThresholdTextField() {
         return fixedCombIntThresholdTextField;
     }
 
-    public JTextField getMaxConsecMzDeltasTextField() {
-        return maxConsecMzDeltasTextField;
+    public JTextField getMaxConsecMassDeltasTextField() {
+        return maxConsecMassDeltasTextField;
     }
 
-    public JTextField getMinConsecMzDeltasTextField() {
-        return minConsecMzDeltasTextField;
+    public JTextField getMinConsecMassDeltasTextField() {
+        return minConsecMassDeltasTextField;
     }
 
-    public JList getMzDeltaFilterList() {
-        return mzDeltaFilterList;
+    public JList getMassDeltaFilterList() {
+        return massDeltaFilterList;
     }
 
-    public JTextField getMzDeltaTextField() {
-        return mzDeltaTextField;
+    public JTextField getMassDeltaTextField() {
+        return massDeltaTextField;
     }
 
-    public JButton getRemoveMzDeltaButton() {
-        return removeMzDeltaButton;
+    public JButton getRemoveMassDeltaButton() {
+        return removeMassDeltaButton;
     }
 
     public JTextField getVarCombIntThresholdTextField() {
@@ -69,44 +71,43 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
         FilterConfigTabbedPane = new javax.swing.JTabbedPane();
         fixedCombMzDeltaFilterPanel = new javax.swing.JPanel();
         mzDeltaLabel = new javax.swing.JLabel();
-        mzDeltaTextField = new javax.swing.JTextField();
+        massDeltaTextField = new javax.swing.JTextField();
         fixedCombIntThresholdLabel = new javax.swing.JLabel();
         fixedCombIntThresholdTextField = new javax.swing.JTextField();
         minConsecMzDeltasLabel = new javax.swing.JLabel();
-        minConsecMzDeltasTextField = new javax.swing.JTextField();
+        minConsecMassDeltasTextField = new javax.swing.JTextField();
         maxConsecMzDeltasLabel = new javax.swing.JLabel();
-        maxConsecMzDeltasTextField = new javax.swing.JTextField();
+        maxConsecMassDeltasTextField = new javax.swing.JTextField();
         variableCombMzDeltaFilterPanel = new javax.swing.JPanel();
         varCombMzDeltaFilterScrollPane = new javax.swing.JScrollPane();
-        mzDeltaFilterList = new javax.swing.JList();
+        massDeltaFilterList = new javax.swing.JList();
         addMzDeltaLabel = new javax.swing.JLabel();
-        addMzDeltaTextField = new javax.swing.JTextField();
-        addMzDeltaButton = new javax.swing.JButton();
-        removeMzDeltaButton = new javax.swing.JButton();
+        addMassDeltaTextField = new javax.swing.JTextField();
+        addMassDeltaButton = new javax.swing.JButton();
+        removeMassDeltaButton = new javax.swing.JButton();
         varCombIntThresholdLabel = new javax.swing.JLabel();
         varCombIntThresholdTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(650, 350));
 
         fixedCombMzDeltaFilterPanel.setMinimumSize(new java.awt.Dimension(4, 4));
         fixedCombMzDeltaFilterPanel.setOpaque(false);
 
-        mzDeltaLabel.setText("M/Z delta");
+        mzDeltaLabel.setText("Mass delta");
 
-        mzDeltaTextField.setPreferredSize(new java.awt.Dimension(60, 25));
+        massDeltaTextField.setPreferredSize(new java.awt.Dimension(60, 25));
 
         fixedCombIntThresholdLabel.setText("Intensity threshold");
 
         fixedCombIntThresholdTextField.setPreferredSize(new java.awt.Dimension(60, 25));
 
-        minConsecMzDeltasLabel.setText("Min consecutive m/z deltas");
+        minConsecMzDeltasLabel.setText("Min consecutive mass deltas");
 
-        minConsecMzDeltasTextField.setPreferredSize(new java.awt.Dimension(60, 25));
+        minConsecMassDeltasTextField.setPreferredSize(new java.awt.Dimension(60, 25));
 
-        maxConsecMzDeltasLabel.setText("Max consecutive m/z deltas");
+        maxConsecMzDeltasLabel.setText("Max consecutive mass deltas");
 
-        maxConsecMzDeltasTextField.setPreferredSize(new java.awt.Dimension(60, 25));
+        maxConsecMassDeltasTextField.setPreferredSize(new java.awt.Dimension(60, 25));
 
         javax.swing.GroupLayout fixedCombMzDeltaFilterPanelLayout = new javax.swing.GroupLayout(fixedCombMzDeltaFilterPanel);
         fixedCombMzDeltaFilterPanel.setLayout(fixedCombMzDeltaFilterPanelLayout);
@@ -121,8 +122,8 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
                             .addComponent(maxConsecMzDeltasLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE))
                         .addGap(12, 12, 12)
                         .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(minConsecMzDeltasTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                            .addComponent(maxConsecMzDeltasTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(minConsecMassDeltasTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                            .addComponent(maxConsecMassDeltasTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(fixedCombMzDeltaFilterPanelLayout.createSequentialGroup()
                         .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fixedCombIntThresholdLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -130,7 +131,7 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(fixedCombIntThresholdTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                            .addComponent(mzDeltaTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(massDeltaTextField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         fixedCombMzDeltaFilterPanelLayout.setVerticalGroup(
@@ -143,38 +144,38 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(mzDeltaLabel)
-                    .addComponent(mzDeltaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(massDeltaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(minConsecMzDeltasLabel)
-                    .addComponent(minConsecMzDeltasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(minConsecMassDeltasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(fixedCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(maxConsecMzDeltasLabel)
-                    .addComponent(maxConsecMzDeltasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(maxConsecMassDeltasTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(190, Short.MAX_VALUE))
         );
 
-        FilterConfigTabbedPane.addTab("Fixed comb m/z delta filter settings", fixedCombMzDeltaFilterPanel);
+        FilterConfigTabbedPane.addTab("Fixed comb mass delta filter settings", fixedCombMzDeltaFilterPanel);
 
         variableCombMzDeltaFilterPanel.setMinimumSize(new java.awt.Dimension(4, 4));
         variableCombMzDeltaFilterPanel.setOpaque(false);
 
-        varCombMzDeltaFilterScrollPane.setViewportView(mzDeltaFilterList);
+        varCombMzDeltaFilterScrollPane.setViewportView(massDeltaFilterList);
 
-        addMzDeltaLabel.setText("M/Z delta");
+        addMzDeltaLabel.setText("Mass delta");
 
-        addMzDeltaTextField.setPreferredSize(new java.awt.Dimension(6, 25));
+        addMassDeltaTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 
-        addMzDeltaButton.setText("add");
-        addMzDeltaButton.setMaximumSize(new java.awt.Dimension(97, 23));
-        addMzDeltaButton.setMinimumSize(new java.awt.Dimension(97, 23));
-        addMzDeltaButton.setPreferredSize(new java.awt.Dimension(97, 23));
+        addMassDeltaButton.setText("add");
+        addMassDeltaButton.setMaximumSize(new java.awt.Dimension(97, 23));
+        addMassDeltaButton.setMinimumSize(new java.awt.Dimension(97, 23));
+        addMassDeltaButton.setPreferredSize(new java.awt.Dimension(97, 23));
 
-        removeMzDeltaButton.setText("remove");
-        removeMzDeltaButton.setMaximumSize(new java.awt.Dimension(97, 23));
-        removeMzDeltaButton.setMinimumSize(new java.awt.Dimension(97, 23));
-        removeMzDeltaButton.setPreferredSize(new java.awt.Dimension(97, 23));
+        removeMassDeltaButton.setText("remove");
+        removeMassDeltaButton.setMaximumSize(new java.awt.Dimension(97, 23));
+        removeMassDeltaButton.setMinimumSize(new java.awt.Dimension(97, 23));
+        removeMassDeltaButton.setPreferredSize(new java.awt.Dimension(97, 23));
 
         varCombIntThresholdLabel.setText("Intensity threshold");
 
@@ -194,13 +195,13 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
                         .addComponent(varCombIntThresholdTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, variableCombMzDeltaFilterPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(addMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addMassDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(removeMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(removeMassDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, variableCombMzDeltaFilterPanelLayout.createSequentialGroup()
                         .addComponent(addMzDeltaLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(addMzDeltaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(addMassDeltaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         variableCombMzDeltaFilterPanelLayout.setVerticalGroup(
@@ -214,16 +215,16 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
                 .addComponent(varCombMzDeltaFilterScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(variableCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addMzDeltaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addMassDeltaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addMzDeltaLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(variableCombMzDeltaFilterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(removeMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addMzDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(removeMassDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addMassDeltaButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        FilterConfigTabbedPane.addTab("Variable comb m/z delta filter settings", variableCombMzDeltaFilterPanel);
+        FilterConfigTabbedPane.addTab("Variable comb mass delta filter settings", variableCombMzDeltaFilterPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -245,20 +246,20 @@ public class AdvancedMzDeltaFilterDialog extends javax.swing.JDialog {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane FilterConfigTabbedPane;
-    private javax.swing.JButton addMzDeltaButton;
+    private javax.swing.JButton addMassDeltaButton;
+    private javax.swing.JTextField addMassDeltaTextField;
     private javax.swing.JLabel addMzDeltaLabel;
-    private javax.swing.JTextField addMzDeltaTextField;
     private javax.swing.JLabel fixedCombIntThresholdLabel;
     private javax.swing.JTextField fixedCombIntThresholdTextField;
     private javax.swing.JPanel fixedCombMzDeltaFilterPanel;
+    private javax.swing.JList massDeltaFilterList;
+    private javax.swing.JTextField massDeltaTextField;
+    private javax.swing.JTextField maxConsecMassDeltasTextField;
     private javax.swing.JLabel maxConsecMzDeltasLabel;
-    private javax.swing.JTextField maxConsecMzDeltasTextField;
+    private javax.swing.JTextField minConsecMassDeltasTextField;
     private javax.swing.JLabel minConsecMzDeltasLabel;
-    private javax.swing.JTextField minConsecMzDeltasTextField;
-    private javax.swing.JList mzDeltaFilterList;
     private javax.swing.JLabel mzDeltaLabel;
-    private javax.swing.JTextField mzDeltaTextField;
-    private javax.swing.JButton removeMzDeltaButton;
+    private javax.swing.JButton removeMassDeltaButton;
     private javax.swing.JLabel varCombIntThresholdLabel;
     private javax.swing.JTextField varCombIntThresholdTextField;
     private javax.swing.JScrollPane varCombMzDeltaFilterScrollPane;

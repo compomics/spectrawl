@@ -48,7 +48,7 @@ public class ResultController {
     private SortedList<SpectrumImpl> sortedSpectrumList;
     //view
     private ChartPanel intensitiesChartPanel;
-    private ChartPanel countChartPanel;
+//    private ChartPanel countChartPanel;
     private ResultPanel resultPanel;
     //parent controller
     @Autowired
@@ -74,11 +74,11 @@ public class ResultController {
         resultPanel = new ResultPanel();
         intensitiesChartPanel = new ChartPanel(null);
         intensitiesChartPanel.setOpaque(false);
-        countChartPanel = new ChartPanel(null);
-        countChartPanel.setOpaque(false);
+//        countChartPanel = new ChartPanel(null);
+//        countChartPanel.setOpaque(false);
 
-        spectrumEventList = new BasicEventList<SpectrumImpl>();
-        sortedSpectrumList = new SortedList<SpectrumImpl>(spectrumEventList, new SpectrumComparator());
+        spectrumEventList = new BasicEventList<>();
+        sortedSpectrumList = new SortedList<>(spectrumEventList, new SpectrumComparator());
         resultPanel.getSpectrumTable().setModel(new EventTableModel(sortedSpectrumList, new SpectrumTableFormat()));
         resultPanel.getSpectrumTable().setSelectionModel(new EventSelectionModel(sortedSpectrumList));
 
@@ -115,7 +115,7 @@ public class ResultController {
         gridBagConstraints.weighty = 1.0;
 
         resultPanel.getIntensityChartParentPanel().add(intensitiesChartPanel, gridBagConstraints);
-        resultPanel.getCountChartParentPanel().add(countChartPanel, gridBagConstraints);
+//        resultPanel.getCountChartParentPanel().add(countChartPanel, gridBagConstraints);
     }
 
     /**
@@ -159,17 +159,17 @@ public class ResultController {
         GuiUtils.setShadowVisible(intensitiesChart, false);
 
         //create count chart
-        JFreeChart countChart = ChartFactory.createBarChart("experiment bins", "bin", "count", countCategoryDataset, PlotOrientation.VERTICAL, true, true, false);
-        CategoryPlot countPlot = (CategoryPlot) countChart.getPlot();
-        xAxis = (CategoryAxis) countPlot.getDomainAxis();
-        xAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
-        countChart.getPlot().setBackgroundPaint(Color.WHITE);
-        countChart.getPlot().setOutlineVisible(false);
-        GuiUtils.setShadowVisible(countChart, false);
+//        JFreeChart countChart = ChartFactory.createBarChart("experiment bins", "bin", "count", countCategoryDataset, PlotOrientation.VERTICAL, true, true, false);
+//        CategoryPlot countPlot = (CategoryPlot) countChart.getPlot();
+//        xAxis = (CategoryAxis) countPlot.getDomainAxis();
+//        xAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
+//        countChart.getPlot().setBackgroundPaint(Color.WHITE);
+//        countChart.getPlot().setOutlineVisible(false);
+//        GuiUtils.setShadowVisible(countChart, false);
 
         //add charts to panels
         intensitiesChartPanel.setChart(intensitiesChart);
-        countChartPanel.setChart(countChart);
+//        countChartPanel.setChart(countChart);
 
         //set spectrum event list
         spectrumEventList.clear();
@@ -185,7 +185,7 @@ public class ResultController {
     public void clear() {
         resultPanel.getExperimentInfoLabel().setText("");
         intensitiesChartPanel.setChart(null);
-        countChartPanel.setChart(null);
+//        countChartPanel.setChart(null);
         addSpectrumPanel(null);
         spectrumEventList.clear();
     }
