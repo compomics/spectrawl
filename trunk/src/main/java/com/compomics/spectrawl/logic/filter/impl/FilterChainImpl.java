@@ -51,10 +51,10 @@ public class FilterChainImpl<T> implements FilterChain<T> {
         for (Filter<T> filter : filters) {
             switch (filterChainType) {
                 case AND:
-                    passesFilterChain = passesFilterChain && filter.passesFilter(t, Boolean.FALSE);
+                    passesFilterChain = passesFilterChain && filter.passesFilter(t, false);
                     break;
                 case OR:
-                    passesFilterChain = passesFilterChain || filter.passesFilter(t, Boolean.FALSE);
+                    passesFilterChain = passesFilterChain || filter.passesFilter(t, false);
                     break;
             }
         }
@@ -94,7 +94,7 @@ public class FilterChainImpl<T> implements FilterChain<T> {
     public static FilterChainImpl getFilterChain(PTM ptm) {
         FilterChainImpl result = new FilterChainImpl(FilterChainType.OR);
         for (NeutralLoss neutralLoss : ptm.getNeutralLosses()) {
-            result.addFilter(new BasicMzDeltaFilter(neutralLoss.mass, null)); // Not sure whether I got that right
+            result.addFilter(new BasicMassDeltaFilter(neutralLoss.mass, null)); // Not sure whether I got that right
         }
         for (ReporterIon reporterIon : ptm.getReporterIons()) {
             result.addFilter(new BasicMzFilter(reporterIon.getTheoreticMass(), new ArrayList<Double>())); //@TODO: add mzRatioFilterValues

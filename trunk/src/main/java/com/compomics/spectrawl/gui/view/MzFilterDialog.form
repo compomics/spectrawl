@@ -476,7 +476,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="precRelMzToleranceLabel">
               <Properties>
-                <Property name="text" type="java.lang.String" value="M/z tolerance"/>
+                <Property name="text" type="java.lang.String" value="M/Z tolerance"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="precRelMzToleranceTextField">

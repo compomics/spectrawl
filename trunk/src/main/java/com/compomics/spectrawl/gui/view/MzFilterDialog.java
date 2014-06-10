@@ -321,7 +321,7 @@ public class MzFilterDialog extends javax.swing.JDialog {
         removePrecRelMzButton.setMinimumSize(new java.awt.Dimension(97, 23));
         removePrecRelMzButton.setPreferredSize(new java.awt.Dimension(97, 23));
 
-        precRelMzToleranceLabel.setText("M/z tolerance");
+        precRelMzToleranceLabel.setText("M/Z tolerance");
 
         precRelMzToleranceTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 

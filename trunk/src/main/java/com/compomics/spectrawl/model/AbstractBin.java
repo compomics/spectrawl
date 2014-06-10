@@ -9,15 +9,9 @@ package com.compomics.spectrawl.model;
  */
 public abstract class AbstractBin {
 
-    protected int peakCount;
-    protected double highestIntensity;
-    protected double intensitySum;
-
-    public AbstractBin() {
-        peakCount = 0;
-        highestIntensity = 0;
-        intensitySum = 0;
-    }
+    protected int peakCount = 0;
+    protected double highestIntensity = 0;
+    protected double intensitySum = 0;
 
     public int getPeakCount() {
         return peakCount;

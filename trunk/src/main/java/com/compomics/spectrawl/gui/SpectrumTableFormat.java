@@ -58,10 +58,14 @@ public class SpectrumTableFormat implements AdvancedTableFormat<SpectrumImpl> {
             case PRECURSOR_MZ:
                 return spectrum.getPrecursor().getMz();
             case CHARGE:
-                return spectrum.getPrecursor().getPossibleCharges().get(0).value;            
+                if (!spectrum.getPrecursor().getPossibleCharges().isEmpty()) {
+                    return spectrum.getPrecursor().getPossibleCharges().get(0).value;
+                } else {
+                    return 0;
+                }
             default:
                 throw new IllegalArgumentException("Unexpected column number " + column);
         }
     }
-    
+
 }

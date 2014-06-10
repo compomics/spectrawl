@@ -2,7 +2,7 @@ package com.compomics.spectrawl.filter;
 
 import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
-import com.compomics.spectrawl.logic.filter.impl.BasicMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.BasicMassDeltaFilter;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import com.compomics.util.experiment.massspectrometry.Charge;
@@ -37,7 +37,7 @@ public class BasicMassDeltaFilterTest {
     public void setUp() {
 
         //compose spectra and add them to the experiment
-        HashMap<Double, Peak> peaks = new HashMap<Double, Peak>();
+        HashMap<Double, Peak> peaks = new HashMap<>();
         Peak peak = new Peak(100D, 70D);
         peaks.put(100D, peak);
         peak = new Peak(220.54, 30D);
@@ -52,7 +52,7 @@ public class BasicMassDeltaFilterTest {
         peaks.put(420.6, peak);
 
         spectrum = new SpectrumImpl("1");
-        ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
+        ArrayList<Charge> possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 1));
         Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum.setPrecursor(precursor);
@@ -64,10 +64,10 @@ public class BasicMassDeltaFilterTest {
     
     @Test
     public void testPassesFilter() {
-        List<Double> filterValues = new ArrayList<Double>();
+        List<Double> filterValues = new ArrayList<>();
         filterValues.add(120D);
         filterValues.add(200D);
-        Filter<SpectrumImpl> filter = new BasicMzDeltaFilter(0.3, filterValues);
+        Filter<SpectrumImpl> filter = new BasicMassDeltaFilter(0.3, filterValues);
         
         assertTrue(filter.passesFilter(spectrum, false));
         assertFalse(filter.passesFilter(spectrum, true));                

@@ -92,7 +92,7 @@ public class ExperimentLoaderController {
         //select only files
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         //select multiple file
-        fileChooser.setMultiSelectionEnabled(Boolean.TRUE);
+        fileChooser.setMultiSelectionEnabled(true);
         //set MGF file filter
         fileChooser.setFileFilter(new MgfFileFilter());
 
@@ -101,9 +101,9 @@ public class ExperimentLoaderController {
             public void actionPerformed(ActionEvent e) {
                 //in response to the button click, show open dialog 
                 int returnVal = experimentLoaderPanel.getFileChooser().showOpenDialog(experimentLoaderPanel);
-                //clear list
-                mgfFilesListModel.clear();
                 if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    //clear list
+                    mgfFilesListModel.clear();
                     for (int i = 0; i < experimentLoaderPanel.getFileChooser().getSelectedFiles().length; i++) {
                         mgfFilesListModel.add(i, experimentLoaderPanel.getFileChooser().getSelectedFiles()[i].getName());
                     }
@@ -240,15 +240,11 @@ public class ExperimentLoaderController {
                 LOGGER.info("done loading MGF file(s)");
             }
 
-//            //bin experiment
-//            if (experiment != null) {
-//                experimentBinner.binExperiment(experiment);
-//            }
-            
-            //calculate quantiles
+            LOGGER.debug("Started to calculate quantiles.");
             if (experiment != null) {
                 experiment.calculateQuantiles();
             }
+            LOGGER.debug("Finished to calculate quantiles.");
 
             return experiment;
         }
@@ -261,10 +257,7 @@ public class ExperimentLoaderController {
             try {
                 Experiment experiment = this.get();
                 mainController.onExperimentLoaded(experiment);
-            } catch (InterruptedException ex) {
-                LOGGER.error(ex.getMessage(), ex);
-                eventBus.post(new UnexpectedErrorMessageEvent(ex.getMessage()));
-            } catch (ExecutionException ex) {
+            } catch (InterruptedException | ExecutionException ex) {
                 LOGGER.error(ex.getMessage(), ex);
                 eventBus.post(new UnexpectedErrorMessageEvent(ex.getMessage()));
             } catch (CancellationException ex) {

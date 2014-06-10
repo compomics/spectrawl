@@ -11,12 +11,12 @@ import javax.swing.JTextField;
  *
  * @author Niels Hulstaert
  */
-public class MzDeltaFilterDialog extends javax.swing.JDialog {
+public class MassDeltaFilterDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form FilterConfigDialog
      */
-    public MzDeltaFilterDialog(java.awt.Frame parent, boolean modal) {
+    public MassDeltaFilterDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.getContentPane().setBackground(Color.WHITE);
@@ -80,7 +80,6 @@ public class MzDeltaFilterDialog extends javax.swing.JDialog {
         orRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(650, 350));
 
         mzDeltaFilterPanel.setMinimumSize(new java.awt.Dimension(4, 4));
         mzDeltaFilterPanel.setOpaque(false);
@@ -88,7 +87,7 @@ public class MzDeltaFilterDialog extends javax.swing.JDialog {
 
         mzDeltaFilterScrollPane.setViewportView(mzDeltaFilterList);
 
-        addMzDeltaLabel.setText("M/Z delta");
+        addMzDeltaLabel.setText("Mass delta");
 
         addMzDeltaTextField.setPreferredSize(new java.awt.Dimension(6, 25));
 
@@ -170,7 +169,7 @@ public class MzDeltaFilterDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        filterSettingsTabbedPane.addTab("M/Z delta filter settings", mzDeltaFilterPanel);
+        filterSettingsTabbedPane.addTab("Mass delta filter settings", mzDeltaFilterPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -49,13 +49,13 @@ public class PrecRelMassFilterTest {
         peaks.put(450.6, peak);
 
         SpectrumImpl spectrum_1 = new SpectrumImpl("1");
-        ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
+        ArrayList<Charge> possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 1));
         Precursor precursor = new Precursor(0.0, 430.6, 0.0, possibleCharges);
         spectrum_1.setPrecursor(precursor);
         spectrum_1.setPeakList(peaks);
 
-        peaks = new HashMap<Double, Peak>();
+        peaks = new HashMap<>();
         peak = new Peak(100.0 / 2, 70D);
         peaks.put(100.0 / 2, peak);
         peak = new Peak(220.54 / 2, 30D);
@@ -72,13 +72,13 @@ public class PrecRelMassFilterTest {
         peaks.put(450.6 / 2, peak);
 
         SpectrumImpl spectrum_2 = new SpectrumImpl("2");
-        possibleCharges = new ArrayList<Charge>();
+        possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 2));
         precursor = new Precursor(0.0, 430.6 / 2, 0.0, possibleCharges);
         spectrum_2.setPrecursor(precursor);
         spectrum_2.setPeakList(peaks);
 
-        peaks = new HashMap<Double, Peak>();
+        peaks = new HashMap<>();
         peak = new Peak(100D / 3, 70D);
         peaks.put(100D / 3, peak);
         peak = new Peak(220.54 / 3, 30D);
@@ -95,13 +95,13 @@ public class PrecRelMassFilterTest {
         peaks.put(450.6 / 3, peak);
 
         SpectrumImpl spectrum_3 = new SpectrumImpl("3");
-        possibleCharges = new ArrayList<Charge>();
+        possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 3));
         precursor = new Precursor(0.0, 430.6 / 3, 0.0, possibleCharges);
         spectrum_3.setPrecursor(precursor);
         spectrum_3.setPeakList(peaks);
 
-        spectra = new ArrayList<SpectrumImpl>();
+        spectra = new ArrayList<>();
         spectra.add(spectrum_1);
         spectra.add(spectrum_2);
         spectra.add(spectrum_3);

@@ -49,8 +49,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                     <showDeprecation>true</showDeprecation>
                     <debug>true</debug>
                 </configuration>
@@ -290,7 +290,7 @@
         <dependency>
             <groupId>com.compomics</groupId>
             <artifactId>utilities</artifactId>
-            <version>3.13.37</version>
+            <version>3.28.11</version>
             <exclusions>
                 <exclusion>
                     <artifactId>derby</artifactId>
@@ -342,7 +342,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.5</version>
+            <version>4.11</version>
             <scope>test</scope>
         </dependency>
 

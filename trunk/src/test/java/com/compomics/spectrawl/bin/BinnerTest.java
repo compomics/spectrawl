@@ -36,7 +36,7 @@ public class BinnerTest {
     public void setUp() {
 
         //compose spectra and add them to the experiment
-        HashMap<Double, Peak> peaks = new HashMap<Double, Peak>();
+        HashMap<Double, Peak> peaks = new HashMap<>();
         Peak peak = new Peak(100D, 70D);
         peaks.put(100D, peak);
         peak = new Peak(220.54, 30D);
@@ -51,13 +51,13 @@ public class BinnerTest {
         peaks.put(420.6, peak);
 
         SpectrumImpl spectrum_1 = new SpectrumImpl("1");
-        ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
+        ArrayList<Charge> possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 1));
         Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum_1.setPrecursor(precursor);
         spectrum_1.setPeakList(peaks);
 
-        peaks = new HashMap<Double, Peak>();
+        peaks = new HashMap<>();
         peak = new Peak(100D, 70D);
         peaks.put(100D, peak);
         peak = new Peak(220.54, 100D);
@@ -78,13 +78,13 @@ public class BinnerTest {
         peaks.put(260.54, peak);
 
         SpectrumImpl spectrum_2 = new SpectrumImpl("2");
-        possibleCharges = new ArrayList<Charge>();
+        possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 1));
         precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum_2.setPrecursor(precursor);
         spectrum_2.setPeakList(peaks);
 
-        peaks = new HashMap<Double, Peak>();
+        peaks = new HashMap<>();
         peak = new Peak(100D, 70D);
         peaks.put(100D, peak);
         peak = new Peak(220.54, 100D);
@@ -99,13 +99,13 @@ public class BinnerTest {
         peaks.put(260.54, peak);
 
         SpectrumImpl spectrum_3 = new SpectrumImpl("3");
-        possibleCharges = new ArrayList<Charge>();
+        possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 2));
         precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum_3.setPrecursor(precursor);
         spectrum_3.setPeakList(peaks);
 
-        peaks = new HashMap<Double, Peak>();
+        peaks = new HashMap<>();
         peak = new Peak(100D, 70D);
         peaks.put(100D, peak);
         peak = new Peak(220.54, 100D);
@@ -120,13 +120,13 @@ public class BinnerTest {
         peaks.put(260.54, peak);
 
         SpectrumImpl spectrum_4 = new SpectrumImpl("4");
-        possibleCharges = new ArrayList<Charge>();
+        possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 2));
         precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum_4.setPrecursor(precursor);
         spectrum_4.setPeakList(peaks);
 
-        peaks = new HashMap<Double, Peak>();
+        peaks = new HashMap<>();
         peak = new Peak(100D, 70D);
         peaks.put(100D, peak);
         peak = new Peak(220.54, 100D);
@@ -141,20 +141,20 @@ public class BinnerTest {
         peaks.put(260.54, peak);
 
         SpectrumImpl spectrum_5 = new SpectrumImpl("5");
-        possibleCharges = new ArrayList<Charge>();
+        possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 3));
         precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum_5.setPrecursor(precursor);
         spectrum_5.setPeakList(peaks);
 
-        peaks = new HashMap<Double, Peak>();
+        peaks = new HashMap<>();
         peak = new Peak(120D, 70D);
         peaks.put(120D, peak);
         peak = new Peak(220.54, 100D);
         peaks.put(220.54, peak);
 
         SpectrumImpl spectrum_6 = new SpectrumImpl("6");
-        possibleCharges = new ArrayList<Charge>();
+        possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 3));
         precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum_6.setPrecursor(precursor);
@@ -169,7 +169,7 @@ public class BinnerTest {
         spectrumBinner.binSpectrum(spectrum_6, BinParams.BINS_FLOOR.getValue(), BinParams.BINS_CEILING.getValue(), BinParams.BIN_SIZE.getValue());
         
         //add spectra to list
-        spectra = new ArrayList<SpectrumImpl>();
+        spectra = new ArrayList<>();
         spectra.add(spectrum_1);
         spectra.add(spectrum_2);
         spectra.add(spectrum_3);

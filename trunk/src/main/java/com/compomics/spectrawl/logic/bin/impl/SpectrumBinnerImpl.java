@@ -1,4 +1,4 @@
-    package com.compomics.spectrawl.logic.bin.impl;
+package com.compomics.spectrawl.logic.bin.impl;
 
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.model.PeakBin;
@@ -20,25 +20,25 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
     public void binSpectrum(SpectrumImpl spectrum, double floor, double ceiling, double binSize) {
         //init bins
         spectrum.initBins();
-        
+
         Map<Double, TreeMap<Double, PeakBin>> peakBinsMap = getPeakBinsMap(spectrum, floor, ceiling, binSize);
-        for(TreeMap<Double, PeakBin> peakBins : peakBinsMap.values()){
+        for (TreeMap<Double, PeakBin> peakBins : peakBinsMap.values()) {
             spectrum.addToBins(peakBins);
         }
     }
 
     @Override
     public Map<Double, TreeMap<Double, PeakBin>> getPeakBinsMap(SpectrumImpl spectrum, double floor, double ceiling, double binSize) {
-        Map<Double, TreeMap<Double, PeakBin>> peakBinsMap = new HashMap<Double, TreeMap<Double, PeakBin>>();
+        Map<Double, TreeMap<Double, PeakBin>> peakBinsMap = new HashMap<>();
 
-        TreeSet<Double> sortedKeys = new TreeSet<Double>(spectrum.getPeakMap().keySet());
+        TreeSet<Double> sortedKeys = new TreeSet<>(spectrum.getPeakMap().keySet());
         //outer loop
         for (Double outerMz : sortedKeys) {
-            TreeMap<Double, PeakBin> peakBins = new TreeMap<Double, PeakBin>();
+            TreeMap<Double, PeakBin> peakBins = new TreeMap<>();
             initPeakBins(peakBins, floor, ceiling, binSize);
             //inner loop            
-            for (Double innerMz : sortedKeys) {                               
-                double mzDelta = innerMz - outerMz;                
+            for (Double innerMz : sortedKeys) {
+                double mzDelta = innerMz - outerMz;
                 //check if m/z delta value lies within the bins floor and ceiling
                 if ((floor <= mzDelta) && (mzDelta < ceiling)) {
                     //add to peak bins
@@ -63,8 +63,17 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
      * @param intensity the intensity
      */
     private void addToPeakBins(TreeMap<Double, PeakBin> peakBins, double mzDelta, double intensity) {
+//        Double key = peakBins.floorKey(mzDelta);
+//        PeakBin bin = peakBins.get(key);
+//        bin.addPeakCount();
+//        bin.addIntensity(intensity);
+
         Double key = peakBins.floorKey(mzDelta);
         PeakBin bin = peakBins.get(key);
+        if (bin == null) {
+            bin = new PeakBin();
+            peakBins.put(key, bin);
+        }
         bin.addPeakCount();
         bin.addIntensity(intensity);
     }
@@ -77,7 +86,8 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
     private void initPeakBins(TreeMap<Double, PeakBin> peakBins, double floor, double ceiling, double binSize) {
         int numberOfBins = (int) ((ceiling - floor) / binSize);
         for (int i = 0; i < numberOfBins; i++) {
-            peakBins.put(floor + (i * binSize), new PeakBin());
+//            peakBins.put(floor + (i * binSize), new PeakBin());
+            peakBins.put(floor + (i * binSize), null);
         }
     }
 }

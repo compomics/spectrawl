@@ -86,8 +86,8 @@ public class MainController implements ActionListener {
 
         //add action listeners
         mainFrame.getExitMenuItem().addActionListener(this);
-        mainFrame.getAdvancedMzDeltaFilterSettingsMenuItem().addActionListener(this);
-        mainFrame.getMzDeltaFilterSettingsMenuItem().addActionListener(this);
+        mainFrame.getAdvancedMassDeltaFilterSettingsMenuItem().addActionListener(this);
+        mainFrame.getMassDeltaFilterSettingsMenuItem().addActionListener(this);
         mainFrame.getMzRatioFilterSettingsMenuItem().addActionListener(this);
     }
 

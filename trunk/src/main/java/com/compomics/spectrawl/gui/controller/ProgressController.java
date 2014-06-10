@@ -27,7 +27,7 @@ public class ProgressController extends WindowAdapter {
     private ExperimentLoaderController experimentLoaderController;        
       
     public void init() {
-        progressFinished = Boolean.FALSE;
+        progressFinished = false;
         //set this controller in PipelineProgressAppender
         ProgressAppender.setProgressController(this);
     }
@@ -43,7 +43,7 @@ public class ProgressController extends WindowAdapter {
         progressDialog.setTitle(progressHeaderText + " Please Wait...");
         progress = 1;
         GuiUtils.centerDialogOnFrame(experimentLoaderController.getMainController().getMainFrame(), progressDialog);
-        progressFinished = Boolean.FALSE;
+        progressFinished = false;
 
         new Thread(new Runnable() {
 
@@ -65,7 +65,7 @@ public class ProgressController extends WindowAdapter {
     public void hideProgressDialog() {
         progressFinished = true;
         progressDialog.setRunFinished();
-        progressDialog.setVisible(Boolean.FALSE);
+        progressDialog.setVisible(false);
     }
 
     public void setProgressInfoText(String progressInfoText) {     

@@ -155,7 +155,7 @@ public class MsLimsExperimentService implements ExperimentService {
 
             //add the spectrum to the spectra
             //if the spectrum passes the filter
-            if (spectrumFilter.passesFilter(spectrum, Boolean.FALSE)) {
+            if (spectrumFilter.passesFilter(spectrum, false)) {
                 LOGGER.debug("spectrum " + spectrum.getSpectrumId() + " passed the filter.");
                 return spectrum;
             } else {

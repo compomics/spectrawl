@@ -4,7 +4,7 @@ import com.compomics.spectrawl.logic.filter.Filter;
 import com.compomics.spectrawl.logic.filter.FilterChain;
 import com.compomics.spectrawl.logic.bin.SpectrumBinner;
 import com.compomics.spectrawl.logic.filter.impl.FilterChainImpl;
-import com.compomics.spectrawl.logic.filter.impl.BasicMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.BasicMassDeltaFilter;
 import com.compomics.spectrawl.logic.filter.impl.BasicMzFilter;
 import com.compomics.spectrawl.model.BinParams;
 import com.compomics.spectrawl.model.SpectrumImpl;
@@ -78,7 +78,7 @@ public class FilterChainTest {
         List<Double> filterValues = new ArrayList<Double>();
         filterValues.add(120D);
         filterValues.add(200D);
-        Filter<SpectrumImpl> binFilter = new BasicMzDeltaFilter(0.8, filterValues);
+        Filter<SpectrumImpl> binFilter = new BasicMassDeltaFilter(0.8, filterValues);
 
         andFilterChain.addFilter(mzRatioFilter);
         orFilterChain.addFilter(mzRatioFilter);

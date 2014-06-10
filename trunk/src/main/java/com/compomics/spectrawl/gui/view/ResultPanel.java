@@ -24,9 +24,9 @@ public class ResultPanel extends javax.swing.JPanel {
         spectrumTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
     }
 
-    public JPanel getCountChartParentPanel() {
-        return countChartParentPanel;
-    }
+//    public JPanel getCountChartParentPanel() {
+//        return countChartParentPanel;
+//    }
 
     public JPanel getIntensityChartParentPanel() {
         return intensityChartParentPanel;
@@ -58,7 +58,6 @@ public class ResultPanel extends javax.swing.JPanel {
         experimentInfoLabel = new javax.swing.JLabel();
         chartsTabbedPane = new javax.swing.JTabbedPane();
         intensityChartParentPanel = new javax.swing.JPanel();
-        countChartParentPanel = new javax.swing.JPanel();
         spectraPanel = new javax.swing.JPanel();
         spectrumTablePanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -88,10 +87,6 @@ public class ResultPanel extends javax.swing.JPanel {
         intensityChartParentPanel.setBackground(new java.awt.Color(255, 255, 255));
         intensityChartParentPanel.setLayout(new java.awt.GridBagLayout());
         chartsTabbedPane.addTab("Intensities chart", intensityChartParentPanel);
-
-        countChartParentPanel.setBackground(new java.awt.Color(255, 255, 255));
-        countChartParentPanel.setLayout(new java.awt.GridBagLayout());
-        chartsTabbedPane.addTab("Count chart", countChartParentPanel);
 
         spectraPanel.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -181,7 +176,6 @@ public class ResultPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane chartsTabbedPane;
-    private javax.swing.JPanel countChartParentPanel;
     private javax.swing.JLabel experimentInfoLabel;
     private javax.swing.JPanel experimentInfoLabelPanel;
     private javax.swing.JPanel intensityChartParentPanel;

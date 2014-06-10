@@ -13,22 +13,22 @@ public class PrecRelMassFilter implements Filter<SpectrumImpl> {
 
     //@TODO: add a name to the filter?
     private double mzTolerance;
-    private List<Double> precRelMzFilterValues;
+    private List<Double> precRelMassFilterValues;
 
     public PrecRelMassFilter() {
     }
 
     public PrecRelMassFilter(double mzTolerance, List<Double> precRelMzFilterValues) {
         this.mzTolerance = mzTolerance;
-        this.precRelMzFilterValues = precRelMzFilterValues;
+        this.precRelMassFilterValues = precRelMzFilterValues;
     }
 
-    public List<Double> getPrecRelMzFilterValues() {
-        return precRelMzFilterValues;
+    public List<Double> getPrecRelMassFilterValues() {
+        return precRelMassFilterValues;
     }
 
-    public void setPrecRelMzFilterValues(List<Double> precRelMzFilterValues) {
-        this.precRelMzFilterValues = precRelMzFilterValues;
+    public void setPrecRelMassFilterValues(List<Double> precRelMzFilterValues) {
+        this.precRelMassFilterValues = precRelMzFilterValues;
     }
 
     public double getMzTolerance() {
@@ -42,7 +42,7 @@ public class PrecRelMassFilter implements Filter<SpectrumImpl> {
     @Override
     public boolean passesFilter(SpectrumImpl spectrum, boolean doInvert) {
         boolean passesFilter = true;
-        for (double precRelMzFilterValue : precRelMzFilterValues) {
+        for (double precRelMzFilterValue : precRelMassFilterValues) {
             if (!passesPrecRelMzFilterValue(spectrum, precRelMzFilterValue)) {
                 passesFilter = false;
                 break;

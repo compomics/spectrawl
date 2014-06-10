@@ -12,7 +12,7 @@ import java.util.List;
 public interface FilterChain<T> extends Filter<T> {
 
     public enum FilterChainType {
-        AND(Boolean.TRUE), OR(Boolean.FALSE);
+        AND(true), OR(false);
 
         private boolean startBooleanValue;
 

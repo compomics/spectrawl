@@ -5,15 +5,16 @@
 package com.compomics.spectrawl.gui.controller;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
-import com.compomics.spectrawl.gui.view.AdvancedMzDeltaFilterDialog;
-import com.compomics.spectrawl.gui.view.MzDeltaFilterDialog;
+import com.compomics.spectrawl.gui.view.AdvancedMassDeltaFilterDialog;
+import com.compomics.spectrawl.gui.view.MassDeltaFilterDialog;
 import com.compomics.spectrawl.gui.view.MzFilterDialog;
 import com.compomics.spectrawl.logic.filter.FilterChain;
-import com.compomics.spectrawl.logic.filter.impl.BasicMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.BasicMassDeltaFilter;
 import com.compomics.spectrawl.logic.filter.impl.BasicMzFilter;
 import com.compomics.spectrawl.logic.filter.impl.FilterChainImpl;
-import com.compomics.spectrawl.logic.filter.impl.FixedCombMzDeltaFilter;
+import com.compomics.spectrawl.logic.filter.impl.FixedCombMassDeltaFilter;
 import com.compomics.spectrawl.logic.filter.impl.PrecRelMassFilter;
+import com.compomics.spectrawl.logic.filter.impl.VariableCombMassDeltaFilter;
 import com.compomics.spectrawl.model.FilterParams;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.awt.event.ActionEvent;
@@ -31,17 +32,17 @@ import org.springframework.stereotype.Component;
  */
 @Component("filterConfigController")
 public class FilterConfigController {
-    
+
     private static final Logger LOGGER = Logger.getLogger(FilterConfigController.class);
     //model
     private DefaultListModel mzFilterListModel;
-    private DefaultListModel precRelMzFilterListModel;
-    private DefaultListModel mzDeltaFilterListModel;
-    private DefaultListModel varCombMzDeltaFilterListModel;
+    private DefaultListModel precRelMassFilterListModel;
+    private DefaultListModel massDeltaFilterListModel;
+    private DefaultListModel varCombMassDeltaFilterListModel;
     //view
     private MzFilterDialog mzFilterDialog;
-    private MzDeltaFilterDialog mzDeltaFilterDialog;
-    private AdvancedMzDeltaFilterDialog advancedMzDeltaFilterDialog;
+    private MassDeltaFilterDialog massDeltaFilterDialog;
+    private AdvancedMassDeltaFilterDialog advancedMassDeltaFilterDialog;
     //parent controller
     @Autowired
     private MainController mainController;
@@ -49,18 +50,20 @@ public class FilterConfigController {
     @Autowired
     private FilterChain<SpectrumImpl> spectrumFilterChain;
     @Autowired
-    private FixedCombMzDeltaFilter fixedCombMzDeltaFilter;
-    
+    private FixedCombMassDeltaFilter fixedCombMassDeltaFilter;
+    @Autowired
+    private VariableCombMassDeltaFilter variableCombMassDeltaFilter;
+
     public MzFilterDialog getMzRatioFilterDialog() {
         return mzFilterDialog;
     }
-    
-    public MzDeltaFilterDialog getMzDeltaFilterDialog() {
-        return mzDeltaFilterDialog;
+
+    public MassDeltaFilterDialog getMzDeltaFilterDialog() {
+        return massDeltaFilterDialog;
     }
-    
-    public AdvancedMzDeltaFilterDialog getAdvancedMzDeltaFilterDialog() {
-        return advancedMzDeltaFilterDialog;
+
+    public AdvancedMassDeltaFilterDialog getAdvancedMzDeltaFilterDialog() {
+        return advancedMassDeltaFilterDialog;
     }
 
     /**
@@ -69,12 +72,12 @@ public class FilterConfigController {
     public void init() {
         //init dialogs
         mzFilterDialog = new MzFilterDialog(mainController.getMainFrame(), true);
-        mzDeltaFilterDialog = new MzDeltaFilterDialog(mainController.getMainFrame(), true);
-        advancedMzDeltaFilterDialog = new AdvancedMzDeltaFilterDialog(mainController.getMainFrame(), true);
+        massDeltaFilterDialog = new MassDeltaFilterDialog(mainController.getMainFrame(), true);
+        advancedMassDeltaFilterDialog = new AdvancedMassDeltaFilterDialog(mainController.getMainFrame(), true);
 
         //init filter chain        
         spectrumFilterChain.setFilterChainType(FilterChain.FilterChainType.AND);
-        
+
         initMzFilterDialog();
         initMassDeltaFilterDialog();
         initAdvancedMassDeltaFilterDialog();
@@ -116,31 +119,31 @@ public class FilterConfigController {
      * @return the validation message list
      */
     public List<String> validateUserInput() {
-        List<String> validationMessages = new ArrayList<String>();
+        List<String> validationMessages = new ArrayList<>();
         if (!mzFilterListModel.isEmpty()) {
             if (mzFilterDialog.getMzToleranceTextField().getText().equals("")) {
-                validationMessages.add("Basic mass filter: m/z tolerance is empty");
+                validationMessages.add("Basic m/z filter: m/z tolerance is empty");
             }
         }
-        
-        if (!precRelMzFilterListModel.isEmpty()) {
+
+        if (!precRelMassFilterListModel.isEmpty()) {
             if (mzFilterDialog.getPrecRelMzToleranceTextField().getText().equals("")) {
-                validationMessages.add("Precursor relative m/z filter: mass tolerance is empty");
+                validationMessages.add("Precursor relative mass filter: mass tolerance is empty");
             }
         }
-        
-        if (!mzDeltaFilterListModel.isEmpty()) {
-            if (mzDeltaFilterDialog.getIntensityThresholdTextField().getText().equals("")) {
-                validationMessages.add("Basic m/z delta filter: intensity threshold is empty");
+
+        if (!massDeltaFilterListModel.isEmpty()) {
+            if (massDeltaFilterDialog.getIntensityThresholdTextField().getText().equals("")) {
+                validationMessages.add("Basic mass delta filter: intensity threshold is empty");
             }
         }
-        
-        if (!varCombMzDeltaFilterListModel.isEmpty()) {
-            if (advancedMzDeltaFilterDialog.getVarCombIntThresholdTextField().getText().equals("")) {
-                validationMessages.add("Variable comb m/z delta filter: intensity threshold is empty");
+
+        if (!varCombMassDeltaFilterListModel.isEmpty()) {
+            if (advancedMassDeltaFilterDialog.getVarCombIntThresholdTextField().getText().equals("")) {
+                validationMessages.add("Variable comb mass delta filter: intensity threshold is empty");
             }
         }
-        
+
         return validationMessages;
     }
 
@@ -155,8 +158,8 @@ public class FilterConfigController {
             if (mzFilterDialog.getAndRadioButton().isSelected()) {
                 //if the filtertype is "and", add all the values to the same filter                
                 BasicMzFilter basicMzFilter = new BasicMzFilter();
-                basicMzFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getMzToleranceTextField().getText()));                
-                List<Double> massFilterValues = new ArrayList<Double>();
+                basicMzFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getMzToleranceTextField().getText()));
+                List<Double> massFilterValues = new ArrayList<>();
                 for (Object value : mzFilterListModel.toArray()) {
                     massFilterValues.add((Double) value);
                 }
@@ -164,12 +167,12 @@ public class FilterConfigController {
                 spectrumFilterChain.addFilter(basicMzFilter);
             } else {
                 //if the filtertype is "or", add all the values to the different filters in the same filterchain            
-                FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<SpectrumImpl>();
+                FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<>();
                 orFilterChain.setFilterChainType(FilterChain.FilterChainType.OR);
                 for (Object value : mzFilterListModel.toArray()) {
                     BasicMzFilter basicMzFilter = new BasicMzFilter();
                     basicMzFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getMzToleranceTextField().getText()));
-                    List<Double> massFilterValues = new ArrayList<Double>();
+                    List<Double> massFilterValues = new ArrayList<>();
                     massFilterValues.add((Double) value);
                     basicMzFilter.setMzFilterValues(massFilterValues);
                     orFilterChain.addFilter(basicMzFilter);
@@ -179,74 +182,84 @@ public class FilterConfigController {
         }
 
         //update PrecRelMassFilter        
-        if (!precRelMzFilterListModel.isEmpty()) {
+        if (!precRelMassFilterListModel.isEmpty()) {
             //check filter type
             if (mzFilterDialog.getPrecRelAndRadioButton().isSelected()) {
                 //if the filtertype is "and", add all the values to the same filter                
-                PrecRelMassFilter precRelMzFilter = new PrecRelMassFilter();
-                precRelMzFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getPrecRelMzToleranceTextField().getText()));                
-                List<Double> massFilterValues = new ArrayList<Double>();
-                for (Object value : mzFilterListModel.toArray()) {
+                PrecRelMassFilter precRelMassFilter = new PrecRelMassFilter();
+                precRelMassFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getPrecRelMzToleranceTextField().getText()));
+                List<Double> massFilterValues = new ArrayList<>();
+                for (Object value : precRelMassFilterListModel.toArray()) {
                     massFilterValues.add((Double) value);
                 }
-                precRelMzFilter.setPrecRelMzFilterValues(massFilterValues);
-                spectrumFilterChain.addFilter(precRelMzFilter);
+                precRelMassFilter.setPrecRelMassFilterValues(massFilterValues);
+                spectrumFilterChain.addFilter(precRelMassFilter);
             } else {
                 //if the filtertype is "or", add all the values to the different filters in the same filterchain            
-                FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<SpectrumImpl>();
+                FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<>();
                 orFilterChain.setFilterChainType(FilterChain.FilterChainType.OR);
-                for (Object value : mzFilterListModel.toArray()) {
-                    PrecRelMassFilter precRelMzFilter = new PrecRelMassFilter();
-                    precRelMzFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getPrecRelMzToleranceTextField().getText()));
-                    List<Double> massFilterValues = new ArrayList<Double>();
+                for (Object value : precRelMassFilterListModel.toArray()) {
+                    PrecRelMassFilter precRelMassFilter = new PrecRelMassFilter();
+                    precRelMassFilter.setMzTolerance(Double.parseDouble(mzFilterDialog.getPrecRelMzToleranceTextField().getText()));
+                    List<Double> massFilterValues = new ArrayList<>();
                     massFilterValues.add((Double) value);
-                    precRelMzFilter.setPrecRelMzFilterValues(massFilterValues);
-                    orFilterChain.addFilter(precRelMzFilter);
+                    precRelMassFilter.setPrecRelMassFilterValues(massFilterValues);
+                    orFilterChain.addFilter(precRelMassFilter);
                 }
                 spectrumFilterChain.addFilter(orFilterChain);
             }
         }
 
-        //update BasicMzDeltaFilter
-        if (!mzDeltaFilterListModel.isEmpty()) {
+        //update BasicMassDeltaFilter
+        if (!massDeltaFilterListModel.isEmpty()) {
             //check filter type
-            if (mzDeltaFilterDialog.getAndRadioButton().isSelected()) {
+            if (massDeltaFilterDialog.getAndRadioButton().isSelected()) {
                 //if the filtertype is "and", add all the values to the same filter                
-                BasicMzDeltaFilter basicMzDeltaFilter = new BasicMzDeltaFilter();
-                basicMzDeltaFilter.setIntensityThreshold(Double.parseDouble(mzDeltaFilterDialog.getIntensityThresholdTextField().getText()));                
-                List<Double> mzDeltaFilterValues = new ArrayList<Double>();
-                for (Object value : mzDeltaFilterListModel.toArray()) {
+                BasicMassDeltaFilter basicMassDeltaFilter = new BasicMassDeltaFilter();
+                basicMassDeltaFilter.setIntensityThreshold(Double.parseDouble(massDeltaFilterDialog.getIntensityThresholdTextField().getText()));
+                List<Double> mzDeltaFilterValues = new ArrayList<>();
+                for (Object value : massDeltaFilterListModel.toArray()) {
                     mzDeltaFilterValues.add((Double) value);
                 }
-                basicMzDeltaFilter.setMzDeltaFilterValues(mzDeltaFilterValues);
-                spectrumFilterChain.addFilter(basicMzDeltaFilter);
+                basicMassDeltaFilter.setMassDeltaFilterValues(mzDeltaFilterValues);
+                spectrumFilterChain.addFilter(basicMassDeltaFilter);
             } else {
                 //if the filtertype is "or", add all the values to the different filters in the same filterchain            
-                FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<SpectrumImpl>();
+                FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<>();
                 orFilterChain.setFilterChainType(FilterChain.FilterChainType.OR);
-                for (Object value : mzDeltaFilterListModel.toArray()) {
-                    BasicMzDeltaFilter basicMzDeltaFilter = new BasicMzDeltaFilter();
-                    basicMzDeltaFilter.setIntensityThreshold(Double.parseDouble(mzDeltaFilterDialog.getIntensityThresholdTextField().getText()));
-                    List<Double> massDeltaFilterValues = new ArrayList<Double>();
+                for (Object value : massDeltaFilterListModel.toArray()) {
+                    BasicMassDeltaFilter basicMassDeltaFilter = new BasicMassDeltaFilter();
+                    basicMassDeltaFilter.setIntensityThreshold(Double.parseDouble(massDeltaFilterDialog.getIntensityThresholdTextField().getText()));
+                    List<Double> massDeltaFilterValues = new ArrayList<>();
                     massDeltaFilterValues.add((Double) value);
-                    basicMzDeltaFilter.setMzDeltaFilterValues(massDeltaFilterValues);
-                    orFilterChain.addFilter(basicMzDeltaFilter);
+                    basicMassDeltaFilter.setMassDeltaFilterValues(massDeltaFilterValues);
+                    orFilterChain.addFilter(basicMassDeltaFilter);
                 }
                 spectrumFilterChain.addFilter(orFilterChain);
             }
         }
 
-        //update FixedCombMzDeltaFilter
-        if (!advancedMzDeltaFilterDialog.getFixedCombIntThresholdTextField().getText().equals("")) {            
-            double intensityThreshold = Double.parseDouble(advancedMzDeltaFilterDialog.getFixedCombIntThresholdTextField().getText());
-            int minConsecBins = Integer.parseInt(advancedMzDeltaFilterDialog.getMinConsecMzDeltasTextField().getText());
-            int maxConsecBins = Integer.parseInt(advancedMzDeltaFilterDialog.getMaxConsecMzDeltasTextField().getText());
-            double massDeltaFilterValue = Double.parseDouble(advancedMzDeltaFilterDialog.getMzDeltaTextField().getText());
-            fixedCombMzDeltaFilter.init(intensityThreshold, minConsecBins, maxConsecBins, massDeltaFilterValue);
-            spectrumFilterChain.addFilter(fixedCombMzDeltaFilter);
+        //update FixedCombMassDeltaFilter
+        if (!advancedMassDeltaFilterDialog.getFixedCombIntThresholdTextField().getText().equals("")) {
+            double intensityThreshold = Double.parseDouble(advancedMassDeltaFilterDialog.getFixedCombIntThresholdTextField().getText());
+            int minConsecBins = Integer.parseInt(advancedMassDeltaFilterDialog.getMinConsecMassDeltasTextField().getText());
+            int maxConsecBins = Integer.parseInt(advancedMassDeltaFilterDialog.getMaxConsecMassDeltasTextField().getText());
+            double massDeltaFilterValue = Double.parseDouble(advancedMassDeltaFilterDialog.getMassDeltaTextField().getText());
+            fixedCombMassDeltaFilter.init(intensityThreshold, minConsecBins, maxConsecBins, massDeltaFilterValue);
+            spectrumFilterChain.addFilter(fixedCombMassDeltaFilter);
         }
 
-        //update VariableCombMzDeltaFilter
+        //update VariableCombMassDeltaFilter
+        if (!varCombMassDeltaFilterListModel.isEmpty()) {
+            double intensityThreshold = Double.parseDouble(advancedMassDeltaFilterDialog.getVarCombIntThresholdTextField().getText());
+            double[] massDeltaFilterValues = new double[varCombMassDeltaFilterListModel.size()];
+            for (int i = 0; i < varCombMassDeltaFilterListModel.size(); i++) {
+                massDeltaFilterValues[i] = (double) varCombMassDeltaFilterListModel.get(i);
+            }
+            variableCombMassDeltaFilter.init(intensityThreshold, massDeltaFilterValues);
+            spectrumFilterChain.addFilter(variableCombMassDeltaFilter);
+        }
+
     }
 
     /**
@@ -261,7 +274,7 @@ public class FilterConfigController {
         //add buttons to group        
         mzFilterDialog.getFilterTypeRadioButtonGroup().add(mzFilterDialog.getAndRadioButton());
         mzFilterDialog.getFilterTypeRadioButtonGroup().add(mzFilterDialog.getOrRadioButton());
-        
+
         //set filter type to and
         mzFilterDialog.getAndRadioButton().setSelected(true);
 
@@ -276,7 +289,7 @@ public class FilterConfigController {
                 }
             }
         });
-        
+
         mzFilterDialog.getRemoveMzButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -288,11 +301,15 @@ public class FilterConfigController {
         });
 
         //init list model
-        precRelMzFilterListModel = new DefaultListModel();
-        mzFilterDialog.getPrecRelMzFilterList().setModel(precRelMzFilterListModel);
+        precRelMassFilterListModel = new DefaultListModel();
+        mzFilterDialog.getPrecRelMzFilterList().setModel(precRelMassFilterListModel);
+
+        //add buttons to group        
+        mzFilterDialog.getPrecRelFilterTypeRadioButtonGroup().add(mzFilterDialog.getPrecRelAndRadioButton());
+        mzFilterDialog.getPrecRelFilterTypeRadioButtonGroup().add(mzFilterDialog.getPrecRelOrRadioButton());
 
         //set filter type to and
-        mzFilterDialog.getPrecRelFilterTypeRadioButtonGroup().setSelected(mzFilterDialog.getPrecRelAndRadioButton().getModel(), true);
+        mzFilterDialog.getPrecRelAndRadioButton().setSelected(true);
 
         //add action listeners
         mzFilterDialog.getAddPrecRelMzButton().addActionListener(new ActionListener() {
@@ -300,18 +317,18 @@ public class FilterConfigController {
             public void actionPerformed(ActionEvent e) {
                 if (!mzFilterDialog.getAddPrecRelMzTextField().getText().isEmpty()) {
                     Double value = Double.parseDouble(mzFilterDialog.getAddPrecRelMzTextField().getText());
-                    precRelMzFilterListModel.addElement(value);
+                    precRelMassFilterListModel.addElement(value);
                     mzFilterDialog.getAddPrecRelMzTextField().setText("");
                 }
             }
         });
-        
+
         mzFilterDialog.getRemovePrecRelMzButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (mzFilterDialog.getPrecRelMzFilterList().getSelectedIndex() != -1) {
                     int index = mzFilterDialog.getPrecRelMzFilterList().getSelectedIndex();
-                    precRelMzFilterListModel.removeElementAt(index);
+                    precRelMassFilterListModel.removeElementAt(index);
                 }
             }
         });
@@ -331,9 +348,9 @@ public class FilterConfigController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (mzFilterDialog.getWinsorFilterCheckBox().isSelected()) {
-                    enableWinsorTextFields(Boolean.TRUE);
+                    enableWinsorTextFields(true);
                 } else {
-                    enableWinsorTextFields(Boolean.FALSE);
+                    enableWinsorTextFields(false);
                 }
             }
         });
@@ -345,34 +362,34 @@ public class FilterConfigController {
      */
     private void initMassDeltaFilterDialog() {
         //init list model
-        mzDeltaFilterListModel = new DefaultListModel();
-        mzDeltaFilterDialog.getMzDeltaFilterList().setModel(mzDeltaFilterListModel);
+        massDeltaFilterListModel = new DefaultListModel();
+        massDeltaFilterDialog.getMzDeltaFilterList().setModel(massDeltaFilterListModel);
 
         //add buttons to group        
-        mzDeltaFilterDialog.getFilterTypeRadioButtonGroup().add(mzDeltaFilterDialog.getAndRadioButton());
-        mzDeltaFilterDialog.getFilterTypeRadioButtonGroup().add(mzDeltaFilterDialog.getOrRadioButton());
-        
+        massDeltaFilterDialog.getFilterTypeRadioButtonGroup().add(massDeltaFilterDialog.getAndRadioButton());
+        massDeltaFilterDialog.getFilterTypeRadioButtonGroup().add(massDeltaFilterDialog.getOrRadioButton());
+
         //set filter type to and
-        mzDeltaFilterDialog.getAndRadioButton().setSelected(true);
+        massDeltaFilterDialog.getAndRadioButton().setSelected(true);
 
         //add action listeners       
-        mzDeltaFilterDialog.getAddMzDeltaButton().addActionListener(new ActionListener() {
+        massDeltaFilterDialog.getAddMzDeltaButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!mzDeltaFilterDialog.getAddMzDeltaTextField().getText().isEmpty()) {
-                    Double value = Double.parseDouble(mzDeltaFilterDialog.getAddMzDeltaTextField().getText());
-                    mzDeltaFilterListModel.addElement(value);
-                    mzDeltaFilterDialog.getAddMzDeltaTextField().setText("");
+                if (!massDeltaFilterDialog.getAddMzDeltaTextField().getText().isEmpty()) {
+                    Double value = Double.parseDouble(massDeltaFilterDialog.getAddMzDeltaTextField().getText());
+                    massDeltaFilterListModel.addElement(value);
+                    massDeltaFilterDialog.getAddMzDeltaTextField().setText("");
                 }
             }
         });
-        
-        mzDeltaFilterDialog.getRemoveMzDeltaButton().addActionListener(new ActionListener() {
+
+        massDeltaFilterDialog.getRemoveMzDeltaButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (mzDeltaFilterDialog.getMzDeltaFilterList().getSelectedIndex() != -1) {
-                    int index = mzDeltaFilterDialog.getMzDeltaFilterList().getSelectedIndex();
-                    mzDeltaFilterListModel.removeElementAt(index);
+                if (massDeltaFilterDialog.getMzDeltaFilterList().getSelectedIndex() != -1) {
+                    int index = massDeltaFilterDialog.getMzDeltaFilterList().getSelectedIndex();
+                    massDeltaFilterListModel.removeElementAt(index);
                 }
             }
         });
@@ -384,27 +401,27 @@ public class FilterConfigController {
      */
     private void initAdvancedMassDeltaFilterDialog() {
         //init list model
-        varCombMzDeltaFilterListModel = new DefaultListModel();
-        advancedMzDeltaFilterDialog.getMzDeltaFilterList().setModel(varCombMzDeltaFilterListModel);
+        varCombMassDeltaFilterListModel = new DefaultListModel();
+        advancedMassDeltaFilterDialog.getMassDeltaFilterList().setModel(varCombMassDeltaFilterListModel);
 
         //add action listeners       
-        advancedMzDeltaFilterDialog.getAddMzDeltaButton().addActionListener(new ActionListener() {
+        advancedMassDeltaFilterDialog.getAddMassDeltaButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!advancedMzDeltaFilterDialog.getAddMzDeltaTextField().getText().isEmpty()) {
-                    Double value = Double.parseDouble(advancedMzDeltaFilterDialog.getAddMzDeltaTextField().getText());
-                    varCombMzDeltaFilterListModel.addElement(value);
-                    advancedMzDeltaFilterDialog.getAddMzDeltaTextField().setText("");
+                if (!advancedMassDeltaFilterDialog.getAddMzDeltaTextField().getText().isEmpty()) {
+                    Double value = Double.parseDouble(advancedMassDeltaFilterDialog.getAddMzDeltaTextField().getText());
+                    varCombMassDeltaFilterListModel.addElement(value);
+                    advancedMassDeltaFilterDialog.getAddMzDeltaTextField().setText("");
                 }
             }
         });
-        
-        advancedMzDeltaFilterDialog.getRemoveMzDeltaButton().addActionListener(new ActionListener() {
+
+        advancedMassDeltaFilterDialog.getRemoveMassDeltaButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (advancedMzDeltaFilterDialog.getMzDeltaFilterList().getSelectedIndex() != -1) {
-                    int index = advancedMzDeltaFilterDialog.getMzDeltaFilterList().getSelectedIndex();
-                    varCombMzDeltaFilterListModel.removeElementAt(index);
+                if (advancedMassDeltaFilterDialog.getMassDeltaFilterList().getSelectedIndex() != -1) {
+                    int index = advancedMassDeltaFilterDialog.getMassDeltaFilterList().getSelectedIndex();
+                    varCombMassDeltaFilterListModel.removeElementAt(index);
                 }
             }
         });

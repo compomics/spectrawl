@@ -64,9 +64,17 @@ public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
             PeakBin peakBin = peakBins.get(binFloor);
             SpectrumBin spectrumBin = spectrumBins.get(binFloor);
 
-            spectrumBin.addPeakCount(peakBin.getPeakCount());
-            spectrumBin.addHighestIntensity(peakBin.getHighestIntensity());
-            spectrumBin.addIntensitySum(peakBin.getIntensitySum());
+            if (peakBin != null) {
+                //-----------
+                if (spectrumBin == null) {
+                    spectrumBin = new SpectrumBin();
+                    spectrumBins.put(binFloor, spectrumBin);
+                }
+                //-----------
+                spectrumBin.addPeakCount(peakBin.getPeakCount());
+                spectrumBin.addHighestIntensity(peakBin.getHighestIntensity());
+                spectrumBin.addIntensitySum(peakBin.getIntensitySum());
+            }
         }
     }
 
@@ -80,11 +88,12 @@ public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
 
     @Override
     public void initBins() {
-        spectrumBins = new TreeMap<Double, SpectrumBin>();
+        spectrumBins = new TreeMap<>();
 
         int numberOfBins = (int) ((BinParams.BINS_CEILING.getValue() - BinParams.BINS_FLOOR.getValue()) / BinParams.BIN_SIZE.getValue());
         for (int i = 0; i < numberOfBins; i++) {
-            spectrumBins.put(BinParams.BINS_FLOOR.getValue() + (i * BinParams.BIN_SIZE.getValue()), new SpectrumBin());
+//            spectrumBins.put(BinParams.BINS_FLOOR.getValue() + (i * BinParams.BIN_SIZE.getValue()), new SpectrumBin());
+            spectrumBins.put(BinParams.BINS_FLOOR.getValue() + (i * BinParams.BIN_SIZE.getValue()), null);
         }
     }
 
@@ -126,5 +135,4 @@ public class SpectrumImpl extends MSnSpectrum implements Binnable<SpectrumBin> {
 //        }
 //        return true;
 //    }
-        
 }

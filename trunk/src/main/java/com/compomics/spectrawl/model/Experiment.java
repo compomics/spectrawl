@@ -83,17 +83,22 @@ public class Experiment implements Binnable<ExperimentBin> {
      * Calculate the quantiles for all experiment bins.
      */
     public void calculateQuantiles() {
-        //iterate over bins
-        for (Map.Entry<Double, ExperimentBin> entry : experimentBins.entrySet()) {
-            ExperimentBin experimentBin = entry.getValue();
+//        //iterate over bins
+//        for (Map.Entry<Double, ExperimentBin> entry : experimentBins.entrySet()) {
+//            ExperimentBin experimentBin = entry.getValue();
+//
+//            experimentBin.calculateQuantiles();
+//        }
 
+        //iterate over bins
+        for (ExperimentBin experimentBin : experimentBins.values()) {
             experimentBin.calculateQuantiles();
         }
     }
 
     @Override
     public void initBins() {
-        experimentBins = new TreeMap<Double, ExperimentBin>();
+        experimentBins = new TreeMap<>();
 
         int numberOfBins = (int) ((BinParams.BINS_CEILING.getValue() - BinParams.BINS_FLOOR.getValue()) / BinParams.BIN_SIZE.getValue());
         for (int i = 0; i < numberOfBins; i++) {

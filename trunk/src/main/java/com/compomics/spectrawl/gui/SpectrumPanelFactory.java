@@ -17,7 +17,14 @@ public class SpectrumPanelFactory {
      */
     public static SpectrumPanel getSpectrumPanel(SpectrumImpl spectrum) {
         //initialize new SpectrumPanel
-        int charge = spectrum.getPrecursor().getPossibleCharges().get(0).value;
+        int charge;
+        if(!spectrum.getPrecursor().getPossibleCharges().isEmpty()){
+            charge = spectrum.getPrecursor().getPossibleCharges().get(0).value;
+        }
+        else{
+            charge = 0;
+        }
+        
         SpectrumPanel spectrumPanel = new SpectrumPanel(spectrum.getMzValuesAsArray(),
                 spectrum.getIntensityValuesAsArray(),
                 spectrum.getPrecursor().getMz(),

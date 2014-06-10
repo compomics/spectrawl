@@ -18,6 +18,7 @@ public interface MgfExperimentRepository extends ExperimentRepository {
     /**
      * Gets the spectrum titles for the given mgf files
      *
+     * @param mgfFiles
      * @return the spectrum titles map (key: the mgf file name, value: the
      * spectrum titles of the spectra in the mgf file)
      */
@@ -26,6 +27,7 @@ public interface MgfExperimentRepository extends ExperimentRepository {
     /**
      * Gets the spectrum by spectrum key
      *
+     * @param spectrumKey
      * @return the spectrum
      */
     SpectrumImpl getSpectrumByKey(String spectrumKey);
