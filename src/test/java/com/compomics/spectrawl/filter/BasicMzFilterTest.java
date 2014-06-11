@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * this template use File | Settings | File Templates.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:springXMLConfig.xml")
+@ContextConfiguration("classpath:spectrawl-context.xml")
 public class BasicMzFilterTest {
 
     private SpectrumImpl spectrum;

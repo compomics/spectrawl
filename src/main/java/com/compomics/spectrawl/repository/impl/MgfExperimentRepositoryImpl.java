@@ -4,7 +4,6 @@
  */
 package com.compomics.spectrawl.repository.impl;
 
-import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 import com.compomics.spectrawl.repository.MgfExperimentRepository;
 import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
 import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
@@ -20,32 +19,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import uk.ac.ebi.jmzml.xml.io.MzMLUnmarshallerException;
 
 /**
  *
  * @author Niels Hulstaert
  */
-@Repository("mgfExperimentRepository")
 public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
 
     private static final Logger LOGGER = Logger.getLogger(MgfExperimentRepositoryImpl.class);
     private boolean doNoiseFiltering;
-    @Autowired
     private NoiseThresholdFinder noiseThresholdFinder;
-    @Autowired
     private NoiseFilter<HashMap<Double, Peak>> spectrumNoiseFilter;
 
-    public MgfExperimentRepositoryImpl() {
-        doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
+    public MgfExperimentRepositoryImpl() {        
     }
+
+    public NoiseThresholdFinder getNoiseThresholdFinder() {
+        return noiseThresholdFinder;
+    }
+
+    public void setNoiseThresholdFinder(NoiseThresholdFinder noiseThresholdFinder) {
+        this.noiseThresholdFinder = noiseThresholdFinder;
+    }
+
+    public NoiseFilter<HashMap<Double, Peak>> getSpectrumNoiseFilter() {
+        return spectrumNoiseFilter;
+    }
+
+    public void setSpectrumNoiseFilter(NoiseFilter<HashMap<Double, Peak>> spectrumNoiseFilter) {
+        this.spectrumNoiseFilter = spectrumNoiseFilter;
+    }        
 
     @Override
     public void setDoNoiseFiltering(boolean doNoiseFiltering) {
         this.doNoiseFiltering = doNoiseFiltering;
     }
+
+    public boolean isDoNoiseFiltering() {
+        return doNoiseFiltering;
+    }        
 
     @Override
     public Map<String, List<String>> getSpectrumTitles(Map<String, File> mgfFiles) {

@@ -4,13 +4,11 @@ import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
 import com.compomics.spectrawl.model.FilterParams;
 import com.compomics.spectrawl.util.MathUtils;
 import com.google.common.primitives.Doubles;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 6/12/11 Time: 11:21 To change
  * this template use File | Settings | File Templates.
  */
-@Component("noiseThresholdFinder")
 public class WinsorNoiseThresholdFinder implements NoiseThresholdFinder {
 
     /**

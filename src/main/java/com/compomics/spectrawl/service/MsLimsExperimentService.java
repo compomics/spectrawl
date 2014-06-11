@@ -18,28 +18,51 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Niels Hulstaert
  */
-@Service("mslimsExperimentService")
 public class MsLimsExperimentService implements ExperimentService {
 
     private static final Logger LOGGER = Logger.getLogger(MsLimsExperimentService.class);
-    @Autowired
-    @Qualifier("filterChain")
-    private Filter<SpectrumImpl> spectrumFilter;
-    @Autowired
+    private Filter<SpectrumImpl> filterChain;
     private MsLimsExperimentRepository msLimsSpectrumRepository;
-    @Autowired
     private SpectrumBinner spectrumBinner;
-    @Autowired
     private ExecutorService taskExecutor;
 
+    public Filter<SpectrumImpl> getFilterChain() {
+        return filterChain;
+    }
+
+    public void setFilterChain(Filter<SpectrumImpl> filterChain) {
+        this.filterChain = filterChain;
+    }
+
+    public MsLimsExperimentRepository getMsLimsSpectrumRepository() {
+        return msLimsSpectrumRepository;
+    }
+
+    public void setMsLimsSpectrumRepository(MsLimsExperimentRepository msLimsSpectrumRepository) {
+        this.msLimsSpectrumRepository = msLimsSpectrumRepository;
+    }
+
+    public SpectrumBinner getSpectrumBinner() {
+        return spectrumBinner;
+    }
+
+    public void setSpectrumBinner(SpectrumBinner spectrumBinner) {
+        this.spectrumBinner = spectrumBinner;
+    }
+
+    public ExecutorService getTaskExecutor() {
+        return taskExecutor;
+    }
+
+    public void setTaskExecutor(ExecutorService taskExecutor) {
+        this.taskExecutor = taskExecutor;
+    }    
+    
     /**
      * Load the experiment by experiment ID with all spectra.
      *
@@ -155,7 +178,7 @@ public class MsLimsExperimentService implements ExperimentService {
 
             //add the spectrum to the spectra
             //if the spectrum passes the filter
-            if (spectrumFilter.passesFilter(spectrum, false)) {
+            if (filterChain.passesFilter(spectrum, false)) {
                 LOGGER.debug("spectrum " + spectrum.getSpectrumId() + " passed the filter.");
                 return spectrum;
             } else {

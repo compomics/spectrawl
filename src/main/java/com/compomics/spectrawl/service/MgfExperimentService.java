@@ -21,28 +21,51 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Niels Hulstaert
  */
-@Service("mgfExperimentService")
 public class MgfExperimentService implements ExperimentService {
 
     private static final Logger LOGGER = Logger.getLogger(MgfExperimentService.class);
-    @Autowired
-    @Qualifier("filterChain")
-    private Filter<SpectrumImpl> spectrumFilter;
-    @Autowired
+    private Filter<SpectrumImpl> filterChain;
     private MgfExperimentRepository mgfExperimentRepository;
-    @Autowired
     private SpectrumBinner spectrumBinner;
-    @Autowired
     private ExecutorService taskExecutor;
 
+    public Filter<SpectrumImpl> getFilterChain() {
+        return filterChain;
+    }
+
+    public void setFilterChain(Filter<SpectrumImpl> filterChain) {
+        this.filterChain = filterChain;
+    }
+
+    public MgfExperimentRepository getMgfExperimentRepository() {
+        return mgfExperimentRepository;
+    }
+
+    public void setMgfExperimentRepository(MgfExperimentRepository mgfExperimentRepository) {
+        this.mgfExperimentRepository = mgfExperimentRepository;
+    }
+
+    public SpectrumBinner getSpectrumBinner() {
+        return spectrumBinner;
+    }
+
+    public void setSpectrumBinner(SpectrumBinner spectrumBinner) {
+        this.spectrumBinner = spectrumBinner;
+    }
+
+    public ExecutorService getTaskExecutor() {
+        return taskExecutor;
+    }
+
+    public void setTaskExecutor(ExecutorService taskExecutor) {
+        this.taskExecutor = taskExecutor;
+    }    
+    
     /**
      * Load the experiment from the given MGF files.
      *
@@ -51,13 +74,13 @@ public class MgfExperimentService implements ExperimentService {
      */
     public Experiment loadExperiment(Map<String, File> mgfFiles) {
         Experiment experiment = new Experiment("");
-        List<SpectrumImpl> spectra = new ArrayList<SpectrumImpl>();
+        List<SpectrumImpl> spectra = new ArrayList<>();
 
         //retrieve map of spectrum titles from the spectrum loader
         Map<String, List<String>> spectrumTitlesMap = mgfExperimentRepository.getSpectrumTitles(mgfFiles);
 
         //submit a job for each spectrum
-        List<Future<SpectrumImpl>> futureList = new ArrayList<Future<SpectrumImpl>>();
+        List<Future<SpectrumImpl>> futureList = new ArrayList<>();
 
         //iterate over spectrum titles
         for (String mgfFileName : spectrumTitlesMap.keySet()) {
@@ -86,9 +109,7 @@ public class MgfExperimentService implements ExperimentService {
                     experiment.addSpectrum(spectrum);
                 }
                 iterator.remove();
-            } catch (InterruptedException e) {
-                LOGGER.error(e.getMessage(), e);
-            } catch (ExecutionException e) {
+            } catch (InterruptedException | ExecutionException e) {
                 LOGGER.error(e.getMessage(), e);
             }
         }
@@ -124,7 +145,7 @@ public class MgfExperimentService implements ExperimentService {
 
             //add the spectrum to the spectra
             //if the spectrum passes the filter
-            if (spectrumFilter.passesFilter(spectrum, false)) {
+            if (filterChain.passesFilter(spectrum, false)) {
                 return spectrum;
             } else {
                 return null;

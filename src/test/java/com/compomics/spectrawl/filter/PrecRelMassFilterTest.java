@@ -23,7 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * this template use File | Settings | File Templates.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:springXMLConfig.xml")
+@ContextConfiguration("classpath:spectrawl-context.xml")
 public class PrecRelMassFilterTest {
 
     private List<SpectrumImpl> spectra;
@@ -32,7 +32,7 @@ public class PrecRelMassFilterTest {
     public void setUp() {
 
         //compose spectra and add them to the experiment
-        HashMap<Double, Peak> peaks = new HashMap<Double, Peak>();
+        HashMap<Double, Peak> peaks = new HashMap<>();
         Peak peak = new Peak(100D, 70D);
         peaks.put(100D, peak);
         peak = new Peak(220.54, 30D);

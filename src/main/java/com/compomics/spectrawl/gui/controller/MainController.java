@@ -21,14 +21,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Niels Hulstaert
  */
-@Component("mainController")
 public class MainController implements ActionListener {
 
     private static final Logger LOGGER = Logger.getLogger(MainController.class);
@@ -37,18 +34,46 @@ public class MainController implements ActionListener {
     //view
     private MainFrame mainFrame;
     //child controllers
-    @Autowired
     private ExperimentLoaderController experimentLoaderController;
-    @Autowired
     private FilterConfigController filterConfigController;
-    @Autowired
     private ResultController resultController;
     //services
-    @Autowired
     private EventBus eventBus;    
 
     public MainFrame getMainFrame() {
         return mainFrame;
+    }    
+
+    public ExperimentLoaderController getExperimentLoaderController() {
+        return experimentLoaderController;
+    }
+
+    public void setExperimentLoaderController(ExperimentLoaderController experimentLoaderController) {
+        this.experimentLoaderController = experimentLoaderController;
+    }
+
+    public FilterConfigController getFilterConfigController() {
+        return filterConfigController;
+    }
+
+    public void setFilterConfigController(FilterConfigController filterConfigController) {
+        this.filterConfigController = filterConfigController;
+    }
+
+    public ResultController getResultController() {
+        return resultController;
+    }
+
+    public void setResultController(ResultController resultController) {
+        this.resultController = resultController;
+    }
+
+    public EventBus getEventBus() {
+        return eventBus;
+    }
+
+    public void setEventBus(EventBus eventBus) {
+        this.eventBus = eventBus;
     }        
 
     /**

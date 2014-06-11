@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
  * @author Niels Hulstaert Hulstaert
  * @author Harald Barsnes
  */
-@Component("progressController")
 public class ProgressController extends WindowAdapter {
 
     //model
@@ -23,9 +22,16 @@ public class ProgressController extends WindowAdapter {
     //view
     private ProgressDialogX progressDialog;
     //parent controller
-    @Autowired
     private ExperimentLoaderController experimentLoaderController;        
-      
+
+    public ExperimentLoaderController getExperimentLoaderController() {
+        return experimentLoaderController;
+    }
+
+    public void setExperimentLoaderController(ExperimentLoaderController experimentLoaderController) {
+        this.experimentLoaderController = experimentLoaderController;
+    }          
+    
     public void init() {
         progressFinished = false;
         //set this controller in PipelineProgressAppender

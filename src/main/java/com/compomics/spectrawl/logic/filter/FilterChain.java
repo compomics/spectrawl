@@ -8,6 +8,7 @@ import java.util.List;
  * Date: 15/02/12
  * Time: 15:18
  * To change this template use File | Settings | File Templates.
+ * @param <T>
  */
 public interface FilterChain<T> extends Filter<T> {
 
@@ -35,7 +36,7 @@ public interface FilterChain<T> extends Filter<T> {
     /**
      * Set the filter chain type.
      * 
-     * @param filter
+     * @param filterChainType
      */
     void setFilterChainType(FilterChainType filterChainType);
     
@@ -48,6 +49,7 @@ public interface FilterChain<T> extends Filter<T> {
     
     /**
      * Set the filters of the chain
+     * @param filters
      */
     void setFilters(List<Filter<T>> filters);
     

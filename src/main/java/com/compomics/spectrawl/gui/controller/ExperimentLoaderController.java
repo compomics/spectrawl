@@ -26,14 +26,11 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Niels Hulstaert
  */
-@Component("experimentLoaderController")
 public class ExperimentLoaderController {
 
     private static final Logger LOGGER = Logger.getLogger(ExperimentLoaderController.class);
@@ -41,22 +38,18 @@ public class ExperimentLoaderController {
     private DefaultListModel mgfFilesListModel;
     private Experiment.ExperimentType experimentType;
     private ExperimentLoaderSwingWorker experimentLoaderSwingWorker;
+    private boolean msLimsEnabled;
     //view
     private ExperimentLoaderPanel experimentLoaderPanel;
     //parent controller
-    @Autowired
     private MainController mainController;
     //child controllers
-    @Autowired
     private ProgressController progressController;
     //services
-    @Autowired
     private EventBus eventBus;
-    @Autowired
     private MsLimsExperimentService msLimsExperimentService;
-    @Autowired
     private MgfExperimentService mgfExperimentService;
-
+        
     public ExperimentLoaderPanel getExperimentLoaderPanel() {
         return experimentLoaderPanel;
     }
@@ -65,12 +58,61 @@ public class ExperimentLoaderController {
         return mainController;
     }
 
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }        
+
+    public ProgressController getProgressController() {
+        return progressController;
+    }
+
+    public void setProgressController(ProgressController progressController) {
+        this.progressController = progressController;
+    }
+
+    public EventBus getEventBus() {
+        return eventBus;
+    }
+
+    public void setEventBus(EventBus eventBus) {
+        this.eventBus = eventBus;
+    }
+
+    public MsLimsExperimentService getMsLimsExperimentService() {
+        return msLimsExperimentService;
+    }
+
+    public void setMsLimsExperimentService(MsLimsExperimentService msLimsExperimentService) {
+        this.msLimsExperimentService = msLimsExperimentService;
+    }
+
+    public MgfExperimentService getMgfExperimentService() {
+        return mgfExperimentService;
+    }
+
+    public void setMgfExperimentService(MgfExperimentService mgfExperimentService) {
+        this.mgfExperimentService = mgfExperimentService;
+    } 
+
+    public boolean isMsLimsEnabled() {
+        return msLimsEnabled;
+    }
+
+    public void setMsLimsEnabled(boolean msLimsEnabled) {
+        this.msLimsEnabled = msLimsEnabled;
+    }         
+
     /**
      * Init the controller.
      */
     public void init() {
         //init the panel
         experimentLoaderPanel = new ExperimentLoaderPanel();
+        
+        //check if the MSLims tab needs to be disabled
+        if(!msLimsEnabled){
+            experimentLoaderPanel.getExperimentSelectionTabbedPane().setEnabledAt(1, false);
+        }
 
         //init child controllers
         progressController.init();

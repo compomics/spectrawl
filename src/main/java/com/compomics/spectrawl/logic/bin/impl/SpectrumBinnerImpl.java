@@ -7,13 +7,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 28/02/12 Time: 15:04 To change
  * this template use File | Settings | File Templates.
  */
-@Component("spectrumBinner")
 public class SpectrumBinnerImpl implements SpectrumBinner {
 
     @Override
@@ -63,11 +61,6 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
      * @param intensity the intensity
      */
     private void addToPeakBins(TreeMap<Double, PeakBin> peakBins, double mzDelta, double intensity) {
-//        Double key = peakBins.floorKey(mzDelta);
-//        PeakBin bin = peakBins.get(key);
-//        bin.addPeakCount();
-//        bin.addIntensity(intensity);
-
         Double key = peakBins.floorKey(mzDelta);
         PeakBin bin = peakBins.get(key);
         if (bin == null) {
@@ -86,7 +79,6 @@ public class SpectrumBinnerImpl implements SpectrumBinner {
     private void initPeakBins(TreeMap<Double, PeakBin> peakBins, double floor, double ceiling, double binSize) {
         int numberOfBins = (int) ((ceiling - floor) / binSize);
         for (int i = 0; i < numberOfBins; i++) {
-//            peakBins.put(floor + (i * binSize), new PeakBin());
             peakBins.put(floor + (i * binSize), null);
         }
     }

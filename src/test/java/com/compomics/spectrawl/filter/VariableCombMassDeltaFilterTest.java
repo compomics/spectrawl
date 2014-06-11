@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import org.junit.Assert;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * this template use File | Settings | File Templates.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:springXMLConfig.xml")
+@ContextConfiguration("classpath:spectrawl-context.xml")
 public class VariableCombMassDeltaFilterTest {
 
     private Experiment experiment;

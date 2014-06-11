@@ -6,8 +6,6 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
     
-    <context:annotation-config/>
-    
     <!-- Property placeholder-->
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
@@ -26,8 +24,12 @@
     
     <bean id="spectrumBinner" class="com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerImpl"/>                                   
     
-    <bean id="fixedCombMassDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.FixedCombMassDeltaFilter"/>                     
+    <bean id="fixedCombMassDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.FixedCombMassDeltaFilter">
+        <property name="spectrumBinner" ref="spectrumBinner"/>
+    </bean>                      
     
-    <bean id="variableCombMassDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.VariableCombMassDeltaFilter"/>                     
-                           
+    <bean id="variableCombMassDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.VariableCombMassDeltaFilter">
+        <property name="spectrumBinner" ref="spectrumBinner"/>
+    </bean>             
+                                                                
 </beans>

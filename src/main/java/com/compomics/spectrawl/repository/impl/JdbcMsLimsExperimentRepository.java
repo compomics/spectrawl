@@ -2,7 +2,6 @@ package com.compomics.spectrawl.repository.impl;
 
 import com.compomics.mslims.db.accessors.Spectrum_file;
 import com.compomics.mslims.util.fileio.MascotGenericFile;
-import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
 import com.compomics.spectrawl.repository.MsLimsExperimentRepository;
 import com.compomics.spectrawl.logic.filter.noise.NoiseFilter;
 import com.compomics.spectrawl.logic.filter.noise.NoiseThresholdFinder;
@@ -20,19 +19,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import javax.sql.DataSource;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.stereotype.Repository;
-
 /**
  * Created by IntelliJ IDEA. User: niels Date: 3/02/12 Time: 10:53 To change
  * this template use File | Settings | File Templates.
  */
-@Repository("msLimsExperimentRepository")
 public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements MsLimsExperimentRepository {
-    
+
     private static final Logger LOGGER = Logger.getLogger(JdbcMsLimsExperimentRepository.class);
     private static final String SELECT_EXPERIMENT_SPECTRUM_FILES = new StringBuilder()
             .append("select sf.l_spectrumid as l_spectrumid, sf.file as file from spectrum s, spectrum_file sf ")
@@ -49,25 +43,33 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
             .append("and s.spectrumid = ?").toString();
     private ConcurrentLinkedQueue<Spectrum_file> spectrumFileQueue;
     private boolean doNoiseFiltering;
-    @Autowired
     private NoiseThresholdFinder noiseThresholdFinder;
-    @Autowired
     private NoiseFilter<HashMap<Double, Peak>> spectrumNoiseFilter;
-    
+
     public JdbcMsLimsExperimentRepository() {
-        doNoiseFiltering = PropertiesConfigurationHolder.getInstance().getBoolean("DO_PROCESS_FILTER");
     }
-    
-    @Autowired
-    public void setDs(DataSource dataSource) {
-        setDataSource(dataSource);
+
+    public NoiseThresholdFinder getNoiseThresholdFinder() {
+        return noiseThresholdFinder;
     }
-    
+
+    public void setNoiseThresholdFinder(NoiseThresholdFinder noiseThresholdFinder) {
+        this.noiseThresholdFinder = noiseThresholdFinder;
+    }
+
+    public NoiseFilter<HashMap<Double, Peak>> getSpectrumNoiseFilter() {
+        return spectrumNoiseFilter;
+    }
+
+    public void setSpectrumNoiseFilter(NoiseFilter<HashMap<Double, Peak>> spectrumNoiseFilter) {
+        this.spectrumNoiseFilter = spectrumNoiseFilter;
+    }
+
     @Override
     public void setDoNoiseFiltering(boolean doNoiseFiltering) {
         this.doNoiseFiltering = doNoiseFiltering;
     }
-    
+
     @Override
     public int loadSpectraByExperimentId(long experimentId) {
         LOGGER.debug("Start loading spectra for experiment " + experimentId);
@@ -75,50 +77,50 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
         LOGGER.debug("Finished loading spectra for experiment " + experimentId);
         return spectrumFileQueue.size();
     }
-    
+
     @Override
     public int loadSpectraBySpectrumIds(List<Long> spectrumIds) {
         String spectrumIdsString = Joiner.on(",").join(spectrumIds);
-        
+
         LOGGER.debug("Start loading " + spectrumIds.size() + " spectra");
         spectrumFileQueue = getJdbcTemplate().query(String.format(SELECT_SPECTRUM_FILES, spectrumIdsString), new SpectrumFileExctractor());
         LOGGER.debug("Finished loading " + spectrumIds.size() + " spectra");
         return spectrumFileQueue.size();
     }
-    
+
     @Override
     public SpectrumImpl getSpectrum() {
         SpectrumImpl spectrum = null;
-        
+
         try {
             //poll spectrum_file from queue
             Spectrum_file spectrum_file = spectrumFileQueue.poll();
-            
+
             spectrum = mapSpectrumFile(spectrum_file);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
-        
+
         return spectrum;
     }
-    
+
     @Override
     public SpectrumImpl getSpectrum(long experimentId, long spectrumId) {
         SpectrumImpl spectrum = null;
-        
+
         try {
             List<Spectrum_file> spectrum_files = getJdbcTemplate().query(SELECT_SPECTRUM_FILE, new SpectrumFileMapper(), new Object[]{experimentId, spectrumId});
-            
+
             if (!spectrum_files.isEmpty()) {
                 spectrum = mapSpectrumFile(spectrum_files.get(0));
             }
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
-        
+
         return spectrum;
     }
-    
+
     private SpectrumImpl mapSpectrumFile(Spectrum_file spectrum_file) throws IOException {
         SpectrumImpl spectrum;
         String spectumIdString = Long.toString(spectrum_file.getL_spectrumid());
@@ -140,7 +142,7 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
             peak = new Peak(mzRatio, mSLimsPeaks.get(mzRatio));
             peaks.put(mzRatio, peak);
         }
-        
+
         double noiseThreshold = 0.0;
         //filter the spectrum if necessary
         if (doNoiseFiltering) {
@@ -152,9 +154,9 @@ public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements Ms
                 throw new IllegalArgumentException("NoiseFilter and/or ThresholdFinder not set");
             }
         }
-        
+
         spectrum = new SpectrumImpl(spectumIdString, mascotGenericFile.getTitle(), mascotGenericFile.getFilename(), precursor, peaks, noiseThreshold);
-        
+
         return spectrum;
     }
 

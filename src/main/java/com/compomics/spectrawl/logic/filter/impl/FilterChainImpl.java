@@ -8,21 +8,20 @@ import com.compomics.util.experiment.biology.PTM;
 import com.compomics.util.experiment.biology.ions.ReporterIon;
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.stereotype.Component;
 
 /**
  * Created by IntelliJ IDEA. User: niels Date: 16/02/12 Time: 14:02 To change
  * this template use File | Settings | File Templates.
+ *
+ * @param <T>
  */
-@Component("filterChain")
 public class FilterChainImpl<T> implements FilterChain<T> {
 
     //@TODO add a name to the chain? Like when a modification the modification name?
     private FilterChainType filterChainType;
-    private List<Filter<T>> filters;
+    private List<Filter<T>> filters = new ArrayList<>();
 
     public FilterChainImpl() {
-        filters = new ArrayList<>();
     }
 
     /**
@@ -90,7 +89,7 @@ public class FilterChainImpl<T> implements FilterChain<T> {
      * Creates a filter chain based on a ptm
      *
      * @param ptm the ptm of interest
-     * @return 
+     * @return
      */
     public static FilterChainImpl getFilterChain(PTM ptm) {
         FilterChainImpl result = new FilterChainImpl(FilterChainType.OR);
