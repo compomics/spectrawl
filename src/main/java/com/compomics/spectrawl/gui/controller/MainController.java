@@ -196,7 +196,7 @@ public class MainController implements ActionListener {
      * @return the list of validation messages
      */
     private List<String> validateUserInput() {
-        List<String> validationMessages = new ArrayList<String>();
+        List<String> validationMessages = new ArrayList<>();
         validationMessages.addAll(experimentLoaderController.validateUserInput());
         validationMessages.addAll(filterConfigController.validateUserInput());
         return validationMessages;
