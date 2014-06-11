@@ -3,13 +3,20 @@ package com.compomics.spectrawl;
 import com.compomics.spectrawl.config.ApplicationContextProvider;
 import com.compomics.spectrawl.gui.controller.MainController;
 import com.compomics.spectrawl.gui.view.MainFrame;
+import javax.swing.JOptionPane;
+import org.apache.log4j.Logger;
+import org.springframework.beans.PropertyBatchUpdateException;
+import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
  * @author Niels Hulstaert
  */
 public class SpectrawlStarter {
+
+    private final static Logger LOGGER = Logger.getLogger(SpectrawlStarter.class);
 
     /**
      * @param args the command line arguments
@@ -48,9 +55,22 @@ public class SpectrawlStarter {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                ApplicationContext applicationContext = ApplicationContextProvider.getInstance().getApplicationContext();
-                MainController mainController = (MainController) applicationContext.getBean("mainController");
-                mainController.init();
+                try {
+                    ApplicationContextProvider.getInstance().setDefaultApplicationContext();
+                    MainController mainController = ApplicationContextProvider.getInstance().getBean("mainController");
+                    mainController.init();
+                } catch (BeanCreationException ex) {
+                    LOGGER.error(ex.getMessage(), ex);
+                    String beanName = ex.getBeanName();
+                    if (beanName.equals("msLimsDataSource") && ex.getCause() instanceof PropertyBatchUpdateException) {
+                        JOptionPane.showMessageDialog(null, "Spectrawl was not able to connect to MSLims with the given credentials."
+                                + "\n" + "The program will continue, but you'll only able to use the MGF functionality.",
+                                "Spectrawl startup warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                    ApplicationContextProvider.getInstance().setApplicationContext(new ClassPathXmlApplicationContext("spectrawl-mgf-only-context.xml"));
+                    MainController mainController = ApplicationContextProvider.getInstance().getBean("mainController");
+                    mainController.init();
+                }
             }
         });
     }

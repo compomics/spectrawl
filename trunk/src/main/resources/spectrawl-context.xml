@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"       
+       xmlns:context="http://www.springframework.org/schema/context"       
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- Property placeholder-->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>${property_file.source}:resources/spectrawl.properties
+                </value>
+            </list>
+        </property>
+        <property name="ignoreUnresolvablePlaceholders">
+            <value>true</value>
+        </property>       
+    </bean> 
+    
+    <!-- transaction beans -->
+    <bean id="msLimsDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.username}"/>
+        <property name="password" value="${db.password}"/>
+    </bean>
+    
+    <!-- service beans -->
+    <bean id="msLimsExperimentService" class="com.compomics.spectrawl.service.MsLimsExperimentService">
+        <property name="msLimsSpectrumRepository" ref="msLimsExperimentRepository"/>
+        <property name="filterChain" ref="filterChain"/>
+        <property name="spectrumBinner" ref="spectrumBinner"/>
+        <property name="taskExecutor" ref="taskExecutor"/>
+    </bean>
+    
+    <bean id="mgfExperimentService" class="com.compomics.spectrawl.service.MgfExperimentService">
+        <property name="mgfExperimentRepository" ref="mgfExperimentRepository"/>
+        <property name="filterChain" ref="filterChain"/>
+        <property name="spectrumBinner" ref="spectrumBinner"/>
+        <property name="taskExecutor" ref="taskExecutor"/>
+    </bean>
+
+    <!-- repository beans -->
+    <bean id="mgfExperimentRepository" class="com.compomics.spectrawl.repository.impl.MgfExperimentRepositoryImpl">
+        <property name="noiseThresholdFinder" ref="noiseThresholdFinder"/>
+        <property name="spectrumNoiseFilter" ref="spectrumNoiseFilter"/>
+        <property name="doNoiseFiltering" value="${DO_PROCESS_FILTER}"/>
+    </bean>    
+    
+    <bean id="msLimsExperimentRepository" class="com.compomics.spectrawl.repository.impl.JdbcMsLimsExperimentRepository">
+        <property name="dataSource" ref="msLimsDataSource"/>
+        <property name="noiseThresholdFinder" ref="noiseThresholdFinder"/>
+        <property name="spectrumNoiseFilter" ref="spectrumNoiseFilter"/>
+        <property name="doNoiseFiltering" value="${DO_PROCESS_FILTER}"/>        
+    </bean>    
+    
+    <!-- logic beans -->
+    <bean id="noiseThresholdFinder" class="com.compomics.spectrawl.logic.filter.noise.impl.WinsorNoiseThresholdFinder"/>
+    
+    <bean id="spectrumNoiseFilter" class="com.compomics.spectrawl.logic.filter.noise.impl.SpectrumNoiseFilter"/>
+    
+    <bean id="filterChain" class="com.compomics.spectrawl.logic.filter.impl.FilterChainImpl"/>
+    
+    <bean id="fixedCombMassDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.FixedCombMassDeltaFilter">
+        <property name="spectrumBinner" ref="spectrumBinner"/>
+    </bean>    
+    
+    <bean id="variableCombMassDeltaFilter" class="com.compomics.spectrawl.logic.filter.impl.VariableCombMassDeltaFilter">
+        <property name="spectrumBinner" ref="spectrumBinner"/>
+    </bean>  
+    
+    <bean id="spectrumBinner" class="com.compomics.spectrawl.logic.bin.impl.SpectrumBinnerImpl"/>
+    
+    <!-- gui beans -->
+    <bean id="mainController" class="com.compomics.spectrawl.gui.controller.MainController">
+        <property name="eventBus" ref="eventBus"/>
+        <property name="experimentLoaderController" ref="experimentLoaderController"/>
+        <property name="filterConfigController" ref="filterConfigController"/>
+        <property name="resultController" ref="resultController"/>        
+    </bean>
+    
+    <bean id="filterConfigController" class="com.compomics.spectrawl.gui.controller.FilterConfigController">
+        <property name="mainController" ref="mainController"/>
+        <property name="filterChain" ref="filterChain"/>
+        <property name="fixedCombMassDeltaFilter" ref="fixedCombMassDeltaFilter"/>
+        <property name="variableCombMassDeltaFilter" ref="variableCombMassDeltaFilter"/>        
+    </bean>
+    
+    <bean id="experimentLoaderController" class="com.compomics.spectrawl.gui.controller.ExperimentLoaderController">
+        <property name="eventBus" ref="eventBus"/>
+        <property name="mainController" ref="mainController"/>
+        <property name="progressController" ref="progressController"/>
+        <property name="mgfExperimentService" ref="mgfExperimentService"/>
+        <property name="msLimsExperimentService" ref="msLimsExperimentService"/>        
+        <property name="msLimsEnabled" value="true"/>        
+    </bean>
+    
+    <bean id="progressController" class="com.compomics.spectrawl.gui.controller.ProgressController">
+        <property name="experimentLoaderController" ref="experimentLoaderController"/>      
+    </bean>
+    
+    <bean id="resultController" class="com.compomics.spectrawl.gui.controller.ResultController"/>     
+    
+    <!-- component beans -->
+    <context:component-scan base-package="com.compomics.spectrawl">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Component"/>
+    </context:component-scan>                                       
+
+    <bean id="taskExecutor" class="java.util.concurrent.Executors" 
+          factory-method="newFixedThreadPool"
+          destroy-method="shutdown">
+        <constructor-arg type="int" value="${size}"/>
+    </bean>
+                                                                                                                                                                                 
+    <!-- guava event bus bean -->
+    <bean id="eventBus" class="com.google.common.eventbus.EventBus"/>                     
+                           
+</beans>

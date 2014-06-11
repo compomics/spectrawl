@@ -23,14 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Niels Hulstaert
  */
-@Component("filterConfigController")
 public class FilterConfigController {
 
     private static final Logger LOGGER = Logger.getLogger(FilterConfigController.class);
@@ -44,14 +41,10 @@ public class FilterConfigController {
     private MassDeltaFilterDialog massDeltaFilterDialog;
     private AdvancedMassDeltaFilterDialog advancedMassDeltaFilterDialog;
     //parent controller
-    @Autowired
     private MainController mainController;
     //services
-    @Autowired
-    private FilterChain<SpectrumImpl> spectrumFilterChain;
-    @Autowired
+    private FilterChain<SpectrumImpl> filterChain;
     private FixedCombMassDeltaFilter fixedCombMassDeltaFilter;
-    @Autowired
     private VariableCombMassDeltaFilter variableCombMassDeltaFilter;
 
     public MzFilterDialog getMzRatioFilterDialog() {
@@ -66,6 +59,38 @@ public class FilterConfigController {
         return advancedMassDeltaFilterDialog;
     }
 
+    public MainController getMainController() {
+        return mainController;
+    }
+
+    public void setMainController(MainController mainController) {
+        this.mainController = mainController;
+    }
+
+    public FilterChain<SpectrumImpl> getFilterChain() {
+        return filterChain;
+    }
+
+    public void setFilterChain(FilterChain<SpectrumImpl> filterChain) {
+        this.filterChain = filterChain;
+    }
+
+    public FixedCombMassDeltaFilter getFixedCombMassDeltaFilter() {
+        return fixedCombMassDeltaFilter;
+    }
+
+    public void setFixedCombMassDeltaFilter(FixedCombMassDeltaFilter fixedCombMassDeltaFilter) {
+        this.fixedCombMassDeltaFilter = fixedCombMassDeltaFilter;
+    }
+
+    public VariableCombMassDeltaFilter getVariableCombMassDeltaFilter() {
+        return variableCombMassDeltaFilter;
+    }
+
+    public void setVariableCombMassDeltaFilter(VariableCombMassDeltaFilter variableCombMassDeltaFilter) {
+        this.variableCombMassDeltaFilter = variableCombMassDeltaFilter;
+    }        
+
     /**
      * Init the controller.
      */
@@ -76,7 +101,7 @@ public class FilterConfigController {
         advancedMassDeltaFilterDialog = new AdvancedMassDeltaFilterDialog(mainController.getMainFrame(), true);
 
         //init filter chain        
-        spectrumFilterChain.setFilterChainType(FilterChain.FilterChainType.AND);
+        filterChain.setFilterChainType(FilterChain.FilterChainType.AND);
 
         initMzFilterDialog();
         initMassDeltaFilterDialog();
@@ -99,7 +124,7 @@ public class FilterConfigController {
      */
     public void updateFilterChain() {
         //clear the chain
-        spectrumFilterChain.reset();
+        filterChain.reset();
         updateFilters();
     }
 
@@ -164,7 +189,7 @@ public class FilterConfigController {
                     massFilterValues.add((Double) value);
                 }
                 basicMzFilter.setMzFilterValues(massFilterValues);
-                spectrumFilterChain.addFilter(basicMzFilter);
+                filterChain.addFilter(basicMzFilter);
             } else {
                 //if the filtertype is "or", add all the values to the different filters in the same filterchain            
                 FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<>();
@@ -177,7 +202,7 @@ public class FilterConfigController {
                     basicMzFilter.setMzFilterValues(massFilterValues);
                     orFilterChain.addFilter(basicMzFilter);
                 }
-                spectrumFilterChain.addFilter(orFilterChain);
+                filterChain.addFilter(orFilterChain);
             }
         }
 
@@ -193,7 +218,7 @@ public class FilterConfigController {
                     massFilterValues.add((Double) value);
                 }
                 precRelMassFilter.setPrecRelMassFilterValues(massFilterValues);
-                spectrumFilterChain.addFilter(precRelMassFilter);
+                filterChain.addFilter(precRelMassFilter);
             } else {
                 //if the filtertype is "or", add all the values to the different filters in the same filterchain            
                 FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<>();
@@ -206,7 +231,7 @@ public class FilterConfigController {
                     precRelMassFilter.setPrecRelMassFilterValues(massFilterValues);
                     orFilterChain.addFilter(precRelMassFilter);
                 }
-                spectrumFilterChain.addFilter(orFilterChain);
+                filterChain.addFilter(orFilterChain);
             }
         }
 
@@ -222,7 +247,7 @@ public class FilterConfigController {
                     mzDeltaFilterValues.add((Double) value);
                 }
                 basicMassDeltaFilter.setMassDeltaFilterValues(mzDeltaFilterValues);
-                spectrumFilterChain.addFilter(basicMassDeltaFilter);
+                filterChain.addFilter(basicMassDeltaFilter);
             } else {
                 //if the filtertype is "or", add all the values to the different filters in the same filterchain            
                 FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<>();
@@ -235,7 +260,7 @@ public class FilterConfigController {
                     basicMassDeltaFilter.setMassDeltaFilterValues(massDeltaFilterValues);
                     orFilterChain.addFilter(basicMassDeltaFilter);
                 }
-                spectrumFilterChain.addFilter(orFilterChain);
+                filterChain.addFilter(orFilterChain);
             }
         }
 
@@ -246,7 +271,7 @@ public class FilterConfigController {
             int maxConsecBins = Integer.parseInt(advancedMassDeltaFilterDialog.getMaxConsecMassDeltasTextField().getText());
             double massDeltaFilterValue = Double.parseDouble(advancedMassDeltaFilterDialog.getMassDeltaTextField().getText());
             fixedCombMassDeltaFilter.init(intensityThreshold, minConsecBins, maxConsecBins, massDeltaFilterValue);
-            spectrumFilterChain.addFilter(fixedCombMassDeltaFilter);
+            filterChain.addFilter(fixedCombMassDeltaFilter);
         }
 
         //update VariableCombMassDeltaFilter
@@ -257,7 +282,7 @@ public class FilterConfigController {
                 massDeltaFilterValues[i] = (double) varCombMassDeltaFilterListModel.get(i);
             }
             variableCombMassDeltaFilter.init(intensityThreshold, massDeltaFilterValues);
-            spectrumFilterChain.addFilter(variableCombMassDeltaFilter);
+            filterChain.addFilter(variableCombMassDeltaFilter);
         }
 
     }

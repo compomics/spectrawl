@@ -7,14 +7,11 @@ import com.compomics.spectrawl.model.PeakBin;
 import com.compomics.spectrawl.model.SpectrumImpl;
 import java.util.Map;
 import java.util.TreeMap;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * This filter looks for a number of consecutive fixed mass delta values between
  * peaks, between a minimum and a maximum value.
  */
-@Component("fixedCombMassDeltaFilter")
 public class FixedCombMassDeltaFilter implements Filter<SpectrumImpl> {
 
     private double intensityThreshold;
@@ -29,7 +26,6 @@ public class FixedCombMassDeltaFilter implements Filter<SpectrumImpl> {
      */
     private int maxConsecMassDeltas;
     private double massDeltaFilterValue;
-    @Autowired
     private SpectrumBinner spectrumBinner;
 
     public SpectrumBinner getSpectrumBinner() {

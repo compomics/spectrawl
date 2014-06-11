@@ -65,6 +65,10 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
     public JButton getLoadMsLimsExperimentButton() {
         return loadMsLimsExperimentButton;
     }
+
+    public JTabbedPane getExperimentSelectionTabbedPane() {
+        return experimentSelectionTabbedPane;
+    }        
         
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,16 +87,16 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
         binCeilingTextField = new javax.swing.JTextField();
         binSizeTextField = new javax.swing.JTextField();
         experimentSelectionTabbedPane = new javax.swing.JTabbedPane();
-        msLimsPanel = new javax.swing.JPanel();
-        experimentIdLabel = new javax.swing.JLabel();
-        msLimsExperimentIdTextField = new javax.swing.JTextField();
-        loadMsLimsExperimentButton = new javax.swing.JButton();
         mgfPanel = new javax.swing.JPanel();
         mgfFileLabel = new javax.swing.JLabel();
         fileChooseButton = new javax.swing.JButton();
         loadMgfExperimentButton = new javax.swing.JButton();
         mgfFilesListScrollPane = new javax.swing.JScrollPane();
         mgfFilesList = new javax.swing.JList();
+        msLimsPanel = new javax.swing.JPanel();
+        experimentIdLabel = new javax.swing.JLabel();
+        msLimsExperimentIdTextField = new javax.swing.JTextField();
+        loadMsLimsExperimentButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(5, 5));
@@ -151,6 +155,64 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        mgfPanel.setBackground(new java.awt.Color(255, 255, 255));
+        mgfPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        mgfFileLabel.setText("MGF file(s)");
+        mgfFileLabel.setMaximumSize(new java.awt.Dimension(70, 14));
+        mgfFileLabel.setMinimumSize(new java.awt.Dimension(70, 14));
+        mgfFileLabel.setPreferredSize(new java.awt.Dimension(70, 14));
+
+        fileChooseButton.setText("choose file(s)");
+
+        loadMgfExperimentButton.setText("load");
+        loadMgfExperimentButton.setMaximumSize(new java.awt.Dimension(97, 23));
+        loadMgfExperimentButton.setMinimumSize(new java.awt.Dimension(97, 23));
+        loadMgfExperimentButton.setPreferredSize(new java.awt.Dimension(97, 23));
+
+        mgfFilesListScrollPane.setPreferredSize(new java.awt.Dimension(300, 60));
+
+        mgfFilesList.setEnabled(false);
+        mgfFilesListScrollPane.setViewportView(mgfFilesList);
+
+        javax.swing.GroupLayout mgfPanelLayout = new javax.swing.GroupLayout(mgfPanel);
+        mgfPanel.setLayout(mgfPanelLayout);
+        mgfPanelLayout.setHorizontalGroup(
+            mgfPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mgfPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mgfFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mgfFilesListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(mgfPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mgfPanelLayout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(fileChooseButton))
+                    .addGroup(mgfPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(loadMgfExperimentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        mgfPanelLayout.setVerticalGroup(
+            mgfPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mgfPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(mgfPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mgfPanelLayout.createSequentialGroup()
+                        .addComponent(mgfFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(mgfPanelLayout.createSequentialGroup()
+                        .addGroup(mgfPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(mgfPanelLayout.createSequentialGroup()
+                                .addComponent(fileChooseButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(loadMgfExperimentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(mgfFilesListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+
+        experimentSelectionTabbedPane.addTab("MGF", mgfPanel);
+
         msLimsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         msLimsPanel.setOpaque(false);
 
@@ -191,64 +253,6 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
 
         experimentSelectionTabbedPane.addTab("MsLims", msLimsPanel);
 
-        mgfPanel.setBackground(new java.awt.Color(255, 255, 255));
-        mgfPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        mgfFileLabel.setText("MGF file(s)");
-        mgfFileLabel.setMaximumSize(new java.awt.Dimension(70, 14));
-        mgfFileLabel.setMinimumSize(new java.awt.Dimension(70, 14));
-        mgfFileLabel.setPreferredSize(new java.awt.Dimension(70, 14));
-
-        fileChooseButton.setText("choose file(s)");
-
-        loadMgfExperimentButton.setText("load");
-        loadMgfExperimentButton.setMaximumSize(new java.awt.Dimension(97, 23));
-        loadMgfExperimentButton.setMinimumSize(new java.awt.Dimension(97, 23));
-        loadMgfExperimentButton.setPreferredSize(new java.awt.Dimension(97, 23));
-
-        mgfFilesListScrollPane.setPreferredSize(new java.awt.Dimension(300, 60));
-
-        mgfFilesList.setEnabled(false);
-        mgfFilesListScrollPane.setViewportView(mgfFilesList);
-
-        javax.swing.GroupLayout mgfPanelLayout = new javax.swing.GroupLayout(mgfPanel);
-        mgfPanel.setLayout(mgfPanelLayout);
-        mgfPanelLayout.setHorizontalGroup(
-            mgfPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mgfPanelLayout.createSequentialGroup()
-                .addContainerGap(121, Short.MAX_VALUE)
-                .addComponent(mgfFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mgfFilesListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(mgfPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mgfPanelLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(fileChooseButton))
-                    .addGroup(mgfPanelLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(loadMgfExperimentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-        );
-        mgfPanelLayout.setVerticalGroup(
-            mgfPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mgfPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(mgfPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mgfPanelLayout.createSequentialGroup()
-                        .addComponent(mgfFileLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(mgfPanelLayout.createSequentialGroup()
-                        .addGroup(mgfPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(mgfPanelLayout.createSequentialGroup()
-                                .addComponent(fileChooseButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(loadMgfExperimentButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(mgfFilesListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(77, Short.MAX_VALUE))))
-        );
-
-        experimentSelectionTabbedPane.addTab("MGF", mgfPanel);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -256,7 +260,7 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(binConfigurationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                    .addComponent(binConfigurationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
                     .addComponent(experimentSelectionTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE))
                 .addContainerGap())
         );

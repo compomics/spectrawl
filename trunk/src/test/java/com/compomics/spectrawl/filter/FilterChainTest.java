@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  * this template use File | Settings | File Templates.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:springXMLConfig.xml")
+@ContextConfiguration("classpath:spectrawl-context.xml")
 public class FilterChainTest {
 
     private SpectrumImpl spectrum;
@@ -40,7 +40,7 @@ public class FilterChainTest {
     public void setUp() {
 
         //compose spectra and add them to the experiment
-        HashMap<Double, Peak> peaks = new HashMap<Double, Peak>();
+        HashMap<Double, Peak> peaks = new HashMap<>();
         Peak peak = new Peak(100D, 70D);
         peaks.put(100D, peak);
         peak = new Peak(220.54, 30D);
@@ -55,7 +55,7 @@ public class FilterChainTest {
         peaks.put(420.6, peak);
 
         spectrum = new SpectrumImpl("1");
-        ArrayList<Charge> possibleCharges = new ArrayList<Charge>();
+        ArrayList<Charge> possibleCharges = new ArrayList<>();
         possibleCharges.add(new Charge(Charge.PLUS, 1));
         Precursor precursor = new Precursor(0.0, 0.0, 0.0, possibleCharges);
         spectrum.setPrecursor(precursor);
@@ -67,15 +67,15 @@ public class FilterChainTest {
 
     @Test
     public void testFilterChain() {
-        FilterChain<SpectrumImpl> andFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.AND);
-        FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.OR);
-        FilterChain<SpectrumImpl> combinedFilterChain = new FilterChainImpl<SpectrumImpl>(FilterChain.FilterChainType.OR);
+        FilterChain<SpectrumImpl> andFilterChain = new FilterChainImpl<>(FilterChain.FilterChainType.AND);
+        FilterChain<SpectrumImpl> orFilterChain = new FilterChainImpl<>(FilterChain.FilterChainType.OR);
+        FilterChain<SpectrumImpl> combinedFilterChain = new FilterChainImpl<>(FilterChain.FilterChainType.OR);
 
         //add 2 filters to the first two filter chains
-        List<Double> mzRatioFilterValues = new ArrayList<Double>();
+        List<Double> mzRatioFilterValues = new ArrayList<>();
         mzRatioFilterValues.add(230D);
         Filter<SpectrumImpl> mzRatioFilter = new BasicMzFilter(0.5, mzRatioFilterValues);
-        List<Double> filterValues = new ArrayList<Double>();
+        List<Double> filterValues = new ArrayList<>();
         filterValues.add(120D);
         filterValues.add(200D);
         Filter<SpectrumImpl> binFilter = new BasicMassDeltaFilter(0.8, filterValues);
