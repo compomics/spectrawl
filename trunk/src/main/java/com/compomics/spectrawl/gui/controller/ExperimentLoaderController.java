@@ -154,7 +154,7 @@ public class ExperimentLoaderController {
      * @return the validation message String
      */
     public List<String> validateUserInput() {
-        List<String> validationMessages = new ArrayList<String>();
+        List<String> validationMessages = new ArrayList<>();
         if (experimentType.equals(Experiment.ExperimentType.MSLIMS)) {
             if (experimentLoaderPanel.getMsLimsExperimentIdTextField().getText().equals("")) {
                 validationMessages.add("mslims experiment id is empty");
@@ -195,7 +195,7 @@ public class ExperimentLoaderController {
      * @return the mgf file (key: mgf file name, value: the mgf file)
      */
     private Map<String, File> getMgfFiles() {
-        Map<String, File> mgfFiles = new HashMap<String, File>();
+        Map<String, File> mgfFiles = new HashMap<>();
         for (File mgfFile : experimentLoaderPanel.getFileChooser().getSelectedFiles()) {
             mgfFiles.put(mgfFile.getName(), mgfFile);
         }

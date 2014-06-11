@@ -50,11 +50,6 @@ public class ResultController {
     private ChartPanel intensitiesChartPanel;
 //    private ChartPanel countChartPanel;
     private ResultPanel resultPanel;
-    //parent controller
-    @Autowired
-    private MainController mainController;
-    //services
-    private SpectrumPanelFactory spectrumPanelFactory;
 
     /**
      * Get the view.
@@ -87,7 +82,7 @@ public class ResultController {
         resultPanel.getSpectrumTable().getColumnModel().getColumn(SpectrumTableFormat.FILE_NAME).setPreferredWidth(100);
         resultPanel.getSpectrumTable().getColumnModel().getColumn(SpectrumTableFormat.PRECURSOR_MZ).setPreferredWidth(20);
         resultPanel.getSpectrumTable().getColumnModel().getColumn(SpectrumTableFormat.CHARGE).setPreferredWidth(10);
-        
+
         //use MULTIPLE_COLUMN_MOUSE to allow sorting by multiple columns
         TableComparatorChooser tableSorter = TableComparatorChooser.install(
                 resultPanel.getSpectrumTable(), sortedSpectrumList, TableComparatorChooser.MULTIPLE_COLUMN_MOUSE);
@@ -107,7 +102,7 @@ public class ResultController {
                 }
             }
         });
-        
+
         //add chartPanel                  
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
@@ -143,7 +138,7 @@ public class ResultController {
         //create intensity chart
         JFreeChart intensitiesChart = ChartFactory.createBarChart("experiment bins", "bin", "relative intensity", intensitiesCategoryDataset, PlotOrientation.VERTICAL, true, true, false);
         CategoryPlot intensitiesPlot = (CategoryPlot) intensitiesChart.getPlot();
-        CategoryAxis xAxis = (CategoryAxis) intensitiesPlot.getDomainAxis();        
+        CategoryAxis xAxis = (CategoryAxis) intensitiesPlot.getDomainAxis();
         xAxis.setCategoryLabelPositions(CategoryLabelPositions.DOWN_90);
         //set labels invisible for clarity
         int counter = 0;
@@ -166,7 +161,6 @@ public class ResultController {
 //        countChart.getPlot().setBackgroundPaint(Color.WHITE);
 //        countChart.getPlot().setOutlineVisible(false);
 //        GuiUtils.setShadowVisible(countChart, false);
-
         //add charts to panels
         intensitiesChartPanel.setChart(intensitiesChart);
 //        countChartPanel.setChart(countChart);

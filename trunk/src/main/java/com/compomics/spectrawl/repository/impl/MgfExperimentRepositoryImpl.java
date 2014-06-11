@@ -49,8 +49,8 @@ public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
 
     @Override
     public Map<String, List<String>> getSpectrumTitles(Map<String, File> mgfFiles) {
-        Map<String, List<String>> spectrumTitles = new HashMap<String, List<String>>();
-        
+        Map<String, List<String>> spectrumTitles = new HashMap<>();
+
         //first, clear factory
         SpectrumFactory.getInstance().clearFactory();
 
@@ -61,9 +61,7 @@ public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
                 spectrumTitles.put(mgfFileName, SpectrumFactory.getInstance().getSpectrumTitles(mgfFileName));
             } catch (FileNotFoundException ex) {
                 LOGGER.error(ex.getMessage(), ex);
-            } catch (IOException ex) {
-                LOGGER.error(ex.getMessage(), ex);
-            } catch (ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 LOGGER.error(ex.getMessage(), ex);
             }
         }
@@ -74,9 +72,9 @@ public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
     public SpectrumImpl getSpectrumByKey(String spectrumKey) {
         SpectrumImpl spectrum = null;
         try {
-            MSnSpectrum mSnSpectrum = (MSnSpectrum) SpectrumFactory.getInstance().getSpectrum(spectrumKey);            
-            
-            double noiseThreshold = 0.0;            
+            MSnSpectrum mSnSpectrum = (MSnSpectrum) SpectrumFactory.getInstance().getSpectrum(spectrumKey);
+
+            double noiseThreshold = 0.0;
             //filter the spectrum if necessary
             if (doNoiseFiltering) {
                 //check if noise threshold finder and noise filter are set
@@ -89,13 +87,9 @@ public class MgfExperimentRepositoryImpl implements MgfExperimentRepository {
                     throw new IllegalArgumentException("NoiseFilter and/or ThresholdFinder not set");
                 }
             }
-                        
-            spectrum = new SpectrumImpl(mSnSpectrum, noiseThreshold);            
-        } catch (IOException ex) {
-            LOGGER.error(ex.getMessage(), ex);
-        } catch (IllegalArgumentException ex) {
-            LOGGER.error(ex.getMessage(), ex);
-        } catch (MzMLUnmarshallerException ex) {
+
+            spectrum = new SpectrumImpl(mSnSpectrum, noiseThreshold);
+        } catch (IOException | IllegalArgumentException | MzMLUnmarshallerException ex) {
             LOGGER.error(ex.getMessage(), ex);
         }
         return spectrum;

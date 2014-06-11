@@ -22,7 +22,7 @@ public class FilterChainImpl<T> implements FilterChain<T> {
     private List<Filter<T>> filters;
 
     public FilterChainImpl() {
-        filters = new ArrayList<Filter<T>>();
+        filters = new ArrayList<>();
     }
 
     /**
@@ -90,6 +90,7 @@ public class FilterChainImpl<T> implements FilterChain<T> {
      * Creates a filter chain based on a ptm
      *
      * @param ptm the ptm of interest
+     * @return 
      */
     public static FilterChainImpl getFilterChain(PTM ptm) {
         FilterChainImpl result = new FilterChainImpl(FilterChainType.OR);
@@ -152,7 +153,7 @@ public class FilterChainImpl<T> implements FilterChain<T> {
      * @return the corresponding filter chain
      */
     public static FilterChainImpl getFilterChain(String peptideFragment, ArrayList<Integer> accountedCharges, PTM ptm) {
-        ArrayList<PTM> ptms = new ArrayList<PTM>();
+        ArrayList<PTM> ptms = new ArrayList<>();
         ptms.add(ptm);
         return getFilterChain(peptideFragment, accountedCharges, ptms);
     }
