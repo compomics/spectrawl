@@ -3,7 +3,7 @@
 = Usage =
 
 == In a nutshell == 
-With spectrawl you can explore peak mass differences in MS2 spectra. All mass differences between all peaks of a given spectrum (an optional noise filtering step can be performed first) are computed and put into a frequency diagram. The size of the bins and the lower and upper bounderies are user definiable. To look for specific mass differences and/or M/Z ratios, several filters [#filters] are provided. Spectrawl supports import from [http://code.google.com/p/ms-lims ms_lims] and from spectra in MGF format.
+With spectrawl you can explore peak mass differences (`Δm`) in MS2 spectra. All mass differences between all peaks of a given spectrum (an optional noise filtering step can be performed first) are computed and put into a frequency diagram. The size of the bins and the lower and upper bounderies are user definiable. To look for specific mass differences and/or M/Z ratios, several filters [#filters] are provided. Spectrawl supports import from [http://code.google.com/p/ms-lims ms_lims] and from spectra in MGF format.
 
 == Configuration ==
 The configuration file can be found in the _resources_ folder. These file can be edited by the user if necessary. If no files are found in the _resources_ directory, default values will be used instead. 
@@ -15,10 +15,17 @@ Most of the parameter values in this file should be left to their default values
   * `db.username`: the database user name.
   * `db.password`: the database password.
   * `size`: the size of the task executor; how many threads you want to run in parallel.
-  * `BINS_FLOOR`: the lowest mass value you're interested in.
-  * `BINS_CEILING`: the minimum number of identifications per charge state used for the recalibration. Else the analyzer instrument default values are used.
+  * `BINS_FLOOR`: the lowest `Δm` value you're interested in.
+  * `BINS_CEILING`: the highest `Δm` value you're interested in.
+  * `BINS_SIZE`: the size of a bin (in dalton).
+  * `DO_PROCESS_FILTER`: do the spectra have to go through a noise filtering step (winsorization) before analyzing the mass differences between peaks.
 
-As mentioned before, this fixed set of pipeline modifications can be complemented with modifications found in PRIDE for the experiment of interest. In [Manual#GUI_mode GUI mode], a dialog is shown if one or more PRIDE modifications have a similar mass compared to the pipeline PTMs.
+== Running ==
+
+Run spectrawl by double clicking the .jar file in the colims-client-x.y.z folder. First, it will try to connect to the database. If no connection with a ms_lims database could be achieved, a warning message is shown and only MGF input will be supported.
+
+It is possible that you need more than the default memory to run spectrawl. In case of any memory issues, run 
+
 == Output ==
 The pipeline produces two result files. The first one (_<experiment accession>_.txt) contains the fragment ion annotations for each identified spectrum. The second one (_<experiment accession>_`_`mods.txt) contains the subset of modifications that could actually explain a precursor mass deviation. These files can be imported (back) into the GUI for further analysis. Please note that for the moment, result files from processed PRIDE xml experiments can be imported, but the identifications details can't be explored.
 
