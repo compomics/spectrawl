@@ -29,7 +29,7 @@ java -jar spectrawl-<version>.jar -Xms4g -Xmx4g
 }}}
 and adjust the memory (4 gigabyte in this case) accordingly.
 
-Once spectrawl is up and running, you can select a ms_lims experiment or a MGF file(s), apply some [#filters] and let it spin. 
+Once spectrawl is up and running, you can select a ms_lims experiment or a MGF file(s), apply some [Usage#Filters filters] and let it spin. 
 
 == Filters ==
 Filters can be configured in the _Filter_ menu. If several filters are applied at the same time, they will be executed sequentially. Some of the filters have a _Filter type_ with 2 options:
