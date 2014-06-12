@@ -1,0 +1,102 @@
+#summary How to run and configure spectrawl
+
+= Usage =
+
+== In a nutshell == 
+With spectrawl you can explore peak mass differences in MS2 spectra. All mass differences between all peaks of a given spectrum (an optional noise filtering step can be performed first) are computed and put into a frequency diagram. The size of the bins and the lower and upper bounderies are user definiable. To look for specific mass differences and/or M/Z ratios, several filters [#filters] are provided. Spectrawl supports import from [http://code.google.com/p/ms-lims ms_lims] and from spectra in MGF format.
+
+== Configuration ==
+The configuration file can be found in the _resources_ folder. These file can be edited by the user if necessary. If no files are found in the _resources_ directory, default values will be used instead. 
+
+=== spectrawl.properties ===
+Most of the parameter values in this file should be left to their default values. The settings that the user might need the change are listed below
+  * `db.driver`: the database driver class name to connect to a ms_lims datatabase.
+  * `db.url`: the url of a ms_lims database.
+  * `db.username`: the database user name.
+  * `db.password`: the database password.
+  * `size`: the size of the task executor; how many threads you want to run in parallel.
+  * `BINS_FLOOR`: the lowest mass value you're interested in.
+  * `BINS_CEILING`: the minimum number of identifications per charge state used for the recalibration. Else the analyzer instrument default values are used.
+
+As mentioned before, this fixed set of pipeline modifications can be complemented with modifications found in PRIDE for the experiment of interest. In [Manual#GUI_mode GUI mode], a dialog is shown if one or more PRIDE modifications have a similar mass compared to the pipeline PTMs.
+== Output ==
+The pipeline produces two result files. The first one (_<experiment accession>_.txt) contains the fragment ion annotations for each identified spectrum. The second one (_<experiment accession>_`_`mods.txt) contains the subset of modifications that could actually explain a precursor mass deviation. These files can be imported (back) into the GUI for further analysis. Please note that for the moment, result files from processed PRIDE xml experiments can be imported, but the identifications details can't be explored.
+
+In case of an unexpected error, the log file (pride-asa-pipeline.log) can be found in the _user_ root folder.
+
+== Command line mode ==
+Execute the following command in the folder where the pipeline _.jar_ file is located:
+{{{
+java -jar pride-asa-pipeline-<version>.jar [-a <accession> | -f <experiment_accessions_file_path> | -p <pride_xml_file_path> | -s <pride_xml_paths_file_path>] [-u] [-h]
+}}}
+Using argument `-a` followed by a PRIDE experiment accession annotates one experiment, whereas `-f` followed by the path of a _.txt_ file containing one or more experiment accessions (line separated) annotates multiple experiments sequentially. `-p` annotates the PRIDE xml file specified in the following path, while `-s` followed by the path of a _.txt_ file containing one or more PRIDE XML file paths (line separated) annotates multiple experiments sequentially. Arguments `-h` and `-u` give more information about the available command line parameters.
+
+== GUI mode ==
+Run the pipeline in GUI mode by double clicking the _.jar_ file. The GUI consists of three parts, described in the following.
+
+=== Pipeline panel ===
+
+*Experiment selection*
+
+On the main panel, an experiment can be selected from the publicly available PRIDE experiments. If the experiment contains no useful identifications, a message is shown. While processing a given experiment, two dialogs might pop up:
+  * Systematic mass error dialog: one or more systematic mass errors exceed the threshold value. The user can decide to proceed or not.
+  * Conflicting modifications dialog: The conflicting PRIDE modifications are shown on the left, the pipeline modifications and non-conflicting PRIDE modifications on the right. The user can include or exclude PRIDE modifications in this dialog. The pipeline modifications can be edited in the [#Modifications_dialog modifications dialog]. Note that the pipeline can handle equal mass modifications, although they increase the processing time significantly. 
+
+A PRIDE xml file can be ran through the pipeline in the _PRIDE XML_ tab. 
+
+In the _Pipeline Result File_ tab, a result file from an already processed experiment can be loaded.
+
+*Pipeline result*
+
+In the _Summary_ tab, some descriptive graphs are shown.In the _Identifications_ tab, all identifications are listed. Clicking on an identifaction shows the annotated spectrum.
+
+=== Configuration dialog ===
+The pipeline settings described in the [Manual#Configuration Configuration section] can be viewed and modified in this dialog. The user is able to restore the default settings by clicking the _reset_ button. Saving the current settings will write the parameter values to the `pride_asa_pipeline.properties` file in the _resources_ folder.
+
+=== Modifications dialog ===
+In this dialog, the user can add, modify and delete modifications. As mentioned before, a modifications XML file can be imported as well. In case of validation error against the schema, an error dialog will be shown.
+
+== Use pride-asap as Maven dependency ==
+Include the following dependecy
+{{{
+    <dependency>
+        <groupId>com.compomics</groupId>
+        <artifactId>pride-asa-pipeline</artifactId>
+        <version>X.Y.Z</version>
+    </dependency>
+}}}
+and the following repositories in your _pom.xml_ file:
+{{{
+    <repositories>                   
+        <repository>
+            <id>genesis-maven2-repo</id>
+            <name>Genesis maven2 repository</name>
+            <url>http://genesis.UGent.be/maven2</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>genesis-maven-repo</id>
+            <name>Genesis maven repository</name>
+            <url>http://genesis.UGent.be/maven</url>
+            <layout>default</layout>
+        </repository>                
+    </repositories>
+}}}
+
+This project uses the _Spring_ framework for depency injection, so the _application context_ needs to be loaded, e.g.:
+{{{
+import com.compomics.pride_asa_pipeline.spring.ApplicationContextProvider;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.compomics.pride_asa_pipeline.logic.PrideSpectrumAnnotator;
+
+//set the default application context
+ApplicationContextProvider.getInstance().setDefaultApplicationContext();
+ApplicationContext applicationContext = ApplicationContextProvider.getInstance().getApplicationContext();
+
+DbSpectrumAnnotator dbSpectrumAnnotator = applicationContext.getBean("dbSpectrumAnnotator", DbSpectrumAnnotator.class);
+//annotate the first PRIDE experiment
+dbSpectrumAnnotator.annotate("1"); 
+}}}
+
+The two _Spring_ configuration files (`springXMLConfig.xml` and `guiSpringXMLConfig.xml`) can be found in the `scr\main\resources` folder.
