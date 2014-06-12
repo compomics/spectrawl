@@ -35,14 +35,20 @@ Once spectrawl is up and running, you can select a ms_lims experiment or a MGF f
 Filters can be configured in the _Filter_ menu. If several filters are applied at the same time, they will be executed sequentially. Some of the filters have a _Filter type_ with 2 options:
   * _and_: all values in the filter need to be there in order to pass.
   * _or_: one of values in the filter need to there in order to pass.
+You can disable a filter by emptying all the values and fields.
 === Noise filtering ===
 As mentioned before, some optional noise filtering is applied on the spectra. You can enable or disable this in the properties file or in the _Filter_ -> _M/Z ratio_ -> _Noise filter settings_ tab. 
 
 === Mass delta ===
-This type of filters require an intensity threshold value. The 'intensity' of a `Δm` is calculated as the square root of the normalized intensities of the two peaks. The mass delta filters look for if a given `Δm` is present in a spectrum, and if its intensity is higher than the threshold value. As a guideline, start with using values between 0.01 
-*Basic filter*
-_Filter_ -> _Mass delta_: Add one or more mass delta values. You need 
-*Advanced filters* 
+This type of filters require an intensity threshold value. The 'intensity' of a `Δm` is calculated as the square root of the normalized intensities of the two peaks. The mass delta filters look for if a given `Δm` is present in a spectrum, and if its intensity is higher than the threshold value. As a guideline, start with using values between 0.01
+ 
+==== Basic filter ====
+_Filter_ -> _Mass delta_: add one or more mass delta values a spectrum needs to contain to pass the filter.
+ 
+==== Advanced filters ====
+_Filter_ -> _Mass delta_: there are two types of advanced `Δm` filters. 
+  * Fixed comb `Δm` filter: this filter looks for consecutive `Δm` values within a spectrum between the given minumum and maximum.
+  * Variable comb `Δm` filter: this filter looks
 
 == Command line mode ==
 Execute the following command in the folder where the pipeline _.jar_ file is located:
