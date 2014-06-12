@@ -22,9 +22,15 @@ Most of the parameter values in this file should be left to their default values
 
 == Running ==
 
-Run spectrawl by double clicking the .jar file in the colims-client-x.y.z folder. First, it will try to connect to the database. If no connection with a ms_lims database could be achieved, a warning message is shown and only MGF input will be supported.
+Run spectrawl by double clicking the .jar file in the spectrawl-x.y.z folder. First, it will try to connect to the database. If no connection with a ms_lims database could be achieved, a warning message is shown and only MGF input will be supported.
 
-It is possible that you need more than the default memory to run spectrawl. In case of any memory issues, run 
+It is possible that you need more than the default memory to run spectrawl. In case of any memory issues, open a command line window and execute the following command in the `spectrawl-x.y.z` folder where the _.jar_ file is located:
+{{{
+java -jar spectrawl-<version>.jar -Xms4g -Xmx4g
+}}}
+and adjust the memory (4 gigabyte in this case) accordingly.
+
+Once spectrawl is up and running, you can select a ms_lims experiment or a MGF file(s), apply some filters and let it spin. 
 
 == Output ==
 The pipeline produces two result files. The first one (_<experiment accession>_.txt) contains the fragment ion annotations for each identified spectrum. The second one (_<experiment accession>_`_`mods.txt) contains the subset of modifications that could actually explain a precursor mass deviation. These files can be imported (back) into the GUI for further analysis. Please note that for the moment, result files from processed PRIDE xml experiments can be imported, but the identifications details can't be explored.
