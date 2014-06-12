@@ -21,7 +21,6 @@ Most of the parameter values in this file should be left to their default values
   * `DO_PROCESS_FILTER`: do the spectra have to go through a noise filtering step (winsorization) before analyzing the mass differences between peaks.
 
 == Running ==
-
 Run spectrawl by double clicking the .jar file in the spectrawl-x.y.z folder. First, it will try to connect to the database. If no connection with a ms_lims database could be achieved, a warning message is shown and only MGF input will be supported.
 
 It is possible that you need more than the default memory to run spectrawl. In case of any memory issues, open a command line window and execute the following command in the `spectrawl-x.y.z` folder where the _.jar_ file is located:
@@ -30,12 +29,20 @@ java -jar spectrawl-<version>.jar -Xms4g -Xmx4g
 }}}
 and adjust the memory (4 gigabyte in this case) accordingly.
 
-Once spectrawl is up and running, you can select a ms_lims experiment or a MGF file(s), apply some filters and let it spin. 
+Once spectrawl is up and running, you can select a ms_lims experiment or a MGF file(s), apply some [#filters] and let it spin. 
 
-== Output ==
-The pipeline produces two result files. The first one (_<experiment accession>_.txt) contains the fragment ion annotations for each identified spectrum. The second one (_<experiment accession>_`_`mods.txt) contains the subset of modifications that could actually explain a precursor mass deviation. These files can be imported (back) into the GUI for further analysis. Please note that for the moment, result files from processed PRIDE xml experiments can be imported, but the identifications details can't be explored.
+== Filters ==
+Filters can be configured in the _Filter_ menu. If several filters are applied at the same time, they will be executed sequentially. Some of the filters have a _Filter type_ with 2 options:
+  * _and_: all values in the filter need to be there in order to pass.
+  * _or_: one of values in the filter need to there in order to pass.
+=== Noise filtering ===
+As mentioned before, some optional noise filtering is applied on the spectra. You can enable or disable this in the properties file or in the _Filter_ -> _M/Z ratio_ -> _Noise filter settings_ tab. 
 
-In case of an unexpected error, the log file (pride-asa-pipeline.log) can be found in the _user_ root folder.
+=== Mass delta ===
+This type of filters require an intensity threshold value. The 'intensity' of a `Δm` is calculated as the square root of the normalized intensities of the two peaks. The mass delta filters look for if a given `Δm` is present in a spectrum, and if its intensity is higher than the threshold value. As a guideline, start with using values between 0.01 
+*Basic filter*
+_Filter_ -> _Mass delta_: Add one or more mass delta values. You need 
+*Advanced filters* 
 
 == Command line mode ==
 Execute the following command in the folder where the pipeline _.jar_ file is located:
