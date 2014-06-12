@@ -3,7 +3,7 @@
 = Usage =
 
 == In a nutshell == 
-With spectrawl you can explore peak mass differences (`Δm`) in MS2 spectra. All mass differences between all peaks of a given spectrum (an optional noise filtering step can be performed first) are computed and put into a frequency diagram. The size of the bins and the lower and upper bounderies are user definiable. To look for specific mass differences and/or M/Z ratios, several [Usage#Filters filters] are provided. Spectrawl supports import from [http://code.google.com/p/ms-lims ms_lims] and from spectra in MGF format.
+With spectrawl you can explore peak mass differences (`Δm`) in MS2 spectra. All mass differences between all peaks of a given spectrum (an optional noise filtering step can be performed first) are computed and put into a frequency diagram. The size of the bins and the lower and upper boundaries are user definable. To look for specific mass differences and/or M/Z ratios, several [Usage#Filters filters] are provided. Spectrawl supports import from [http://code.google.com/p/ms-lims ms_lims] and from spectra in MGF format.
 
 == Configuration ==
 The configuration file can be found in the _resources_ folder. These file can be edited by the user if necessary. If no files are found in the _resources_ directory, default values will be used instead. 
@@ -47,8 +47,17 @@ _Filter_ -> _Mass delta_: add one or more mass delta values a spectrum needs to 
  
 ==== Advanced filters ====
 _Filter_ -> _Mass delta_: there are two types of advanced `Δm` filters. 
-  * Fixed comb `Δm` filter: this filter looks for a consecutive `Δm` values within a spectrum between the given minumum and maximum. The consecutive `Δm` is one value. 
-  * Variable comb `Δm` filter: this filter looks for a set a given consecutive `Δm` values in a spectrum.  
+  * Fixed comb `Δm` filter: this filter looks for a consecutive `Δm` values within a spectrum between the given minimum and maximum. The consecutive `Δm` is one value. 
+  * Variable comb `Δm` filter: this filter looks for a set a given consecutive `Δm` values in a spectrum. 
+
+=== M/Z ratio ===
+This type of filters look for specific M/Z values, not mass differences between peaks. The can be configured in _Filter_ -> _M/Z ratio_. They require a mass tolerance. 
+ 
+==== M/Z ratio filter ====
+This filter looks for given M/Z ratios in spectra.
+
+==== Precursor relative mass filter ====
+This filter looks for given mass values relative to the precursor value. A negative value is subtracted from the precursor, a positive value is added.
 
 == Output ==
-When spectrawl has finished processing, the intitial number of spectra and the number that have passed the filter(s) are shown. The intensities chart shows the 50% quantiles of the highest intensity and the intensity sum in each bin, accross all (filtered) spectra. You can browse through the specta in the _spectra_ tab (click above one peak and then above another the calculate the `Δm`, do _ctrl_ + mouse click to undo). 
+When spectrawl has finished processing, the initial number of spectra and the number that have passed the filter(s) are shown. The intensities chart shows the 50% quantiles of the highest intensity and the intensity sum in each bin, across all (filtered) spectra. You can browse through the spectra in the _spectra_ tab (click above one peak and then above another the calculate the `Δm`, do _ctrl_ + mouse click to undo). 
