@@ -389,7 +389,7 @@ public class MzFilterDialog extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        FilteSettingsTabbedPane.addTab("Precursor relative mass ratio filter settings", precRelMzFilterPanel);
+        FilteSettingsTabbedPane.addTab("Precursor relative mass filter settings", precRelMzFilterPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
