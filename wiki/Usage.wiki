@@ -51,7 +51,7 @@ _Filter_ -> _Mass delta_: there are two types of advanced `Δm` filters.
   * Variable comb `Δm` filter: this filter looks for a set a given consecutive `Δm` values in a spectrum. 
 
 === M/Z ratio ===
-This type of filters look for specific M/Z values, not mass differences between peaks. The can be configured in _Filter_ -> _M/Z ratio_. They require a mass tolerance. 
+This type of filters look for specific M/Z values, not mass differences between peaks. They can be configured in _Filter_ -> _M/Z ratio_ and require a mass tolerance. 
  
 ==== M/Z ratio filter ====
 This filter looks for given M/Z ratios in spectra.
