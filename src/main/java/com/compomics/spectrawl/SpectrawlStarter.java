@@ -63,7 +63,7 @@ public class SpectrawlStarter {
                     LOGGER.error(ex.getMessage(), ex);
                     String beanName = ex.getBeanName();
                     if (beanName.equals("msLimsDataSource") && ex.getCause() instanceof PropertyBatchUpdateException) {
-                        JOptionPane.showMessageDialog(null, "Spectrawl was not able to connect to MSLims with the given credentials."
+                        JOptionPane.showMessageDialog(null, "Spectrawl was not able to connect to ms-lims with the given credentials."
                                 + "\n" + "The program will continue, but you'll only able to use the MGF functionality.",
                                 "Spectrawl startup warning", JOptionPane.WARNING_MESSAGE);
                     }

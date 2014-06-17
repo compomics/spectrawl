@@ -216,7 +216,7 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
         msLimsPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         msLimsPanel.setOpaque(false);
 
-        experimentIdLabel.setText("MSLims experiment ID");
+        experimentIdLabel.setText("Ms-lims experiment ID");
 
         msLimsExperimentIdTextField.setPreferredSize(new java.awt.Dimension(100, 25));
 
@@ -230,7 +230,7 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
         msLimsPanelLayout.setHorizontalGroup(
             msLimsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(msLimsPanelLayout.createSequentialGroup()
-                .addContainerGap(338, Short.MAX_VALUE)
+                .addContainerGap(192, Short.MAX_VALUE)
                 .addGroup(msLimsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, msLimsPanelLayout.createSequentialGroup()
                         .addComponent(experimentIdLabel)
@@ -251,7 +251,7 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
                 .addContainerGap(98, Short.MAX_VALUE))
         );
 
-        experimentSelectionTabbedPane.addTab("MsLims", msLimsPanel);
+        experimentSelectionTabbedPane.addTab("Ms-lims", msLimsPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -260,7 +260,7 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(binConfigurationPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                    .addComponent(binConfigurationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 482, Short.MAX_VALUE)
                     .addComponent(experimentSelectionTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -270,7 +270,7 @@ public class ExperimentLoaderPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(binConfigurationPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(experimentSelectionTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                .addComponent(experimentSelectionTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents

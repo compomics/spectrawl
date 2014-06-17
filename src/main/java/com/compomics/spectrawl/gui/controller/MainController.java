@@ -175,8 +175,11 @@ public class MainController implements ActionListener {
      * @param messageEvent the message event
      */
     @Subscribe
-    public void onMessageEvent(MessageEvent messageEvent) {
+    public void onMessageEvent(MessageEvent messageEvent) {        
         showMessageDialog(messageEvent.getMessageTitle(), messageEvent.getMessage(), messageEvent.getMessageType());
+        if(messageEvent instanceof UnexpectedErrorMessageEvent){
+            System.exit(0);
+        }
     }
 
     @Override
