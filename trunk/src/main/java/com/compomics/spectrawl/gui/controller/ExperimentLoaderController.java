@@ -5,6 +5,7 @@
 package com.compomics.spectrawl.gui.controller;
 
 import com.compomics.spectrawl.config.PropertiesConfigurationHolder;
+import com.compomics.spectrawl.gui.event.MessageEvent;
 import com.compomics.spectrawl.service.MgfExperimentService;
 import com.compomics.spectrawl.service.MsLimsExperimentService;
 import com.compomics.spectrawl.gui.event.UnexpectedErrorMessageEvent;
@@ -24,8 +25,10 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 
 /**
  *
@@ -49,7 +52,7 @@ public class ExperimentLoaderController {
     private EventBus eventBus;
     private MsLimsExperimentService msLimsExperimentService;
     private MgfExperimentService mgfExperimentService;
-        
+
     public ExperimentLoaderPanel getExperimentLoaderPanel() {
         return experimentLoaderPanel;
     }
@@ -60,7 +63,7 @@ public class ExperimentLoaderController {
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
-    }        
+    }
 
     public ProgressController getProgressController() {
         return progressController;
@@ -92,7 +95,7 @@ public class ExperimentLoaderController {
 
     public void setMgfExperimentService(MgfExperimentService mgfExperimentService) {
         this.mgfExperimentService = mgfExperimentService;
-    } 
+    }
 
     public boolean isMsLimsEnabled() {
         return msLimsEnabled;
@@ -100,7 +103,7 @@ public class ExperimentLoaderController {
 
     public void setMsLimsEnabled(boolean msLimsEnabled) {
         this.msLimsEnabled = msLimsEnabled;
-    }         
+    }
 
     /**
      * Init the controller.
@@ -108,9 +111,9 @@ public class ExperimentLoaderController {
     public void init() {
         //init the panel
         experimentLoaderPanel = new ExperimentLoaderPanel();
-        
+
         //check if the MSLims tab needs to be disabled
-        if(!msLimsEnabled){
+        if (!msLimsEnabled) {
             experimentLoaderPanel.getExperimentSelectionTabbedPane().setEnabledAt(1, false);
         }
 
@@ -301,7 +304,12 @@ public class ExperimentLoaderController {
                 mainController.onExperimentLoaded(experiment);
             } catch (InterruptedException | ExecutionException ex) {
                 LOGGER.error(ex.getMessage(), ex);
-                eventBus.post(new UnexpectedErrorMessageEvent(ex.getMessage()));
+                if (ex.getCause() instanceof CannotGetJdbcConnectionException) {
+                    eventBus.post(new UnexpectedErrorMessageEvent("Ms-lims connection error", "Spectrawl could not connect to the ms-lims database"
+                            + "\n" + "Please check your credentials and try again.", JOptionPane.ERROR_MESSAGE));
+                } else {
+                    eventBus.post(new UnexpectedErrorMessageEvent(ex.getMessage()));
+                }
             } catch (CancellationException ex) {
                 LOGGER.info("loading experiment cancelled");
             } finally {

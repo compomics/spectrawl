@@ -13,4 +13,9 @@ public class UnexpectedErrorMessageEvent extends MessageEvent {
                 + "\n" + message
                 + "\n" + "please try to rerun the application.", JOptionPane.ERROR_MESSAGE);
     }
+
+    public UnexpectedErrorMessageEvent(String messageTitle, String message, int messageType) {
+        super(messageTitle, message, messageType);
+    }
+        
 }
