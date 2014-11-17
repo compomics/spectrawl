@@ -121,7 +121,7 @@ public class ExperimentLoaderController {
         progressController.init();
 
         //register to event bus
-        eventBus.register(this);
+        //eventBus.register(this);
 
         //init model for list
         mgfFilesListModel = new DefaultListModel();
