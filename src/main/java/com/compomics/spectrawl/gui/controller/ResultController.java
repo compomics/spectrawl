@@ -48,7 +48,7 @@ public class ResultController {
     private ResultPanel resultPanel;
 
     /**
-     * Get the view.
+     * Get the view of this controller.
      *
      * @return the view
      */
@@ -99,7 +99,7 @@ public class ResultController {
             }
         });
 
-        //add chartPanel                  
+        //add chartPanel
         GridBagConstraints gridBagConstraints = new GridBagConstraints();
         gridBagConstraints.fill = GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
