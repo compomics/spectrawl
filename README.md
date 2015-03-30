@@ -1,6 +1,6 @@
 # spectrawl
 
- * [Project_Description] (#project_description)
+ * [Project Description](#project_description)
  * [Downloads](#downloads)
  * [Usage](#usage)
  * [Compomics](#compomics)
