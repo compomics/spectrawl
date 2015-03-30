@@ -24,7 +24,7 @@ Download Spectrawl 0.8.0 [here](http://genesis.ugent.be/maven2/com/compomics/spe
 ----
 
 ## Usage
-See the [http://code.google.com/p/spectrawl/wiki wiki] for additional information on how to setup, run and configure spectrawl.
+See the [wiki](https://github.com/compomics/spectrawl/wiki) for additional information on how to setup, run and configure spectrawl.
 
 [To top of page](#spectrawl)
 
