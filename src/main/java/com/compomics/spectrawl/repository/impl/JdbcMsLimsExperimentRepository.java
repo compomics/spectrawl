@@ -27,7 +27,11 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
  */
 public class JdbcMsLimsExperimentRepository extends JdbcDaoSupport implements MsLimsExperimentRepository {
 
+    /**
+     * Logger instance.
+     */
     private static final Logger LOGGER = Logger.getLogger(JdbcMsLimsExperimentRepository.class);
+
     private static final String SELECT_EXPERIMENT_SPECTRUM_FILES = new StringBuilder()
             .append("select sf.l_spectrumid as l_spectrumid, sf.file as file from spectrum s, spectrum_file sf ")
             .append("where s.spectrumid = sf.l_spectrumid ")
