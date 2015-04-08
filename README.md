@@ -32,7 +32,7 @@ See the [wiki](https://github.com/compomics/spectrawl/wiki) for additional infor
 
 ## Project Support
 
-The jTraML project is grateful for the support by:
+The spectrawl project is grateful for the support by:
 
 | Compomics | VIB | Ghent University|
 |:--:|:--:|:--:|
